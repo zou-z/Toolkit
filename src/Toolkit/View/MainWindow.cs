@@ -86,7 +86,7 @@ namespace Toolkit.View
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            var iconPath = @$"{Environment.CurrentDirectory}\Image\bear.ico";
+            var iconPath = @$"{Environment.CurrentDirectory}\Image\application.ico";
             if (!File.Exists(iconPath))
             {
                 Logger.Fatal(new IOException($"未找到图标文件:{iconPath}"), "图标丢失", MethodBase.GetCurrentMethod()?.GetMethodName());
