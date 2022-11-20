@@ -47,17 +47,10 @@ namespace Toolkit.View
                         case 514: // 左键松开
                             if (mainMenu == null)
                             {
-                                mainMenu = new MainMenuView(notifyIconPosition, () => { Close(); })
-                                {
-                                    Owner = this,
-                                };
-                                mainMenu.Deactivated += (sender, e) =>
-                                {
-                                    mainMenu.Hide();
-                                };
+                                InitMainMenu();
                             }
-                            mainMenu.Show();
-                            mainMenu.Activate();
+                            mainMenu?.Show();
+                            mainMenu?.Activate();
                             break;
                         case 516: // 右键按下
                             break;
@@ -89,6 +82,18 @@ namespace Toolkit.View
         private void MainWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
         {
             notifyIconUtil.DeleteNotifyIcon();
+        }
+
+        private void InitMainMenu()
+        {
+            mainMenu = new MainMenuView(notifyIconPosition, () => { Close(); })
+            {
+                Owner = this,
+            };
+            mainMenu.Deactivated += (sender, e) =>
+            {
+                mainMenu?.Hide();
+            };
         }
 
         private readonly NotifyIconUtil notifyIconUtil;
