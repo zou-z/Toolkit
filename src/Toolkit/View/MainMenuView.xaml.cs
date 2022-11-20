@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,10 +12,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Toolkit.Message;
 
 namespace Toolkit.View
 {
-    internal partial class MainMenuView : Window
+    internal partial class MainMenuView : Window, IRecipient<MainMenuHideMessage>
     {
         public MainMenuView(Rect notifyIconPosition, Action exit)
         {
@@ -23,6 +25,7 @@ namespace Toolkit.View
             Left = notifyIconPosition.Left - BorderThickness.Left;
             Top = notifyIconPosition.Top - size.Height - BorderThickness.Top - BorderThickness.Bottom;
             this.exit = exit;
+            WeakReferenceMessenger.Default.Register(this);
         }
 
         private Size GetContentSize()
@@ -39,6 +42,11 @@ namespace Toolkit.View
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             exit?.Invoke();
+        }
+
+        public void Receive(MainMenuHideMessage message)
+        {
+            Hide();
         }
 
         private readonly Action exit;

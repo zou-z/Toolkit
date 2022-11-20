@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using NLog.Targets.Wrappers;
+using Toolkit.Message;
 
 namespace Toolkit.Model
 {
@@ -30,8 +32,7 @@ namespace Toolkit.Model
 
 
             // if callback is not null, close main menu
-
-
+            WeakReferenceMessenger.Default.Send(new MainMenuHideMessage());
         }
 
         private void MouseLeftButtonUp()
