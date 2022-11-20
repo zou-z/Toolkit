@@ -6,6 +6,8 @@ namespace Toolkit.Base.Common
     public static class Win32Native
     {
 #pragma warning disable SYSLIB1054
+#pragma warning disable CA1401
+
         #region Shell_NotifyIcon
         [StructLayout(LayoutKind.Sequential)]
         public struct NotifyIconData
@@ -47,7 +49,9 @@ namespace Toolkit.Base.Common
         public const int WM_APP = 0x8000;
 
         [DllImport("shell32.dll")]
+
         public static extern bool Shell_NotifyIcon(uint dwMessage, [In] ref NotifyIconData pnid);
+
         #endregion
 
         #region Shell_NotifyIconGetRect
@@ -80,6 +84,8 @@ namespace Toolkit.Base.Common
         [DllImport("user32.dll")]
         public static extern IntPtr SetParent(IntPtr hwnd, IntPtr hwndNewParent);
         #endregion
+
+#pragma warning restore CA1401
 #pragma warning restore SYSLIB1054
     }
 }
