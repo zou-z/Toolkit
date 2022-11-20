@@ -1,0 +1,9 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <CornerRadius x:Key="Style.Config.MenuCornerRadius" TopLeft="8" TopRight="8" BottomLeft="8" BottomRight="8"/>
+    <CornerRadius x:Key="Style.Config.MenuItemCornerRadius" TopLeft="6" TopRight="6" BottomLeft="6" BottomRight="6"/>
+    <SolidColorBrush x:Key="Style.Config.MenuForeground" Color="#222222"/>
+    <SolidColorBrush x:Key="Style.Config.MenuBackground" Color="White"/>
+    <SolidColorBrush x:Key="Style.Config.MenuHoverBackground" Color="Gainsboro"/>
+    <SolidColorBrush x:Key="Style.Config.MenuPressedBackground" Color="Gray"/>
+</ResourceDictionary>

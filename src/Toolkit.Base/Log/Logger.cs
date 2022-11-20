@@ -9,7 +9,7 @@ namespace Toolkit.Base.Log
         {
             GetLogger().Trace(exception, $"{position}\n{message}");
 #if DEBUG
-            MessageBox.Show($"{position}\n{message}\n{exception.Message}", "Logger.Trace");
+            MessageBox.Show($"{position}\n{message}\n{exception.Message}", "Toolkit - Logger.Trace");
 #endif
         }
 
@@ -17,7 +17,7 @@ namespace Toolkit.Base.Log
         {
             GetLogger().Debug(exception, $"{position}\n{message}");
 #if DEBUG
-            MessageBox.Show($"{position}\n{message}\n{exception.Message}", "Logger.Debug");
+            MessageBox.Show($"{position}\n{message}\n{exception.Message}", "Toolkit - Logger.Debug");
 #endif
         }
 
@@ -25,7 +25,7 @@ namespace Toolkit.Base.Log
         {
             GetLogger().Info(exception, $"{position}\n{message}");
 #if DEBUG
-            MessageBox.Show($"{position}\n{message}\n{exception.Message}", "Logger.Info");
+            MessageBox.Show($"{position}\n{message}\n{exception.Message}", "Toolkit - Logger.Info");
 #endif
         }
 
@@ -33,7 +33,7 @@ namespace Toolkit.Base.Log
         {
             GetLogger().Warn(exception, $"{position}\n{message}");
 #if DEBUG
-            MessageBox.Show($"{position}\n{message}\n{exception.Message}", "Logger.Warn");
+            MessageBox.Show($"{position}\n{message}\n{exception.Message}", "Toolkit - Logger.Warn");
 #endif
         }
 
@@ -41,7 +41,7 @@ namespace Toolkit.Base.Log
         {
             GetLogger().Error(exception, $"{position}\n{message}");
 #if DEBUG
-            MessageBox.Show($"{position}\n{message}\n{exception.Message}", "Logger.Error");
+            MessageBox.Show($"{position}\n{message}\n{exception.Message}", "Toolkit - Logger.Error");
 #endif
         }
 
@@ -49,7 +49,7 @@ namespace Toolkit.Base.Log
         {
             GetLogger().Fatal(exception, $"{position}\n{message}");
 #if DEBUG
-            MessageBox.Show($"{position}\n{message}\n{exception.Message}", "Logger.Fatal");
+            MessageBox.Show($"{position}\n{message}\n{exception.Message}", "Toolkit - Logger.Fatal");
 #endif
         }
 

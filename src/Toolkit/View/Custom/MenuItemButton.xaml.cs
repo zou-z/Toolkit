@@ -13,14 +13,19 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Toolkit
+namespace Toolkit.View.Custom
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+    internal partial class MenuItemButton : Button
     {
-        public MainWindow()
+        public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(object), typeof(MenuItemButton), new PropertyMetadata(null));
+
+        public object Icon
+        {
+            get => GetValue(IconProperty);
+            set => SetValue(IconProperty, value);
+        }
+
+        public MenuItemButton()
         {
             InitializeComponent();
         }

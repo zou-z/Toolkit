@@ -7,7 +7,27 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="MainWindow.xaml">
+    <Compile Update="View\Custom\MenuItemButton.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\MainMenuView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Style\Config.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Style\ListBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Style\ScrollViewer.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Custom\MenuItemButton.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\MainMenuView.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
