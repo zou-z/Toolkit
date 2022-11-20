@@ -5,3 +5,5 @@
 /src/.vs
 /src/Toolkit/bin
 /src/Toolkit/obj
+/src/Toolkit.Base/bin
+/src/Toolkit.Base/obj
