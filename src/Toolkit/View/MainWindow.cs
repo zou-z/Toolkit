@@ -45,30 +45,23 @@ namespace Toolkit.View
                         case 513: // 左键按下
                             break;
                         case 514: // 左键松开
-                            if (mainMenu == null)
+                            mainMenu = new MainMenuView(notifyIconPosition, () =>
                             {
-                                mainMenu = new MainMenuView(notifyIconPosition, () =>
-                                {
-                                    Close();
-                                })
-                                {
-                                    Owner = this,
-                                };
-                                mainMenu.Closed += (sender, e) =>
-                                {
-                                    mainMenu = null;
-                                };
-                                mainMenu.Deactivated += (sender, e) =>
-                                {
-                                    mainMenu.Close();
-                                };
-                                mainMenu.Show();
-                                mainMenu.Activate();
-                            }
-                            else
+                                Close();
+                            })
+                            {
+                                Owner = this,
+                            };
+                            mainMenu.Closed += (sender, e) =>
+                            {
+                                mainMenu = null;
+                            };
+                            mainMenu.Deactivated += (sender, e) =>
                             {
                                 mainMenu.Close();
-                            }
+                            };
+                            mainMenu.Show();
+                            mainMenu.Activate();
                             break;
                         case 516: // 右键按下
                             break;

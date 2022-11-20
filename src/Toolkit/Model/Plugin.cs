@@ -28,6 +28,10 @@ namespace Toolkit.Model
             Debug.WriteLine("触发了左键按下事件");
             Mouse.Capture(Application.Current.MainWindow);
 
+
+            // if callback is not null, close main menu
+
+
         }
 
         private void MouseLeftButtonUp()

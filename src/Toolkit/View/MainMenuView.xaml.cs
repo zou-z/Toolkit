@@ -19,7 +19,6 @@ namespace Toolkit.View
         public MainMenuView(Rect notifyIconPosition, Action exit)
         {
             InitializeComponent();
-            // don't show in switcher
             Size size = GetContentSize();
             Left = notifyIconPosition.Left - BorderThickness.Left;
             Top = notifyIconPosition.Top - size.Height - BorderThickness.Top - BorderThickness.Bottom;
