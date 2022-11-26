@@ -1,19 +1,39 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Emit;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using Toolkit.Base.Log;
 using Toolkit.View;
+using Toolkit.ViewModel;
 
 namespace Toolkit
 {
     public partial class App : Application
     {
+        public new static App Current => (App)Application.Current;
+
+        public IServiceProvider Services { get; }
+
+        public App()
+        {
+            Services = ConfigureServices();
+        }
+
+        private static IServiceProvider ConfigureServices()
+        {
+            var services = new ServiceCollection();
+            services.AddSingleton<MainMenuViewModel>();
+            return services.BuildServiceProvider();
+        }
+
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             CatchUnhandledException();

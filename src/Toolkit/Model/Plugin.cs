@@ -9,6 +9,7 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using NLog.Targets.Wrappers;
+using Toolkit.Contract;
 using Toolkit.Message;
 
 namespace Toolkit.Model
@@ -21,8 +22,10 @@ namespace Toolkit.Model
 
         public RelayCommand MouseLeftButtonUpCommand => mouseLeftButtonUpCommand ??= new RelayCommand(MouseLeftButtonUp);
 
-        public Plugin()
+        public Plugin(IPlugin plugin)
         {
+            this.plugin = plugin;
+            Name = this.plugin.GetString();
         }
 
         private void MouseLeftButtonDown()
@@ -43,5 +46,6 @@ namespace Toolkit.Model
 
         private RelayCommand? mouseLeftButtonDownCommand = null;
         private RelayCommand? mouseLeftButtonUpCommand = null;
+        private readonly IPlugin plugin;
     }
 }

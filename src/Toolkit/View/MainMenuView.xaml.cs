@@ -21,11 +21,17 @@ namespace Toolkit.View
         public MainMenuView(Rect notifyIconPosition, Action exit)
         {
             InitializeComponent();
+            this.notifyIconPosition = notifyIconPosition;
+            this.exit = exit;
+            WeakReferenceMessenger.Default.Register(this);
+        }
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
             Size size = GetContentSize();
             Left = notifyIconPosition.Left - BorderThickness.Left;
             Top = notifyIconPosition.Top - size.Height - BorderThickness.Top - BorderThickness.Bottom;
-            this.exit = exit;
-            WeakReferenceMessenger.Default.Register(this);
         }
 
         private Size GetContentSize()
@@ -50,5 +56,6 @@ namespace Toolkit.View
         }
 
         private readonly Action exit;
+        private readonly Rect notifyIconPosition;
     }
 }

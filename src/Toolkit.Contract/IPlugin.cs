@@ -11,5 +11,6 @@ namespace Toolkit.Contract
         // name
         // tooltip
 
+        string GetString();
     }
 }

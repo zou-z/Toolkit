@@ -14,38 +14,38 @@
     <Window.Effect>
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Color="Black" Opacity="0.4"/>
     </Window.Effect>
-    <Window.DataContext>
-        <viewmodel:MainMenuViewModel/>
-    </Window.DataContext>
     <Grid Width="180">
         <Border CornerRadius="{StaticResource Style.Config.MenuCornerRadius}" Background="{StaticResource Style.Config.MenuBackground}"/>
         <StackPanel Margin="10">
-            <ListBox ItemsSource="{Binding Plugins,Mode=OneWay}" Style="{StaticResource Style.ListBox.Default}">
-                <ListBox.ItemContainerStyle>
-                    <Style TargetType="ListBoxItem">
-                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="ListBoxItem">
-                                    <custom:MenuItemButton Button.Content="{Binding Name,Mode=OneTime}" Width="{TemplateBinding ActualWidth}">
-                                        <custom:MenuItemButton.Icon>
-                                            <Border CornerRadius="8" Background="RoyalBlue"/>
-                                        </custom:MenuItemButton.Icon>
-                                        <b:Interaction.Triggers>
-                                            <b:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                                <b:InvokeCommandAction Command="{Binding MouseLeftButtonDownCommand}"/>
-                                            </b:EventTrigger>
-                                            <b:EventTrigger EventName="PreviewMouseLeftButtonUp">
-                                                <b:InvokeCommandAction Command="{Binding MouseLeftButtonUpCommand}"/>
-                                            </b:EventTrigger>
-                                        </b:Interaction.Triggers>
-                                    </custom:MenuItemButton>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </ListBox.ItemContainerStyle>
-            </ListBox>
+            <Grid>
+                <TextBlock Text="未找到任何插件！" Visibility="{Binding Plugins.Count,Converter={StaticResource EmptyDataVisibleConverter}}" Margin="5,20,5,20" TextWrapping="Wrap" TextAlignment="Center"/>
+                <ListBox ItemsSource="{Binding Plugins,Mode=OneWay}" Style="{StaticResource Style.ListBox.Default}">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListBoxItem">
+                                        <custom:MenuItemButton Button.Content="{Binding Name,Mode=OneTime}" Width="{TemplateBinding ActualWidth}">
+                                            <custom:MenuItemButton.Icon>
+                                                <Border CornerRadius="8" Background="RoyalBlue"/>
+                                            </custom:MenuItemButton.Icon>
+                                            <b:Interaction.Triggers>
+                                                <b:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                                    <b:InvokeCommandAction Command="{Binding MouseLeftButtonDownCommand}"/>
+                                                </b:EventTrigger>
+                                                <b:EventTrigger EventName="PreviewMouseLeftButtonUp">
+                                                    <b:InvokeCommandAction Command="{Binding MouseLeftButtonUpCommand}"/>
+                                                </b:EventTrigger>
+                                            </b:Interaction.Triggers>
+                                        </custom:MenuItemButton>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
+            </Grid>
             <Separator Margin="5,10" Background="Gainsboro"/>
             <custom:MenuItemButton Content="退出" Click="Exit_Click">
                 <custom:MenuItemButton.Icon>

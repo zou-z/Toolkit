@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Toolkit.Base\Toolkit.Base.csproj" />
+    <ProjectReference Include="..\Toolkit.Contract\Toolkit.Contract.csproj" />
+  </ItemGroup>
+
+</Project>

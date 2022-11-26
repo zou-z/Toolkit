@@ -11,6 +11,8 @@ using System.Windows;
 using Toolkit.Base.Common;
 using Toolkit.Util;
 using Toolkit.Base.Log;
+using Microsoft.Extensions.DependencyInjection;
+using Toolkit.ViewModel;
 
 namespace Toolkit.View
 {
@@ -77,6 +79,7 @@ namespace Toolkit.View
             }
             notifyIconUtil.AddNotifyIcon(new WindowInteropHelper(this).Handle, iconPath);
             notifyIconUtil.GetNotifyIconPosition(out notifyIconPosition);
+            App.Current.Services.GetService<MainMenuViewModel>()?.LoadPluginsAsync();
         }
 
         private void MainWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
@@ -89,6 +92,7 @@ namespace Toolkit.View
             mainMenu = new MainMenuView(notifyIconPosition, () => { Close(); })
             {
                 Owner = this,
+                DataContext = App.Current.Services.GetService<MainMenuViewModel>()
             };
             mainMenu.Deactivated += (sender, e) =>
             {
@@ -99,5 +103,7 @@ namespace Toolkit.View
         private readonly NotifyIconUtil notifyIconUtil;
         private Rect notifyIconPosition;
         private MainMenuView? mainMenu = null;
+
+        private MainMenuViewModel mainMenuViewModel;
     }
 }
