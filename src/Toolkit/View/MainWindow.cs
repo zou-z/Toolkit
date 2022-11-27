@@ -103,7 +103,5 @@ namespace Toolkit.View
         private readonly NotifyIconUtil notifyIconUtil;
         private Rect notifyIconPosition;
         private MainMenuView? mainMenu = null;
-
-        private MainMenuViewModel mainMenuViewModel;
     }
 }

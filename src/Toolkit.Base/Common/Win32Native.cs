@@ -8,6 +8,24 @@ namespace Toolkit.Base.Common
 #pragma warning disable SYSLIB1054
 #pragma warning disable CA1401
 
+        #region Common Data Type
+        [StructLayout(LayoutKind.Sequential)]
+        public struct Win32Point
+        {
+            public int X;
+            public int Y;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct Win32Rect
+        {
+            public int Left;
+            public int Top;
+            public int Right;
+            public int Bottom;
+        }
+        #endregion
+
         #region Shell_NotifyIcon
         [StructLayout(LayoutKind.Sequential)]
         public struct NotifyIconData
@@ -49,21 +67,10 @@ namespace Toolkit.Base.Common
         public const int WM_APP = 0x8000;
 
         [DllImport("shell32.dll")]
-
         public static extern bool Shell_NotifyIcon(uint dwMessage, [In] ref NotifyIconData pnid);
-
         #endregion
 
         #region Shell_NotifyIconGetRect
-        [StructLayout(LayoutKind.Sequential)]
-        public struct Rect
-        {
-            public int Left;
-            public int Top;
-            public int Right;
-            public int Bottom;
-        }
-
         [StructLayout(LayoutKind.Sequential)]
         public struct NotifyIconIdentifier
         {
@@ -73,9 +80,8 @@ namespace Toolkit.Base.Common
             public Guid GuidItem;
         }
 
-
         [DllImport("shell32.dll", SetLastError = true)]
-        public static extern int Shell_NotifyIconGetRect([In] ref NotifyIconIdentifier identifier, [Out] out Rect iconLocation);
+        public static extern int Shell_NotifyIconGetRect([In] ref NotifyIconIdentifier identifier, [Out] out Win32Rect iconLocation);
         #endregion
 
         #region SetParent
@@ -84,6 +90,8 @@ namespace Toolkit.Base.Common
         [DllImport("user32.dll")]
         public static extern IntPtr SetParent(IntPtr hwnd, IntPtr hwndNewParent);
         #endregion
+
+
 
 #pragma warning restore CA1401
 #pragma warning restore SYSLIB1054

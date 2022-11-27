@@ -31,6 +31,9 @@ namespace TopMost
 
         public void MouseLeftDown()
         {
+
+
+
             System.Windows.MessageBox.Show("鼠标左键点击");
         }
 

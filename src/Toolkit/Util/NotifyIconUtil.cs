@@ -42,7 +42,7 @@ namespace Toolkit.Util
                 CbSize = Marshal.SizeOf(typeof(Win32Native.NotifyIconIdentifier)),
                 Hwnd = windowHandle,
             };
-            if (Win32Native.Shell_NotifyIconGetRect(ref notifyIconIdentifier, out Win32Native.Rect rect) != 0) return false;
+            if (Win32Native.Shell_NotifyIconGetRect(ref notifyIconIdentifier, out Win32Native.Win32Rect rect) != 0) return false;
             position = new Rect(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top);
             return true;
         }
