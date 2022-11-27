@@ -16,7 +16,7 @@ namespace Toolkit.Model
 {
     internal class Plugin
     {
-        public string Name { get; set; } = string.Empty;
+        public string Name { get; set; }
 
         public RelayCommand MouseLeftButtonDownCommand => mouseLeftButtonDownCommand ??= new RelayCommand(MouseLeftButtonDown);
 
@@ -25,23 +25,21 @@ namespace Toolkit.Model
         public Plugin(IPlugin plugin)
         {
             this.plugin = plugin;
-            Name = this.plugin.GetString();
+            Name = this.plugin.GetName();
         }
 
         private void MouseLeftButtonDown()
         {
-            Debug.WriteLine("触发了左键按下事件");
-            Mouse.Capture(Application.Current.MainWindow);
-
-
-            // if callback is not null, close main menu
-            WeakReferenceMessenger.Default.Send(new MainMenuHideMessage());
+            if (plugin.IsCloseMenuEarly())
+            {
+                WeakReferenceMessenger.Default.Send(new MainMenuHideMessage());
+            }
+            plugin.MouseLeftDown();
         }
 
         private void MouseLeftButtonUp()
         {
-            Mouse.Capture(null);
-            Debug.WriteLine("触发了左键松开事件");
+            plugin.MouseLeftUp();
         }
 
         private RelayCommand? mouseLeftButtonDownCommand = null;

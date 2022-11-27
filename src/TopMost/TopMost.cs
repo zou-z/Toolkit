@@ -9,9 +9,33 @@ namespace TopMost
 {
     public class TopMost : IPlugin
     {
-        public string GetString()
+        public string GetName()
         {
-            return "Position: TopMost.TopMost.GetString()";
+            return "窗口置顶";
+        }
+
+        public object? GetIcon()
+        {
+            return null;
+        }
+
+        public object? GetToolTip()
+        {
+            return null;
+        }
+
+        public bool IsCloseMenuEarly()
+        {
+            return true;
+        }
+
+        public void MouseLeftDown()
+        {
+            System.Windows.MessageBox.Show("鼠标左键点击");
+        }
+
+        public void MouseLeftUp()
+        {
         }
     }
 }

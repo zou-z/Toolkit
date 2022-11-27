@@ -18,13 +18,13 @@ namespace Toolkit.Contract
         /// 获取插件的图标
         /// </summary>
         /// <returns>插件的图标</returns>
-        object GetIcon();
+        object? GetIcon();
 
         /// <summary>
         /// 获取插件的提示
         /// </summary>
         /// <returns>插件的提示</returns>
-        object GetToolTip();
+        object? GetToolTip();
 
         /// <summary>
         /// 是否提前关闭菜单
