@@ -91,7 +91,55 @@ namespace Toolkit.Base.Common
         public static extern IntPtr SetParent(IntPtr hwnd, IntPtr hwndNewParent);
         #endregion
 
+        #region GetAsyncKeyState
+        public enum VirtualKeyCodes : int
+        {
+            VK_LBUTTON = 0x01,
+            VK_ESCAPE = 0x1B,
+        }
 
+        [DllImport("user32.dll")]
+        public static extern int GetAsyncKeyState(int vKeys);
+        #endregion
+
+        #region MouseHook
+        public const int WM_MOUSEMOVE = 0x200;
+        public const int WM_LBUTTONDOWN = 0x201;
+        public const int WM_LBUTTONUP = 0x202;
+        public const int WM_LBUTTONDBLCLK = 0x203;
+        public const int WM_RBUTTONDOWN = 0x204;
+        public const int WM_RBUTTONUP = 0x205;
+        public const int WM_RBUTTONDBLCLK = 0x206;
+        public const int WM_MBUTTONDOWN = 0x207;
+        public const int WM_MBUTTONUP = 0x208;
+        public const int WM_MBUTTONDBLCLK = 0x209;
+
+        public enum HookType : int
+        {
+            WH_MOUSE = 7,
+            WH_MOUSE_LL = 14,
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct MouseHookStruct
+        {
+            public Win32Point Point;
+            public IntPtr Hwnd;
+            public int WHitTestCode;
+            public int DwExtraInfo;
+        }
+
+        public delegate IntPtr HookProc(int nCode, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+        public static extern int SetWindowsHookEx(HookType hookType, HookProc lpfn, IntPtr hInstance, int threadId);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+        public static extern bool UnhookWindowsHookEx(int idHook);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+        public static extern IntPtr CallNextHookEx(int idHook, int nCode, IntPtr wParam, IntPtr lParam);
+        #endregion
 
 #pragma warning restore CA1401
 #pragma warning restore SYSLIB1054
