@@ -9,6 +9,8 @@ namespace Toolkit.Base.Common
 #pragma warning disable CA1401
 
         #region Common Data Type
+        public const int NULL = 0;
+
         [StructLayout(LayoutKind.Sequential)]
         public struct Win32Point
         {
@@ -24,6 +26,11 @@ namespace Toolkit.Base.Common
             public int Right;
             public int Bottom;
         }
+        #endregion
+
+        #region GetLastError
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern long GetLastError();
         #endregion
 
         #region Shell_NotifyIcon

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Toolkit.Contract;
+using TopMost.ViewModel;
 
 namespace TopMost
 {
@@ -31,14 +32,14 @@ namespace TopMost
 
         public void MouseLeftDown()
         {
-
-
-
-            System.Windows.MessageBox.Show("鼠标左键点击");
+            areaIndicationViewModel ??= new AreaIndicationViewModel();
+            areaIndicationViewModel.Start();
         }
 
         public void MouseLeftUp()
         {
         }
+
+        private AreaIndicationViewModel? areaIndicationViewModel = null;
     }
 }

@@ -89,7 +89,7 @@ namespace Toolkit.View
 
         private void InitMainMenu()
         {
-            mainMenu = new MainMenuView(notifyIconPosition, () => { Close(); })
+            mainMenu = new MainMenuView(notifyIconPosition, Exit)
             {
                 Owner = this,
                 DataContext = App.Current.Services.GetService<MainMenuViewModel>()
@@ -98,6 +98,12 @@ namespace Toolkit.View
             {
                 mainMenu?.Hide();
             };
+        }
+
+        private void Exit()
+        {
+            Close();
+            Environment.Exit(0);
         }
 
         private readonly NotifyIconUtil notifyIconUtil;

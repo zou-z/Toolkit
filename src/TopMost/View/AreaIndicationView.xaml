@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TopMost.View"
         mc:Ignorable="d"
-        Title="AreaIndicationView" Height="450" Width="800">
+        Title="AreaIndicationView" Height="400" Width="400">
     <Grid>
         
     </Grid>
