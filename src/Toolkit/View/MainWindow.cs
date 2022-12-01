@@ -24,6 +24,7 @@ namespace Toolkit.View
             notifyIconUtil = new NotifyIconUtil();
             Loaded += MainWindow_Loaded;
             Closing += MainWindow_Closing;
+            Logger.Trace("Main Window Initialized");
         }
 
         protected override void OnSourceInitialized(EventArgs e)
@@ -35,6 +36,7 @@ namespace Toolkit.View
                 Visibility = Visibility.Collapsed;
                 hwndSource.AddHook(WndProc);
             }
+            Logger.Trace("Main Window Source Initialized");
         }
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -53,6 +55,7 @@ namespace Toolkit.View
                             }
                             mainMenu?.Show();
                             mainMenu?.Activate();
+                            Logger.Trace("Main Menu Showed");
                             break;
                         case 516: // 右键按下
                             break;
@@ -80,6 +83,7 @@ namespace Toolkit.View
             notifyIconUtil.AddNotifyIcon(new WindowInteropHelper(this).Handle, iconPath);
             notifyIconUtil.GetNotifyIconPosition(out notifyIconPosition);
             App.Current.Services.GetService<MainMenuViewModel>()?.LoadPluginsAsync();
+            Logger.Trace("Main Window Loaded");
         }
 
         private void MainWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)

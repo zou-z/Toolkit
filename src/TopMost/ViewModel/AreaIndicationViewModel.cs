@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -17,15 +18,34 @@ namespace TopMost.ViewModel
         {
         }
 
-        public void Start()
+        public async void Start()
         {
             if (!MouseButtonStatusUtil.IsMouseLeftButtonDown()) return;
-            if (mouseHookUtil == null)
+            await Task.Run(() =>
             {
-                mouseHookUtil = new MouseHookUtil();
-                mouseHookUtil.MouseLeftButtonUpEvent += MouseHookUtil_MouseLeftButtonUpEvent;
-                mouseHookUtil.MouseMoveEvent += MouseHookUtil_MouseMoveEvent;
+                windowInfos?.Clear();
+                try
+                {
+                    windowInfos = WindowListUtil.GetWindowList(IntPtr.Zero);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error(ex, "获取窗口列表失败", MethodBase.GetCurrentMethod()?.GetMethodName());
+                }
+            });
+            if (!MouseButtonStatusUtil.IsMouseLeftButtonDown()) return;
+            InitAreaIndicationView();
+            InitMouseHook();
+            if (!SetMouseHook()) return;
+            if (areaIndicationView != null)
+            {
+                areaIndicationView.Width = areaIndicationView.Height = areaIndicationView.Left = areaIndicationView.Top = 0;
+                areaIndicationView.Show();
             }
+        }
+
+        private void InitAreaIndicationView()
+        {
             areaIndicationView ??= new AreaIndicationView
             {
                 Width = 200,
@@ -34,35 +54,66 @@ namespace TopMost.ViewModel
                 ShowInTaskbar = false,
                 DataContext = this,
             };
-            if (mouseHookUtil.SetHook() == Win32Native.NULL)
+        }
+
+        private void InitMouseHook()
+        {
+            if (mouseHookUtil == null)
+            {
+                mouseHookUtil = new MouseHookUtil();
+                mouseHookUtil.MouseLeftButtonUpEvent += MouseHookUtil_MouseLeftButtonUpEvent;
+                mouseHookUtil.MouseMoveEvent += MouseHookUtil_MouseMoveEvent;
+            }
+        }
+
+        private bool SetMouseHook()
+        {
+            if (mouseHookUtil?.SetHook() == Win32Native.NULL)
             {
                 long errorCode = Win32Native.GetLastError();
                 Logger.Error(new Exception($"GetLastError:{errorCode}"), "安装鼠标钩子失败", MethodBase.GetCurrentMethod()?.GetMethodName());
-                return;
+                return false;
             }
-            areaIndicationView.Show();
+            return true;
         }
 
-        private void MouseHookUtil_MouseLeftButtonUpEvent(double x, double y)
+        private void RemoveMouseHook()
         {
             if (mouseHookUtil != null && !mouseHookUtil.UnHook())
             {
                 long errorCode = Win32Native.GetLastError();
                 Logger.Error(new Exception($"GetLastError:{errorCode}"), "卸载鼠标钩子失败", MethodBase.GetCurrentMethod()?.GetMethodName());
             }
+        }
+
+        private void MouseHookUtil_MouseLeftButtonUpEvent(double x, double y)
+        {
+            RemoveMouseHook();
             areaIndicationView?.Hide();
         }
 
         private void MouseHookUtil_MouseMoveEvent(double x, double y)
         {
-            if (areaIndicationView != null)
+            if (windowInfos?.Count > 0 && areaIndicationView != null)
             {
-                areaIndicationView.Left = x + 10;
-                areaIndicationView.Top = y + 10;
+                foreach (var windowInfo in windowInfos)
+                {
+                    if (windowInfo.Left < x && x < windowInfo.Right && windowInfo.Top < y && y < windowInfo.Bottom)
+                    {
+                        areaIndicationView.Left = windowInfo.Left;
+                        areaIndicationView.Top = windowInfo.Top;
+                        areaIndicationView.Width = windowInfo.Right - windowInfo.Left;
+                        areaIndicationView.Height = windowInfo.Bottom - windowInfo.Top;
+                        // icon title
+                        return;
+                    }
+                }
             }
+            areaIndicationView?.Hide();
         }
 
         private AreaIndicationView? areaIndicationView = null;
         private MouseHookUtil? mouseHookUtil = null;
+        private List<WindowListUtil.WindowInfo>? windowInfos = null;
     }
 }

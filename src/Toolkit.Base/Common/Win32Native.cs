@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Text;
+using System.Windows;
 
 namespace Toolkit.Base.Common
 {
@@ -146,6 +148,99 @@ namespace Toolkit.Base.Common
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr CallNextHookEx(int idHook, int nCode, IntPtr wParam, IntPtr lParam);
+        #endregion
+
+        #region GetWindowTextLength
+        [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        public static extern int GetWindowTextLength(IntPtr hwnd);
+        #endregion
+
+        #region GetWindowText
+        [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        public static extern int GetWindowText(IntPtr hwnd, StringBuilder lpString, int cch);
+        #endregion
+
+        #region GetWindow
+        public const uint GW_HWNDNEXT = 2;
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr GetWindow(IntPtr hwnd, uint windowType);
+        #endregion
+
+        #region GetWindowRect
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool GetWindowRect(IntPtr hWnd, out Win32Rect lpRect);
+        #endregion
+
+        #region GetDesktopWindow
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetDesktopWindow();
+        #endregion
+
+        #region GetTopWindow
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetTopWindow(IntPtr hWnd);
+        #endregion
+
+        #region GetClassName
+        [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        public static extern int GetClassName(IntPtr hwnd, StringBuilder lpClassName, int nMaxCount);
+        #endregion
+
+        #region GetShellWindow
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetShellWindow();
+        #endregion
+
+        #region IsWindowVisible
+        [DllImport("user32.dll")]
+        public static extern bool IsWindowVisible(IntPtr hwnd);
+        #endregion
+
+        #region GetAncestor
+        public const uint GA_ROOT = 2;
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetAncestor(IntPtr hwnd, uint gaFlags);
+        #endregion
+
+        #region GetWindowLong
+        public const int GWL_STYLE = -16;
+        public const int GWL_EXSTYLE = -20;
+        public const long WS_DISABLED = 0x08000000L;
+        public const long WS_EX_TOOLWINDOW = 0x00000080L;
+        public const long WS_EX_TOPMOST = 0x00000008L;
+
+        [DllImport("user32.dll")]
+        public static extern long GetWindowLong(IntPtr hwnd, int nIndex);
+        #endregion
+
+        #region DwmGetWindowAttribute
+        public const int DWM_CLOAKED_SHELL = 0x0000002;
+        
+        public enum DWMWINDOWATTRIBUTE
+        {
+            DWMWA_NCRENDERING_ENABLED = 1,
+            DWMWA_NCRENDERING_POLICY,
+            DWMWA_TRANSITIONS_FORCEDISABLED,
+            DWMWA_ALLOW_NCPAINT,
+            DWMWA_CAPTION_BUTTON_BOUNDS,
+            DWMWA_NONCLIENT_RTL_LAYOUT,
+            DWMWA_FORCE_ICONIC_REPRESENTATION,
+            DWMWA_FLIP3D_POLICY,
+            DWMWA_EXTENDED_FRAME_BOUNDS,
+            DWMWA_HAS_ICONIC_BITMAP,
+            DWMWA_DISALLOW_PEEK,
+            DWMWA_EXCLUDED_FROM_PEEK,
+            DWMWA_CLOAK,
+            DWMWA_CLOAKED,
+            DWMWA_FREEZE_REPRESENTATION,
+            DWMWA_LAST
+        };
+
+        [DllImport("dwmapi.dll")]
+        public static extern uint DwmGetWindowAttribute(IntPtr hwnd, DWMWINDOWATTRIBUTE dwAttribute, out int pvAttribute, int cbAttribute);
         #endregion
 
 #pragma warning restore CA1401

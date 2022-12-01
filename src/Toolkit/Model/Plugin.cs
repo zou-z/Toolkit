@@ -9,6 +9,7 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using NLog.Targets.Wrappers;
+using Toolkit.Base.Log;
 using Toolkit.Contract;
 using Toolkit.Message;
 
@@ -30,6 +31,7 @@ namespace Toolkit.Model
 
         private void MouseLeftButtonDown()
         {
+            Logger.Trace("Main Menu Mouse Left Button Down");
             if (plugin.IsCloseMenuEarly())
             {
                 WeakReferenceMessenger.Default.Send(new MainMenuHideMessage());
@@ -39,6 +41,7 @@ namespace Toolkit.Model
 
         private void MouseLeftButtonUp()
         {
+            Logger.Trace("Main Menu Mouse Left Button Up");
             plugin.MouseLeftUp();
         }
 

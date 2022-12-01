@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Windows;
 
 namespace Toolkit.Base.Log
@@ -53,6 +54,11 @@ namespace Toolkit.Base.Log
 #endif
         }
 
+        public static void Trace(string message)
+        {
+            System.Diagnostics.Debug.WriteLine($"[{appName} Trace] {message}");
+        }
+
         private static NLog.Logger GetLogger()
         {
             if (logger == null)
@@ -72,5 +78,6 @@ namespace Toolkit.Base.Log
         }
 
         private static NLog.Logger? logger = null;
+        private readonly static string? appName = Assembly.GetEntryAssembly()?.GetName().Name;
     }
 }

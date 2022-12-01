@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Toolkit.Base.Log;
 using Toolkit.Message;
 
 namespace Toolkit.View
@@ -24,6 +25,7 @@ namespace Toolkit.View
             this.notifyIconPosition = notifyIconPosition;
             this.exit = exit;
             WeakReferenceMessenger.Default.Register(this);
+            Logger.Trace("Main Menu Initialized");
         }
 
         protected override void OnSourceInitialized(EventArgs e)
@@ -32,6 +34,7 @@ namespace Toolkit.View
             Size size = GetContentSize();
             Left = notifyIconPosition.Left - BorderThickness.Left;
             Top = notifyIconPosition.Top - size.Height - BorderThickness.Top - BorderThickness.Bottom;
+            Logger.Trace("Main Menu Source Initialized");
         }
 
         private Size GetContentSize()
