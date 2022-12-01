@@ -5,9 +5,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TopMost.View"
-        mc:Ignorable="d"
-        Title="AreaIndicationView" Height="400" Width="400">
-    <Grid>
-        
-    </Grid>
+        Title="AreaIndicationView" Height="400" Width="400"
+        WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True" Background="Transparent">
+    <Window.Resources>
+        <SolidColorBrush x:Key="BorderColor" Color="RoyalBlue"/>
+    </Window.Resources>
+    <Border BorderBrush="{StaticResource BorderColor}" BorderThickness="5">
+        <StackPanel Background="{StaticResource BorderColor}" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Border Width="30" Height="30">
+                <Border Width="16" Height="16" CornerRadius="4" Background="Orange"/>
+            </Border>
+            <TextBlock Text="测试文本测试文本测试文本" Margin="0,0,7,0" Foreground="White" VerticalAlignment="Center"/>
+        </StackPanel>
+    </Border>
 </Window>

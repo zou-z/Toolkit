@@ -32,6 +32,7 @@ namespace TopMost.ViewModel
                 Height = 200,
                 Topmost = true,
                 ShowInTaskbar = false,
+                DataContext = this,
             };
             if (mouseHookUtil.SetHook() == Win32Native.NULL)
             {
