@@ -115,14 +115,13 @@ namespace TopMost.ViewModel
                         }
                         displayedWindowInfo = windowInfo;
                         WindowTitle = windowInfo.Title;
-                        Win32Native.SetWindowPos(
+                        Win32Native.MoveWindow(
                             areaIndicationViewHandle,
-                            IntPtr.Zero,
                             windowInfo.Left,
                             windowInfo.Top,
                             windowInfo.Right - windowInfo.Left,
                             windowInfo.Bottom - windowInfo.Top,
-                            Win32Native.SWP_NOZORDER);
+                            true);
                         // icon
                         return;
                     }

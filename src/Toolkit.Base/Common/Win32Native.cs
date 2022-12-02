@@ -250,6 +250,12 @@ namespace Toolkit.Base.Common
         public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
         #endregion
 
+        #region MoveWindow
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool MoveWindow(IntPtr hWnd, int x, int y, int nWidth, int nHeight, bool bRepaint);
+        #endregion
+
+
 #pragma warning restore CA1401
 #pragma warning restore SYSLIB1054
     }
