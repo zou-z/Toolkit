@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Interop;
 using Toolkit.Base.Common;
 using Toolkit.Base.Log;
 using TopMost.Util;
@@ -48,6 +49,7 @@ namespace TopMost.ViewModel
             {
                 areaIndicationView.Width = areaIndicationView.Height = areaIndicationView.Left = areaIndicationView.Top = 0;
                 areaIndicationView.Show();
+                areaIndicationViewHandle = new WindowInteropHelper(areaIndicationView).Handle;
             }
         }
 
@@ -107,11 +109,20 @@ namespace TopMost.ViewModel
                 {
                     if (windowInfo.Left < x && x < windowInfo.Right && windowInfo.Top < y && y < windowInfo.Bottom)
                     {
-                        areaIndicationView.Left = windowInfo.Left;
-                        areaIndicationView.Top = windowInfo.Top;
-                        areaIndicationView.Width = windowInfo.Right - windowInfo.Left;
-                        areaIndicationView.Height = windowInfo.Bottom - windowInfo.Top;
+                        if (windowInfo.Equals(displayedWindowInfo))
+                        {
+                            return;
+                        }
+                        displayedWindowInfo = windowInfo;
                         WindowTitle = windowInfo.Title;
+                        Win32Native.SetWindowPos(
+                            areaIndicationViewHandle,
+                            IntPtr.Zero,
+                            windowInfo.Left,
+                            windowInfo.Top,
+                            windowInfo.Right - windowInfo.Left,
+                            windowInfo.Bottom - windowInfo.Top,
+                            Win32Native.SWP_NOZORDER);
                         // icon
                         return;
                     }
@@ -121,9 +132,10 @@ namespace TopMost.ViewModel
         }
 
         private AreaIndicationView? areaIndicationView = null;
+        private IntPtr areaIndicationViewHandle = IntPtr.Zero;
         private MouseHookUtil? mouseHookUtil = null;
         private List<WindowListUtil.WindowInfo>? windowInfos = null;
-        //private WindowListUtil.WindowInfo? displayedWindowInfo = null; // if displayed window info is the same,then skip
+        private WindowListUtil.WindowInfo? displayedWindowInfo = null;
         private string windowTitle = string.Empty;
     }
 }

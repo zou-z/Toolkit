@@ -243,6 +243,13 @@ namespace Toolkit.Base.Common
         public static extern uint DwmGetWindowAttribute(IntPtr hwnd, DWMWINDOWATTRIBUTE dwAttribute, out int pvAttribute, int cbAttribute);
         #endregion
 
+        #region SetWindowPos
+        public const uint SWP_NOZORDER = 0x0004;
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
+        #endregion
+
 #pragma warning restore CA1401
 #pragma warning restore SYSLIB1054
     }

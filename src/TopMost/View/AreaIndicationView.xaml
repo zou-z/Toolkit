@@ -11,7 +11,7 @@
         <SolidColorBrush x:Key="BorderColor" Color="RoyalBlue"/>
     </Window.Resources>
     <Border BorderBrush="{StaticResource BorderColor}" BorderThickness="5">
-        <StackPanel Background="{StaticResource BorderColor}" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <StackPanel Background="#AF000000" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Border Width="30" Height="30">
                 <Border Width="16" Height="16" CornerRadius="4" Background="Orange"/>
             </Border>
