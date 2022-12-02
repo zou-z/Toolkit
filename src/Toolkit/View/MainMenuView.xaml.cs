@@ -34,7 +34,7 @@ namespace Toolkit.View
             Size size = GetContentSize();
             Left = notifyIconPosition.Left - BorderThickness.Left;
             Top = notifyIconPosition.Top - size.Height - BorderThickness.Top - BorderThickness.Bottom;
-            Logger.Trace("Main Menu Source Initialized");
+            Logger.Trace($"Main Menu Source Initialized, Position: ({Left},{Top})");
         }
 
         private Size GetContentSize()
