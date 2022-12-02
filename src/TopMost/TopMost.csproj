@@ -11,4 +11,8 @@
     <ProjectReference Include="..\Toolkit.Contract\Toolkit.Contract.csproj" />
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="if not exist $(SolutionDir)$(SolutionName)\bin\Debug\net7.0-windows\Plugin (&#xD;&#xA;md $(SolutionDir)Toolkit\bin\Debug\net7.0-windows\Plugin&#xD;&#xA;)&#xD;&#xA;copy $(TargetPath) $(SolutionDir)$(SolutionName)\bin\Debug\net7.0-windows\Plugin\$(TargetFileName)" />
+  </Target>
+
 </Project>
