@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -12,8 +13,14 @@ using TopMost.View;
 
 namespace TopMost.ViewModel
 {
-    internal class AreaIndicationViewModel
+    internal class AreaIndicationViewModel : ObservableObject
     {
+        public string WindowTitle
+        {
+            get => windowTitle;
+            set => SetProperty(ref windowTitle, value);
+        }
+
         public AreaIndicationViewModel()
         {
         }
@@ -104,7 +111,8 @@ namespace TopMost.ViewModel
                         areaIndicationView.Top = windowInfo.Top;
                         areaIndicationView.Width = windowInfo.Right - windowInfo.Left;
                         areaIndicationView.Height = windowInfo.Bottom - windowInfo.Top;
-                        // icon title
+                        WindowTitle = windowInfo.Title;
+                        // icon
                         return;
                     }
                 }
@@ -115,5 +123,7 @@ namespace TopMost.ViewModel
         private AreaIndicationView? areaIndicationView = null;
         private MouseHookUtil? mouseHookUtil = null;
         private List<WindowListUtil.WindowInfo>? windowInfos = null;
+        //private WindowListUtil.WindowInfo? displayedWindowInfo = null; // if displayed window info is the same,then skip
+        private string windowTitle = string.Empty;
     }
 }

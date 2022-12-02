@@ -15,7 +15,7 @@
             <Border Width="30" Height="30">
                 <Border Width="16" Height="16" CornerRadius="4" Background="Orange"/>
             </Border>
-            <TextBlock Text="测试文本测试文本测试文本" Margin="0,0,7,0" Foreground="White" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding WindowTitle,Mode=OneWay}" Margin="0,0,7,0" Foreground="White" VerticalAlignment="Center"/>
         </StackPanel>
     </Border>
 </Window>
