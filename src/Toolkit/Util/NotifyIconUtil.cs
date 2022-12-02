@@ -35,16 +35,16 @@ namespace Toolkit.Util
             return Win32Native.Shell_NotifyIcon((uint)Win32Native.NotifyIconMessage.NIM_DELETE, ref notifyIconData);
         }
 
-        public bool GetNotifyIconPosition(out Rect position)
+        public int GetNotifyIconPosition(out Rect position)
         {
             var notifyIconIdentifier = new Win32Native.NotifyIconIdentifier()
             {
                 CbSize = Marshal.SizeOf(typeof(Win32Native.NotifyIconIdentifier)),
                 Hwnd = windowHandle,
             };
-            if (Win32Native.Shell_NotifyIconGetRect(ref notifyIconIdentifier, out Win32Native.Win32Rect rect) != 0) return false;
+            int code = Win32Native.Shell_NotifyIconGetRect(ref notifyIconIdentifier, out Win32Native.Win32Rect rect);
             position = new Rect(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top);
-            return true;
+            return code;
         }
 
         private IntPtr windowHandle = IntPtr.Zero;

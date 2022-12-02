@@ -80,8 +80,17 @@ namespace Toolkit.View
                 Close();
                 return;
             }
-            notifyIconUtil.AddNotifyIcon(new WindowInteropHelper(this).Handle, iconPath);
-            notifyIconUtil.GetNotifyIconPosition(out notifyIconPosition);
+            if (!notifyIconUtil.AddNotifyIcon(new WindowInteropHelper(this).Handle, iconPath))
+            {
+                Logger.Fatal(new Exception("显示状态栏图标失败"), "显示状态栏图标失败", MethodBase.GetCurrentMethod()?.GetMethodName());
+                Exit();
+            }
+            int code = notifyIconUtil.GetNotifyIconPosition(out notifyIconPosition);
+            if (code != 0)
+            {
+                Logger.Fatal(new Exception($"Error Code {code}"), "获取状态栏图标位置失败", MethodBase.GetCurrentMethod()?.GetMethodName());
+                Exit();
+            }
             App.Current.Services.GetService<MainMenuViewModel>()?.LoadPluginsAsync();
             Logger.Trace("Main Window Loaded");
         }
