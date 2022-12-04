@@ -126,16 +126,21 @@ namespace TopMost.ViewModel
                             isRepositionWindow = false;
                             return;
                         }
+
                         displayedWindowInfo = windowInfo;
+                        int left = windowInfo.Left, top = windowInfo.Top;
+                        int width = windowInfo.Right - windowInfo.Left, height = windowInfo.Bottom - windowInfo.Top;
+                        if (windowInfo.IsMaximized)
+                        {
+                            left += 8;
+                            top += 8;
+                            width -= 16;
+                            height -= 16;
+                        }
+                        
                         _ = areaIndicationView.Dispatcher.BeginInvoke(() =>
                         {
-                            Win32Native.MoveWindow(
-                                areaIndicationViewHandle,
-                                windowInfo.Left,
-                                windowInfo.Top,
-                                windowInfo.Right - windowInfo.Left,
-                                windowInfo.Bottom - windowInfo.Top,
-                                true);
+                            Win32Native.MoveWindow(areaIndicationViewHandle, left, top, width, height, true);
                             WindowTitle = windowInfo.Title;
                             WindowIcon = IconCache.GetIcon(windowInfo.Handle);
                         });
