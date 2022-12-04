@@ -26,9 +26,9 @@
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="ListBoxItem">
-                                        <custom:MenuItemButton Button.Content="{Binding Name,Mode=OneTime}" Width="{TemplateBinding ActualWidth}" ToolTip="{Binding ToolTip}">
+                                        <custom:MenuItemButton Button.Content="{Binding Name,Mode=OneTime}" Width="{TemplateBinding ActualWidth}" ToolTip="{Binding ToolTip,Mode=OneTime}">
                                             <custom:MenuItemButton.Icon>
-                                                <Border CornerRadius="8" Background="RoyalBlue"/>
+                                                <ContentControl Content="{Binding Icon,Mode=OneTime}"/>
                                             </custom:MenuItemButton.Icon>
                                             <b:Interaction.Triggers>
                                                 <b:EventTrigger EventName="PreviewMouseLeftButtonDown">
