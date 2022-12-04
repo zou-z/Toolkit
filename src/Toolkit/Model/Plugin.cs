@@ -19,6 +19,8 @@ namespace Toolkit.Model
     {
         public string Name { get; set; }
 
+        public object? ToolTip { get; set; }
+
         public RelayCommand MouseLeftButtonDownCommand => mouseLeftButtonDownCommand ??= new RelayCommand(MouseLeftButtonDown);
 
         public RelayCommand MouseLeftButtonUpCommand => mouseLeftButtonUpCommand ??= new RelayCommand(MouseLeftButtonUp);
@@ -26,7 +28,8 @@ namespace Toolkit.Model
         public Plugin(IPlugin plugin)
         {
             this.plugin = plugin;
-            Name = this.plugin.GetName();
+            Name = plugin.GetName();
+            ToolTip = plugin.GetToolTip();
         }
 
         private void MouseLeftButtonDown()

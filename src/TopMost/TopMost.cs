@@ -22,7 +22,7 @@ namespace TopMost
 
         public object? GetToolTip()
         {
-            return null;
+            return "按住鼠标拖拽到窗口，设置/取消窗口置顶";
         }
 
         public bool IsCloseMenuEarly()
