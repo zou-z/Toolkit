@@ -255,6 +255,15 @@ namespace Toolkit.Base.Common
         public static extern bool MoveWindow(IntPtr hWnd, int x, int y, int nWidth, int nHeight, bool bRepaint);
         #endregion
 
+        #region IsZoomed
+        [DllImport("user32.dll")]
+        public static extern int IsZoomed(IntPtr hWnd);
+        #endregion
+
+        #region IsIconic
+        [DllImport("user32.dll")]
+        public static extern int IsIconic(IntPtr hWnd);
+        #endregion
 
 #pragma warning restore CA1401
 #pragma warning restore SYSLIB1054

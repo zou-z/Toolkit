@@ -35,6 +35,7 @@ namespace TopMost.ViewModel
                 try
                 {
                     windowInfos = WindowListUtil.GetWindowList(IntPtr.Zero);
+                    windowInfos = windowInfos.FindAll(t => !t.IsMinimized);
                 }
                 catch (Exception ex)
                 {

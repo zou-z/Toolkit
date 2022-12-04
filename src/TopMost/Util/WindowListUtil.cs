@@ -30,6 +30,10 @@ namespace TopMost.Util
 
             public bool IsTopmost { get; set; }
 
+            public bool IsMaximized { get; set; }
+
+            public bool IsMinimized { get; set; }
+
             public WindowInfo(IntPtr handle)
             {
                 Handle = handle;
@@ -40,6 +44,7 @@ namespace TopMost.Util
                 Icon = null;
                 Left = Top = Right = Bottom = 0;
                 IsTopmost = false;
+                IsMaximized = IsMinimized = false;
             }
         }
 
@@ -60,6 +65,11 @@ namespace TopMost.Util
                             windowInfo.Top = rect.Top;
                             windowInfo.Right = rect.Right;
                             windowInfo.Bottom = rect.Bottom;
+                        }
+                        windowInfo.IsMaximized = Win32Native.IsZoomed(hwnd) != 0;
+                        if (!windowInfo.IsMaximized)
+                        {
+                            windowInfo.IsMinimized = Win32Native.IsIconic(hwnd) != 0;
                         }
                         list.Add(windowInfo);
                     }
