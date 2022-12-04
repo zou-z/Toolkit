@@ -67,6 +67,7 @@ namespace TopMost.ViewModel
                 areaIndicationView.Hide();
             }
             isRepositionWindow = false;
+            displayedWindowInfo = null;
         }
 
         private void InitAreaIndicationView()
@@ -115,7 +116,18 @@ namespace TopMost.ViewModel
         private void MouseHookUtil_MouseLeftButtonUpEvent(double x, double y)
         {
             MouseHookUtil_MouseRightButtonDownEvent(x, y);
-            // set top most
+            if (displayedWindowInfo != null)
+            {
+                displayedWindowInfo.IsTopmost = !displayedWindowInfo.IsTopmost;
+                if (!TopMostUtil.SetIsTopMost(displayedWindowInfo.Handle, displayedWindowInfo.IsTopmost))
+                {
+                    long errorCode = Win32Native.GetLastError();
+                    Logger.Error(
+                        new Exception($"GetLastError:{errorCode}"),
+                        $"{(displayedWindowInfo.IsTopmost ? "设置" : "取消")}窗口置顶失败，窗口标题：{displayedWindowInfo.Title}，窗口句柄：{displayedWindowInfo.Handle}",
+                        MethodBase.GetCurrentMethod()?.GetMethodName());
+                }
+            }
         }
 
         private void MouseHookUtil_MouseMoveEvent(double x, double y)
