@@ -74,6 +74,7 @@ namespace TopMost.ViewModel
                 mouseHookUtil = new MouseHookUtil();
                 mouseHookUtil.MouseLeftButtonUpEvent += MouseHookUtil_MouseLeftButtonUpEvent;
                 mouseHookUtil.MouseMoveEvent += MouseHookUtil_MouseMoveEvent;
+                mouseHookUtil.MouseRightButtonDownEvent += MouseHookUtil_MouseRightButtonDownEvent;
             }
         }
 
@@ -99,8 +100,8 @@ namespace TopMost.ViewModel
 
         private void MouseHookUtil_MouseLeftButtonUpEvent(double x, double y)
         {
-            RemoveMouseHook();
-            areaIndicationView?.Hide();
+            MouseHookUtil_MouseRightButtonDownEvent(x, y);
+            // set top most
         }
 
         private void MouseHookUtil_MouseMoveEvent(double x, double y)
@@ -138,6 +139,12 @@ namespace TopMost.ViewModel
             }
             areaIndicationView?.Hide();
             isRepositionWindow = false;
+        }
+
+        private void MouseHookUtil_MouseRightButtonDownEvent(double arg1, double arg2)
+        {
+            RemoveMouseHook();
+            areaIndicationView?.Hide();
         }
 
         private AreaIndicationView? areaIndicationView = null;

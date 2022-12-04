@@ -12,6 +12,7 @@ namespace TopMost.Util
     {
         public event Action<double, double>? MouseLeftButtonDownEvent;
         public event Action<double, double>? MouseLeftButtonUpEvent;
+        public event Action<double, double>? MouseRightButtonDownEvent;
         public event Action<double, double>? MouseMoveEvent;
 
         public int SetHook()
@@ -47,6 +48,9 @@ namespace TopMost.Util
                         break;
                     case Win32Native.WM_LBUTTONUP:
                         MouseLeftButtonUpEvent?.Invoke(mouseHookStruct.Point.X, mouseHookStruct.Point.Y);
+                        break;
+                    case Win32Native.WM_RBUTTONDOWN:
+                        MouseRightButtonDownEvent?.Invoke(mouseHookStruct.Point.X, mouseHookStruct.Point.Y);
                         break;
                     case Win32Native.WM_MOUSEMOVE:
                         MouseMoveEvent?.Invoke(mouseHookStruct.Point.X, mouseHookStruct.Point.Y);
