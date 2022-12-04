@@ -13,7 +13,8 @@
     <Border BorderBrush="{StaticResource BorderColor}" BorderThickness="5">
         <StackPanel Background="#AF000000" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Border Width="30" Height="30">
-                <Border Width="16" Height="16" CornerRadius="4" Background="Orange"/>
+                <!--<Border Width="16" Height="16" CornerRadius="4" Background="Orange"/>-->
+                <Image Width="16" Height="16" Source="{Binding WindowIcon,Mode=OneWay}"/>
             </Border>
             <TextBlock Text="{Binding WindowTitle,Mode=OneWay}" Margin="0,0,7,0" Foreground="White" VerticalAlignment="Center"/>
         </StackPanel>

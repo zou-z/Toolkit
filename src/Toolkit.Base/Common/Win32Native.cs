@@ -265,6 +265,52 @@ namespace Toolkit.Base.Common
         public static extern int IsIconic(IntPtr hWnd);
         #endregion
 
+        #region SendMessage
+        public const uint WM_GETICON = 0x007F;
+        public static readonly IntPtr ICON_SMALL2 = new(2);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr SendMessage(IntPtr hwnd, uint msg, IntPtr wParam, IntPtr lParam);
+        #endregion
+
+        #region GetClassLong/Ptr
+        public const int GCL_HICON = -14;
+
+        [DllImport("user32.dll")]
+        public static extern uint GetClassLong(IntPtr hwnd, int nIndex);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetClassLongPtr(IntPtr hwnd, int nIndex);
+        #endregion
+
+        #region LoadIcon
+        public static readonly IntPtr IDI_APPLICATION = new(0x7F00);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr LoadIcon(IntPtr hInstance, IntPtr lpIconName);
+        #endregion
+
+        #region GetWindowThreadProcessId
+        [DllImport("user32.dll")]
+        public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+        #endregion
+
+        #region OpenProcess
+        [DllImport("kernel32.dll")]
+        public static extern IntPtr OpenProcess(uint dwDesiredAccess, int bInheritHandle, uint dwProcessId);
+        #endregion
+
+        #region GetModuleFileNameEx
+        [DllImport("psapi.dll", CharSet = CharSet.Unicode)]
+        public static extern uint GetModuleFileNameEx(IntPtr hProcess, IntPtr hModule, [Out] StringBuilder lpBaseName, [In][MarshalAs(UnmanagedType.U4)] int nSize);
+        #endregion
+
+        #region CloseHandle
+        [DllImport("kernel32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool CloseHandle(IntPtr hObject);
+        #endregion
+
 #pragma warning restore CA1401
 #pragma warning restore SYSLIB1054
     }

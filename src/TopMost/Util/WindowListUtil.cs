@@ -10,7 +10,7 @@ using Toolkit.Base.Log;
 
 namespace TopMost.Util
 {
-    internal class WindowListUtil
+    internal static class WindowListUtil
     {
         public class WindowInfo
         {

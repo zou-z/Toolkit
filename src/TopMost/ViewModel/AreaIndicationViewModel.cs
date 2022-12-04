@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Interop;
+using System.Windows.Media;
 using Toolkit.Base.Common;
 using Toolkit.Base.Log;
 using TopMost.Util;
@@ -20,6 +21,12 @@ namespace TopMost.ViewModel
         {
             get => windowTitle;
             set => SetProperty(ref windowTitle, value);
+        }
+
+        public ImageSource? WindowIcon
+        {
+            get => windowIcon;
+            set => SetProperty(ref windowIcon, value);
         }
 
         public AreaIndicationViewModel()
@@ -130,7 +137,7 @@ namespace TopMost.ViewModel
                                 windowInfo.Bottom - windowInfo.Top,
                                 true);
                             WindowTitle = windowInfo.Title;
-                            // icon
+                            WindowIcon = IconCache.GetIcon(windowInfo.Handle);
                         });
                         isRepositionWindow = false;
                         return;
@@ -154,5 +161,6 @@ namespace TopMost.ViewModel
         private WindowListUtil.WindowInfo? displayedWindowInfo = null;
         private bool isRepositionWindow = false;
         private string windowTitle = string.Empty;
+        private ImageSource? windowIcon = null;
     }
 }
