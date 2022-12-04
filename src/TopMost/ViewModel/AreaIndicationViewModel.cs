@@ -52,6 +52,7 @@ namespace TopMost.ViewModel
                 areaIndicationView.Show();
                 areaIndicationViewHandle = new WindowInteropHelper(areaIndicationView).Handle;
             }
+            isRepositionWindow = false;
         }
 
         private void InitAreaIndicationView()
@@ -104,6 +105,8 @@ namespace TopMost.ViewModel
 
         private void MouseHookUtil_MouseMoveEvent(double x, double y)
         {
+            if (isRepositionWindow) return;
+            isRepositionWindow = true;
             if (windowInfos?.Count > 0 && areaIndicationView != null)
             {
                 foreach (var windowInfo in windowInfos)
@@ -112,23 +115,29 @@ namespace TopMost.ViewModel
                     {
                         if (windowInfo.Equals(displayedWindowInfo))
                         {
+                            isRepositionWindow = false;
                             return;
                         }
                         displayedWindowInfo = windowInfo;
-                        WindowTitle = windowInfo.Title;
-                        Win32Native.MoveWindow(
-                            areaIndicationViewHandle,
-                            windowInfo.Left,
-                            windowInfo.Top,
-                            windowInfo.Right - windowInfo.Left,
-                            windowInfo.Bottom - windowInfo.Top,
-                            true);
-                        // icon
+                        _ = areaIndicationView.Dispatcher.BeginInvoke(() =>
+                        {
+                            Win32Native.MoveWindow(
+                                areaIndicationViewHandle,
+                                windowInfo.Left,
+                                windowInfo.Top,
+                                windowInfo.Right - windowInfo.Left,
+                                windowInfo.Bottom - windowInfo.Top,
+                                true);
+                            WindowTitle = windowInfo.Title;
+                            // icon
+                        });
+                        isRepositionWindow = false;
                         return;
                     }
                 }
             }
             areaIndicationView?.Hide();
+            isRepositionWindow = false;
         }
 
         private AreaIndicationView? areaIndicationView = null;
@@ -136,6 +145,7 @@ namespace TopMost.ViewModel
         private MouseHookUtil? mouseHookUtil = null;
         private List<WindowListUtil.WindowInfo>? windowInfos = null;
         private WindowListUtil.WindowInfo? displayedWindowInfo = null;
+        private bool isRepositionWindow = false;
         private string windowTitle = string.Empty;
     }
 }
