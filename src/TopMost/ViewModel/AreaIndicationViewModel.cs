@@ -29,6 +29,12 @@ namespace TopMost.ViewModel
             set => SetProperty(ref windowIcon, value);
         }
 
+        public bool WindowTopMost
+        {
+            get => windowTopMost;
+            set => SetProperty(ref windowTopMost, value);
+        }
+
         public AreaIndicationViewModel()
         {
         }
@@ -58,6 +64,7 @@ namespace TopMost.ViewModel
                 areaIndicationView.Width = areaIndicationView.Height = areaIndicationView.Left = areaIndicationView.Top = 0;
                 areaIndicationView.Show();
                 areaIndicationViewHandle = new WindowInteropHelper(areaIndicationView).Handle;
+                areaIndicationView.Hide();
             }
             isRepositionWindow = false;
         }
@@ -143,6 +150,8 @@ namespace TopMost.ViewModel
                             Win32Native.MoveWindow(areaIndicationViewHandle, left, top, width, height, true);
                             WindowTitle = windowInfo.Title;
                             WindowIcon = IconCache.GetIcon(windowInfo.Handle);
+                            WindowTopMost = windowInfo.IsTopmost;
+                            areaIndicationView.Show();
                         });
                         isRepositionWindow = false;
                         return;
@@ -167,5 +176,6 @@ namespace TopMost.ViewModel
         private bool isRepositionWindow = false;
         private string windowTitle = string.Empty;
         private ImageSource? windowIcon = null;
+        private bool windowTopMost = false;
     }
 }

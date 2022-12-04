@@ -5,16 +5,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TopMost.View"
+        xmlns:converter="clr-namespace:TopMost.Converter"
         Title="AreaIndicationView" Height="400" Width="400"
         WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True" Background="Transparent">
     <Window.Resources>
         <SolidColorBrush x:Key="BorderColor" Color="RoyalBlue"/>
+        <converter:TopMostMarkConverter x:Key="TopMostMarkConverter"/>
     </Window.Resources>
     <Border BorderBrush="{StaticResource BorderColor}" BorderThickness="5">
         <StackPanel Background="#AF000000" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Border Width="30" Height="30">
-                <!--<Border Width="16" Height="16" CornerRadius="4" Background="Orange"/>-->
-                <Image Width="16" Height="16" Source="{Binding WindowIcon,Mode=OneWay}"/>
+                <Border Width="16" BorderBrush="{Binding WindowTopMost,Mode=OneWay,Converter={StaticResource TopMostMarkConverter}}" BorderThickness="0,0,0,2">
+                    <Image Width="16" Height="16" Source="{Binding WindowIcon,Mode=OneWay}" Margin="0,7,0,0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                </Border>
             </Border>
             <TextBlock Text="{Binding WindowTitle,Mode=OneWay}" Margin="0,0,7,0" Foreground="White" VerticalAlignment="Center"/>
         </StackPanel>
