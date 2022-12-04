@@ -49,7 +49,7 @@
             <Separator Margin="5,10" Background="Gainsboro"/>
             <custom:MenuItemButton Content="退出" Click="Exit_Click">
                 <custom:MenuItemButton.Icon>
-                    <Border CornerRadius="8" Background="RoyalBlue"/>
+                    <Path Data="{StaticResource ExitIcon}" Fill="Tomato" Stretch="Uniform"/>
                 </custom:MenuItemButton.Icon>
             </custom:MenuItemButton>
         </StackPanel>

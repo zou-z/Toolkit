@@ -21,6 +21,9 @@
     <Page Update="Style\ListBox.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Style\PathIcon.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Style\ScrollViewer.xaml">
       <SubType>Designer</SubType>
     </Page>

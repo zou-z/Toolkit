@@ -8,6 +8,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Style/Config.xaml"/>
+                <ResourceDictionary Source="Style/PathIcon.xaml"/>
                 <ResourceDictionary Source="Style/ScrollViewer.xaml"/>
                 <ResourceDictionary Source="Style/ListBox.xaml"/>
             </ResourceDictionary.MergedDictionaries>
