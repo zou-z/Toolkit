@@ -66,8 +66,8 @@ namespace TopMost.ViewModel
                 areaIndicationViewHandle = new WindowInteropHelper(areaIndicationView).Handle;
                 areaIndicationView.Hide();
             }
-            isRepositionWindow = false;
             displayedWindowInfo = null;
+            isRepositionWindow = false;
         }
 
         private void InitAreaIndicationView()
@@ -171,6 +171,7 @@ namespace TopMost.ViewModel
                 }
             }
             areaIndicationView?.Hide();
+            displayedWindowInfo = null;
             isRepositionWindow = false;
         }
 
