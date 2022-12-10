@@ -5,9 +5,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:JsonFormat.View"
-        mc:Ignorable="d"
-        Title="JsonFormat" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        xmlns:viewmodel="clr-namespace:JsonFormat.ViewModel"
+        Title="JsonFormat" Height="500" Width="800" Background="#1E1E1E">
+    <Window.DataContext>
+        <viewmodel:MainViewModel/>
+    </Window.DataContext>
+    <local:TabView ItemsSource="{Binding Tabs,Mode=OneWay}" SelectedItem="{Binding SelectedItem,Mode=TwoWay}" NewTabCommand="{Binding NewTabCommand,Mode=OneTime}">
+        <local:TabView.TabViewFooter>
+            <Border Width="40" Height="20" Margin="0,0,5,0" Background="RoyalBlue">
+            </Border>
+        </local:TabView.TabViewFooter>
+    </local:TabView>
 </Window>
