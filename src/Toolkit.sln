@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toolkit.Contract", "Toolkit
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugin", "Plugin", "{EFC52907-0BD3-4E03-A1BC-CE45E6E04401}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopMost", "TopMost\TopMost.csproj", "{C3540BC6-CADD-4353-9A96-9E18C21556B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopMost", "TopMost\TopMost.csproj", "{C3540BC6-CADD-4353-9A96-9E18C21556B0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PluginTest", "PluginTest", "{7DA90DF6-25C1-4E76-A482-B08693EA9464}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
