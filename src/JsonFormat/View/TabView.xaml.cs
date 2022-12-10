@@ -82,7 +82,7 @@ namespace JsonFormat.View
         protected override Size ArrangeOverride(Size finalSize)
         {
             headerListBox.Arrange(new Rect(0, 0, finalSize.Width, headerListBox.DesiredSize.Height));
-            contentControl.Arrange(new Rect(0, headerListBox.DesiredSize.Height, finalSize.Width, contentControl.DesiredSize.Height));
+            contentControl.Arrange(new Rect(0, headerListBox.DesiredSize.Height, finalSize.Width, finalSize.Height > headerListBox.DesiredSize.Height ? finalSize.Height - headerListBox.DesiredSize.Height : 0));
             return finalSize;
         }
 

@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace JsonFormat.ViewModel
 {
@@ -30,7 +31,8 @@ namespace JsonFormat.ViewModel
                 tabs.Add(new TabViewItem
                 {
                     Header = $"header {i + 1}",
-                    Content = new System.Windows.Controls.TextBlock { Text = $"content {i + 1}", Foreground = System.Windows.Media.Brushes.White },
+                    //Content = new System.Windows.Controls.TextBlock { Text = $"content {i + 1}", Foreground = System.Windows.Media.Brushes.White },
+                    Content = CreateTabContent(),
                 });
             }
         }
@@ -40,7 +42,8 @@ namespace JsonFormat.ViewModel
             var item = new TabViewItem
             {
                 Header = $"new header {++newTabIndex}",
-                Content = new System.Windows.Controls.TextBlock { Text = $"new content {newTabIndex}", Foreground = System.Windows.Media.Brushes.White },
+                //Content = new System.Windows.Controls.TextBlock { Text = $"new content {newTabIndex}", Foreground = System.Windows.Media.Brushes.White },
+                Content = CreateTabContent(),
             };
             if (SelectedItem != null)
             {
@@ -52,6 +55,13 @@ namespace JsonFormat.ViewModel
                 Tabs.Add(item);
             }
             SelectedItem = item;
+        }
+
+        private object CreateTabContent()
+        {
+            return new RichTextBox
+            {
+            };
         }
 
         private readonly ObservableCollection<TabViewItem> tabs;
