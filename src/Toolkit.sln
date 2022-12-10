@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PluginTest", "PluginTest", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonFormat", "JsonFormat\JsonFormat.csproj", "{DE75B754-DC47-4741-B38A-C8482F10B9B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonFormatTest", "JsonFormatTest\JsonFormatTest.csproj", "{6058FCFD-C499-42C3-B6A1-DD6D02F8EFBF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{DE75B754-DC47-4741-B38A-C8482F10B9B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE75B754-DC47-4741-B38A-C8482F10B9B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE75B754-DC47-4741-B38A-C8482F10B9B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6058FCFD-C499-42C3-B6A1-DD6D02F8EFBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6058FCFD-C499-42C3-B6A1-DD6D02F8EFBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6058FCFD-C499-42C3-B6A1-DD6D02F8EFBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6058FCFD-C499-42C3-B6A1-DD6D02F8EFBF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +61,7 @@ Global
 		{639FB70A-4110-4D20-9A34-BBEE20907977} = {D9AE438C-CFD3-4CCE-8BCA-FA4B9FD7B8C1}
 		{C3540BC6-CADD-4353-9A96-9E18C21556B0} = {EFC52907-0BD3-4E03-A1BC-CE45E6E04401}
 		{DE75B754-DC47-4741-B38A-C8482F10B9B7} = {EFC52907-0BD3-4E03-A1BC-CE45E6E04401}
+		{6058FCFD-C499-42C3-B6A1-DD6D02F8EFBF} = {7DA90DF6-25C1-4E76-A482-B08693EA9464}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4BDF7A74-E870-46F3-A515-BEA8E0A03266}
