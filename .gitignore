@@ -11,3 +11,5 @@
 /src/Toolkit.Contract/obj
 /src/TopMost/bin
 /src/TopMost/obj
+/src/JsonFormat/bin
+/src/JsonFormat/obj
