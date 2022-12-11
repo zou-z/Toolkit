@@ -24,6 +24,7 @@ namespace JsonFormat.View
         {
             InitializeComponent();
             SnapsToDevicePixels = false;
+            DataObject.AddPastingHandler(this, RichTextBoxPasting);
         }
 
         protected override void OnTextChanged(TextChangedEventArgs e)
@@ -106,7 +107,15 @@ namespace JsonFormat.View
             }
         }
 
-        // Remove paste text format
+        private void RichTextBoxPasting(object sender, DataObjectPastingEventArgs e)
+        {
+            if (e.DataObject.GetData(DataFormats.Text) is string pastingText)
+            {
+                CaretPosition.InsertTextInRun(pastingText);
+            }
+            e.CancelCommand();
+        }
+
         // Forbid paste other type data
 
         private VirtualizingStackPanel? lineNumberView = null;
