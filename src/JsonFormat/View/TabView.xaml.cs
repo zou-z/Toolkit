@@ -72,10 +72,11 @@ namespace JsonFormat.View
         {
             headerListBox.Measure(availableSize);
             contentControl.Measure(availableSize);
+            double totalHeight = headerListBox.DesiredSize.Height + contentControl.DesiredSize.Height;
             return new Size
             {
                 Width = contentControl.DesiredSize.Width,
-                Height = headerListBox.DesiredSize.Height + contentControl.DesiredSize.Height,
+                Height = totalHeight >= availableSize.Height ? availableSize.Height : totalHeight,
             };
         }
 
