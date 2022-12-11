@@ -259,8 +259,8 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="MainBorder" Width="21" Height="21" Background="Transparent" CornerRadius="4">
-                            <Path Data="M6,0 L6,12 M0,6 L12,6" Stroke="White" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Border x:Name="MainBorder" Width="36" Height="30" Background="Transparent">
+                            <TextBlock Text="&#xE109;" Foreground="White" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
@@ -289,7 +289,7 @@
                             <ScrollViewer Grid.Column="0" CanContentScroll="False" Style="{StaticResource ScrollViewerStyle}">
                                 <ItemsPresenter/>
                             </ScrollViewer>
-                            <Button Grid.Column="1" Click="AddButton_Click" Style="{StaticResource AddButtonStyle}" VerticalAlignment="Top" Margin="5,4,5,0"/>
+                            <Button Grid.Column="1" Click="AddButton_Click" Style="{StaticResource AddButtonStyle}" VerticalAlignment="Top" Margin="5,0,0,0" ToolTip="新建标签"/>
                             <ContentControl Grid.Column="2" Content="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:TabView},Path=TabViewFooter,Mode=OneWay}"/>
                         </Grid>
                     </ControlTemplate>
