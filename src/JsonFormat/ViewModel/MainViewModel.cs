@@ -13,6 +13,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 
 namespace JsonFormat.ViewModel
 {
@@ -62,7 +63,7 @@ namespace JsonFormat.ViewModel
 
         private static object CreateTabContent()
         {
-            return new RichTextBoxEx();
+            return new JsonFormatView();
         }
 
         private readonly ObservableCollection<TabViewItem> tabs;
