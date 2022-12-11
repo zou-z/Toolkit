@@ -1,10 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using JsonFormat.Model;
+using JsonFormat.Service;
 using JsonFormat.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -19,6 +21,10 @@ namespace JsonFormat.ViewModel
 {
     internal class MainViewModel : ObservableObject
     {
+        public RelayCommand NewTabCommand => newTabCommand ??= new RelayCommand(NewTab);
+
+        public AsyncRelayCommand FormatCommand => formatCommand ??= new AsyncRelayCommand(Format);
+
         public ObservableCollection<TabViewItem> Tabs => tabs;
 
         public TabViewItem? SelectedItem
@@ -26,16 +32,6 @@ namespace JsonFormat.ViewModel
             get => selectedItem;
             set => SetProperty(ref selectedItem, value);
         }
-
-        public bool IsFormatEnabled
-        {
-            get => isFormatEnabled;
-            set => SetProperty(ref isFormatEnabled, value);
-        }
-
-        public RelayCommand NewTabCommand => newTabCommand ??= new RelayCommand(NewTab);
-
-        public RelayCommand FormatCommand => formatCommand ??= new RelayCommand(Format);
 
         public MainViewModel()
         {
@@ -69,11 +65,13 @@ namespace JsonFormat.ViewModel
             SelectedItem = item;
         }
 
-        private void Format()
+        private async Task Format()
         {
-            isFormatEnabled = false;
-            MessageBox.Show("点击了格式化");
-            isFormatEnabled = true;
+            if (SelectedItem == null) return;
+            if (SelectedItem.Content is FrameworkElement element && element.DataContext is IJsonFormat jsonFormat)
+            {
+                await jsonFormat.Format();
+            }
         }
 
         private static object CreateTabContent()
@@ -84,9 +82,7 @@ namespace JsonFormat.ViewModel
         private readonly ObservableCollection<TabViewItem> tabs;
         private TabViewItem? selectedItem = null;
         private RelayCommand? newTabCommand = null;
-        private RelayCommand? formatCommand=null;
+        private AsyncRelayCommand? formatCommand = null;
         private int newTabIndex = 0;
-        private bool isFormatEnabled = true;
-
     }
 }

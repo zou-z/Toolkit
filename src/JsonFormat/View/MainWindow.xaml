@@ -28,7 +28,7 @@
                                 <Setter TargetName="MainBorder" Property="Background" Value="#4B4C4C"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Opacity" Value="0.6"/>
+                                <Setter Property="Opacity" Value="0.5"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -39,7 +39,7 @@
     <local:TabView ItemsSource="{Binding Tabs,Mode=OneWay}" SelectedItem="{Binding SelectedItem,Mode=TwoWay}" NewTabCommand="{Binding NewTabCommand,Mode=OneTime}">
         <local:TabView.TabViewFooter>
             <StackPanel Orientation="Horizontal" DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window},Path=DataContext,Mode=OneTime}">
-                <Button Command="{Binding FormatCommand,Mode=OneTime}" IsEnabled="{Binding IsFormatEnabled,Mode=OneWay}" Style="{StaticResource TitleButtonStyle}" ToolTip="格式化">
+                <Button Command="{Binding FormatCommand,Mode=OneTime}" Style="{StaticResource TitleButtonStyle}" ToolTip="格式化">
                     <TextBlock Text="&#xE102;" FontSize="13" Foreground="White" FontFamily="Segoe MDL2 Assets"/>
                 </Button>
                 <Button Style="{StaticResource TitleButtonStyle}" ToolTip="复制">
