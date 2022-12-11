@@ -116,8 +116,6 @@ namespace JsonFormat.View
             e.CancelCommand();
         }
 
-        // Forbid paste other type data
-
         private VirtualizingStackPanel? lineNumberView = null;
         private Style? lineNumberTextStyle = null;
         private double lineHeight = 0;
