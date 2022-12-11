@@ -27,7 +27,15 @@ namespace JsonFormat.ViewModel
             set => SetProperty(ref selectedItem, value);
         }
 
+        public bool IsFormatEnabled
+        {
+            get => isFormatEnabled;
+            set => SetProperty(ref isFormatEnabled, value);
+        }
+
         public RelayCommand NewTabCommand => newTabCommand ??= new RelayCommand(NewTab);
+
+        public RelayCommand FormatCommand => formatCommand ??= new RelayCommand(Format);
 
         public MainViewModel()
         {
@@ -61,6 +69,13 @@ namespace JsonFormat.ViewModel
             SelectedItem = item;
         }
 
+        private void Format()
+        {
+            isFormatEnabled = false;
+            MessageBox.Show("点击了格式化");
+            isFormatEnabled = true;
+        }
+
         private static object CreateTabContent()
         {
             return new JsonFormatView();
@@ -69,6 +84,9 @@ namespace JsonFormat.ViewModel
         private readonly ObservableCollection<TabViewItem> tabs;
         private TabViewItem? selectedItem = null;
         private RelayCommand? newTabCommand = null;
+        private RelayCommand? formatCommand=null;
         private int newTabIndex = 0;
+        private bool isFormatEnabled = true;
+
     }
 }
