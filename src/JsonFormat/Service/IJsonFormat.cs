@@ -8,6 +8,6 @@ namespace JsonFormat.Service
 {
     internal interface IJsonFormat
     {
-        Task Format();
+        Task Format(string text);
     }
 }

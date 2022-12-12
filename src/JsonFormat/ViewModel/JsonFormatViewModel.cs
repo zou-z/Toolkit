@@ -15,10 +15,11 @@ namespace JsonFormat.ViewModel
         {
         }
 
-        public async Task Format()
+        public async Task Format(string text)
         {
             await Task.Delay(3000);
             Debug.WriteLine("Format()");
+            Debug.WriteLine(text);
         }
     }
 }

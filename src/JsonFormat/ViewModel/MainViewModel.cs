@@ -68,9 +68,13 @@ namespace JsonFormat.ViewModel
         private async Task Format()
         {
             if (SelectedItem == null) return;
-            if (SelectedItem.Content is FrameworkElement element && element.DataContext is IJsonFormat jsonFormat)
+            if (SelectedItem.Content is IJsonFormatView jsonFormatView)
             {
-                await jsonFormat.Format();
+                var jsonFormat = jsonFormatView.GetDataContext();
+                if (jsonFormat != null)
+                {
+                    await jsonFormat.Format(jsonFormatView.GetText());
+                }
             }
         }
 
