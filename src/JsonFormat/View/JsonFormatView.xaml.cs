@@ -37,7 +37,8 @@ namespace JsonFormat.View
         public string GetText()
         {
             if (richTextBox == null) return string.Empty;
-            return new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;
+            string text = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;
+            return text.Trim();
         }
 
         public IJsonFormat? GetDataContext()

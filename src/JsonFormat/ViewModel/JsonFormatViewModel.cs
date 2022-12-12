@@ -17,6 +17,8 @@ namespace JsonFormat.ViewModel
 
         public async Task Format(string text)
         {
+            if (string.IsNullOrWhiteSpace(text)) return;
+
             await Task.Delay(3000);
             Debug.WriteLine("Format()");
             Debug.WriteLine(text);
