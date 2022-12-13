@@ -18,6 +18,14 @@ namespace JsonFormat.View
 {
     internal partial class JsonFormatView : UserControl, IJsonFormatView
     {
+        public static readonly DependencyProperty JsonDocumentProperty = DependencyProperty.Register("JsonDocument", typeof(FlowDocument), typeof(JsonFormatView), new PropertyMetadata(null, new PropertyChangedCallback(JsonDocumentChanged)));
+
+        public FlowDocument JsonDocument
+        {
+            get => (FlowDocument)GetValue(JsonDocumentProperty);
+            set => SetValue(JsonDocumentProperty, value);
+        }
+
         public JsonFormatView()
         {
             InitializeComponent();
@@ -32,6 +40,7 @@ namespace JsonFormat.View
                     }
                 }
             }
+            SetBinding(JsonDocumentProperty, new Binding("JsonDocument") { Mode = BindingMode.OneWay });
         }
 
         public string GetText()
@@ -48,6 +57,21 @@ namespace JsonFormat.View
                 return jsonFormat;
             }
             return null;
+        }
+
+        private static void JsonDocumentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is JsonFormatView self && self.richTextBox != null)
+            {
+                if (e.NewValue == null)
+                {
+                    self.richTextBox.Document = null;
+                }
+                else if (e.NewValue is FlowDocument flowDocument)
+                {
+                    self.richTextBox.Document = flowDocument;
+                }
+            }
         }
 
         private readonly RichTextBoxEx? richTextBox;

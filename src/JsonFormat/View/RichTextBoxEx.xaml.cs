@@ -25,34 +25,6 @@ namespace JsonFormat.View
             InitializeComponent();
             SnapsToDevicePixels = false;
             DataObject.AddPastingHandler(this, RichTextBoxPasting);
-
-#if DEBUG
-            Loaded += (sender, e) =>
-            {
-                var paragraph1 = new Paragraph();
-                paragraph1.Inlines.Add(new Run
-                {
-                    Text = "this is first paragraph",
-                    Foreground = Brushes.Red,
-                });
-                var paragraph2 = new Paragraph();
-                paragraph2.Inlines.Add(new Run
-                {
-                    Text = "this is second paragraph this is second paragraph this is second paragraph this is second paragraph this is second paragraph this is second paragraph this is second paragraph",
-                    Foreground = Brushes.Green,
-                });
-                var paragraph3 = new Paragraph();
-                paragraph3.Inlines.Add(new Run
-                {
-                    Text = "this is third paragraph",
-                    Foreground = Brushes.Blue,
-                });
-                Document.Blocks.Clear();
-                Document.Blocks.Add(paragraph1);
-                Document.Blocks.Add(paragraph2);
-                Document.Blocks.Add(paragraph3);
-            };
-#endif
         }
 
         protected override void OnTextChanged(TextChangedEventArgs e)
