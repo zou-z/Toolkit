@@ -143,14 +143,7 @@ namespace JsonFormat.Core
 
             public void Init()
             {
-                //flowDocument ??= new FlowDocument();
-                if (flowDocument == null)
-                {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        flowDocument = new FlowDocument();
-                    });
-                }
+                flowDocument ??= new FlowDocument();
                 flowDocument?.Blocks.Clear();
                 currentIndentCount = 0;
             }

@@ -29,23 +29,31 @@ namespace JsonFormat.ViewModel
         public async Task Format(string text)
         {
             if (string.IsNullOrWhiteSpace(text)) return;
-            //await Task.Run(() =>
-            //{
-            try
+            bool result = false;
+            var jsonObject = await Task.Run(() =>
             {
-                var jsonObject = JsonParser.Parse(text);
+                try
+                {
+                    var jsonObject = JsonParser.Parse(text);
+                    result = true;
+                    return jsonObject;
+                }
+                catch (JsonParseException)
+                {
+                }
+                catch (Exception)
+                {
+                }
+                result = false;
+                return false;
+            });
+            if (result)
+            {
                 jsonRenderer ??= new JsonRenderer(new JsonRenderer.RenderConfig
                 {
                 });
                 JsonDocument = jsonRenderer.Render(jsonObject);
             }
-            catch (JsonParseException)
-            {
-            }
-            catch (Exception)
-            {
-            }
-            //});
         }
 
         private FlowDocument? jsonDocument = null;
