@@ -78,17 +78,17 @@ namespace JsonFormat.Core
                 flowDocumentUtil.AppendKey($"\"{keyValuePair.Key}\"", false);
                 if (keyValuePair.Value is List<object> list)
                 {
-                    flowDocumentUtil.AppendChar(":", true);
+                    flowDocumentUtil.AppendChar(": ", true);
                     RenderArray(list, _isLastOne);
                 }
                 else if (keyValuePair.Value is Dictionary<string, object> _dict)
                 {
-                    flowDocumentUtil.AppendChar(":", true);
+                    flowDocumentUtil.AppendChar(": ", true);
                     RenderObject(_dict, _isLastOne);
                 }
                 else
                 {
-                    flowDocumentUtil.AppendChar(":", false);
+                    flowDocumentUtil.AppendChar(": ", false);
                     RenderJsonNormalValue(keyValuePair.Value, _isLastOne);
                 }
             }
