@@ -24,7 +24,7 @@ namespace JsonFormat.View
         {
             InitializeComponent();
             SnapsToDevicePixels = false;
-            DataObject.AddPastingHandler(this, RichTextBoxPasting);
+            PreviewKeyDown += RichTextBox_PreviewKeyDown;
         }
 
         protected override void OnTextChanged(TextChangedEventArgs e)
@@ -107,13 +107,19 @@ namespace JsonFormat.View
             }
         }
 
-        private void RichTextBoxPasting(object sender, DataObjectPastingEventArgs e)
+        private void RichTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.DataObject.GetData(DataFormats.Text) is string pastingText)
+            if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control && e.Key == Key.V)
             {
-                CaretPosition.InsertTextInRun(pastingText);
+                if (Clipboard.GetData("Text") != null)
+                {
+                    Clipboard.SetText((string)Clipboard.GetData("Text"), TextDataFormat.Text);
+                }
+                else
+                {
+                    e.Handled = true;
+                }
             }
-            e.CancelCommand();
         }
 
         private VirtualizingStackPanel? lineNumberView = null;
