@@ -215,7 +215,7 @@ namespace JsonFormat.Core
             // 添加布尔值
             public void AppendBoolean(bool b, bool isLineEnd)
             {
-                AppendText(b.ToString(), renderConfig.BooleanNullColor, isLineEnd);
+                AppendText(b.ToString().ToLower(), renderConfig.BooleanNullColor, isLineEnd);
             }
 
             // 添加null
