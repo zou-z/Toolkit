@@ -35,7 +35,7 @@ namespace JsonFormat.Core
             // 数字颜色
             public Color NumberColor { get; set; } = Colors.White;
 
-            // 布尔值和null值颜色
+            // 布尔值和null颜色
             public Color BooleanNullColor { get; set; } = Colors.White;
         }
 

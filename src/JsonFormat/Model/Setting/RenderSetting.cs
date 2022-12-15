@@ -25,7 +25,7 @@ namespace JsonFormat.Model.Setting
         // 数字颜色
         public string NumberColor { get; set; } = "#FFFFFF";
 
-        // 布尔值和null值颜色
+        // 布尔值和null颜色
         public string BooleanNullColor { get; set; } = "#FFFFFF";
     }
 }
