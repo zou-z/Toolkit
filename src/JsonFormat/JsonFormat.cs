@@ -43,6 +43,10 @@ namespace JsonFormat
                 {
                     WindowStartupLocation = WindowStartupLocation.CenterScreen,
                 };
+                mainWindow.Closed += (sender, e) =>
+                {
+                    mainWindow = null;
+                };
             }
             mainWindow.Show();
             mainWindow.Activate();

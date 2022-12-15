@@ -21,9 +21,11 @@ namespace JsonFormat.ViewModel
 {
     internal class MainViewModel : ObservableObject
     {
+        public AsyncRelayCommand FormatCommand => formatCommand ??= new AsyncRelayCommand(Format);
+
         public TabManager TabManager => tabManager ??= new TabManager();
 
-        public AsyncRelayCommand FormatCommand => formatCommand ??= new AsyncRelayCommand(Format);
+        public AppSetting AppSetting => appSetting ??= new AppSetting();
 
         public MainViewModel()
         {
@@ -43,6 +45,7 @@ namespace JsonFormat.ViewModel
         }
 
         private TabManager? tabManager = null;
+        private AppSetting? appSetting = null;
         private AsyncRelayCommand? formatCommand = null;
     }
 }

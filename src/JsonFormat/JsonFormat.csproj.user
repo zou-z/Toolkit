@@ -11,6 +11,9 @@
     <Compile Update="View\RichTextBoxEx.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\SettingWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\TabView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -23,6 +26,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\RichTextBoxEx.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\SettingWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\TabView.xaml">

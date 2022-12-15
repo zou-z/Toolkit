@@ -45,7 +45,7 @@
                 <Button Style="{StaticResource TitleButtonStyle}" ToolTip="复制">
                     <TextBlock Text="&#xE16F;" FontSize="13" Foreground="White" FontFamily="Segoe MDL2 Assets"/>
                 </Button>
-                <Button Style="{StaticResource TitleButtonStyle}">
+                <Button Command="{Binding AppSetting.OpenSettingCommand,Mode=OneTime}" Style="{StaticResource TitleButtonStyle}">
                     <TextBlock Text="&#xE10C;" FontSize="13" Foreground="White" FontFamily="Segoe MDL2 Assets"/>
                 </Button>
             </StackPanel>
