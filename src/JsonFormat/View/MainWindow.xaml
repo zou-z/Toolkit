@@ -36,7 +36,7 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <local:TabView ItemsSource="{Binding Tabs,Mode=OneWay}" SelectedItem="{Binding SelectedItem,Mode=TwoWay}" NewTabCommand="{Binding NewTabCommand,Mode=OneTime}">
+    <local:TabView ItemsSource="{Binding TabManager.Tabs,Mode=OneWay}" SelectedItem="{Binding TabManager.SelectedItem,Mode=TwoWay}" NewTabCommand="{Binding TabManager.NewTabCommand,Mode=OneTime}">
         <local:TabView.TabViewFooter>
             <StackPanel Orientation="Horizontal" DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window},Path=DataContext,Mode=OneTime}">
                 <Button Command="{Binding FormatCommand,Mode=OneTime}" Style="{StaticResource TitleButtonStyle}" ToolTip="格式化">
