@@ -5,8 +5,84 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:JsonFormat.View"
-        Title="设置" Height="350" Width="500" ResizeMode="NoResize">
-    <Grid>
-        
-    </Grid>
+        Title="设置" SizeToContent="WidthAndHeight" ResizeMode="NoResize" Background="#1E1E1E">
+    <Window.Resources>
+        <Thickness x:Key="SettingItemMargin" Left="0" Top="0" Right="0" Bottom="20"/>
+        <Thickness x:Key="SettingItemInsideMargin" Left="0" Top="10" Right="0" Bottom="0"/>
+        <Style x:Key="TextBaseStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="SettingSecondItemTextStyle" TargetType="TextBlock" BasedOn="{StaticResource TextBaseStyle}">
+            <Setter Property="Margin" Value="10,0"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="SettingItemTextStyle" TargetType="TextBlock" BasedOn="{StaticResource TextBaseStyle}">
+            <Setter Property="Foreground" Value="DarkGray"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+    </Window.Resources>
+    <DockPanel Margin="20">
+        <Border DockPanel.Dock="Bottom" Margin="0,20,0,0" BorderBrush="#282828" BorderThickness="0,1,0,0" SnapsToDevicePixels="True">
+            <StackPanel Margin="0,20,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Width="80" Height="26" Content="应用"/>
+                <Button Width="100" Height="26" Content="恢复默认设置" Margin="20,0,0,0"/>
+            </StackPanel>
+        </Border>
+        <StackPanel DockPanel.Dock="Left">
+            <StackPanel Margin="{StaticResource SettingItemMargin}">
+                <TextBlock Text="字体类型" Style="{StaticResource SettingItemTextStyle}"/>
+                <ComboBox Width="200" Height="26" HorizontalAlignment="Left" Margin="{StaticResource SettingItemInsideMargin}"/>
+            </StackPanel>
+            <StackPanel Margin="{StaticResource SettingItemMargin}">
+                <TextBlock Text="字体大小" Style="{StaticResource SettingItemTextStyle}"/>
+                <ComboBox Width="200" Height="26" HorizontalAlignment="Left" Margin="{StaticResource SettingItemInsideMargin}"/>
+            </StackPanel>
+            <StackPanel Margin="{StaticResource SettingItemMargin}">
+                <TextBlock Text="缩进空格数" Style="{StaticResource SettingItemTextStyle}"/>
+                <ComboBox Width="200" Height="26" HorizontalAlignment="Left" Margin="{StaticResource SettingItemInsideMargin}"/>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Margin="30,0,0,0">
+            <TextBlock Text="高亮颜色" Style="{StaticResource SettingItemTextStyle}"/>
+            <Grid Margin="{StaticResource SettingItemInsideMargin}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="15"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="15"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="15"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="15"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" Grid.Column="0" Background="Gray">
+                    <TextBlock Text="字符" Style="{StaticResource SettingSecondItemTextStyle}"/>
+                </Border>
+                <TextBox Grid.Row="0" Grid.Column="1" Width="150" Height="26" HorizontalAlignment="Left"/>
+                <Border Grid.Row="2" Grid.Column="0" Background="Gray">
+                    <TextBlock Text="键名" Style="{StaticResource SettingSecondItemTextStyle}"/>
+                </Border>
+                <TextBox Grid.Row="2" Grid.Column="1" Width="150" Height="26" HorizontalAlignment="Left"/>
+                <Border Grid.Row="4" Grid.Column="0" Background="Gray">
+                    <TextBlock Text="字符串" Style="{StaticResource SettingSecondItemTextStyle}"/>
+                </Border>
+                <TextBox Grid.Row="4" Grid.Column="1" Width="150" Height="26" HorizontalAlignment="Left"/>
+                <Border Grid.Row="6" Grid.Column="0" Background="Gray">
+                    <TextBlock Text="数字" Style="{StaticResource SettingSecondItemTextStyle}"/>
+                </Border>
+                <TextBox Grid.Row="6" Grid.Column="1" Width="150" Height="26" HorizontalAlignment="Left"/>
+                <Border Grid.Row="8" Grid.Column="0" Background="Gray">
+                    <TextBlock Text="布尔和null" Style="{StaticResource SettingSecondItemTextStyle}"/>
+                </Border>
+                <TextBox Grid.Row="8" Grid.Column="1" Width="150" Height="26" HorizontalAlignment="Left"/>
+            </Grid>
+        </StackPanel>
+    </DockPanel>
 </Window>
