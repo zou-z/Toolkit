@@ -1,4 +1,6 @@
-﻿using JsonFormat.View;
+﻿using JsonFormat.Model;
+using JsonFormat.View;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,6 +54,22 @@ namespace JsonFormat
             mainWindow.Activate();
         }
 
+        internal static IServiceProvider GetServices()
+        {
+            lock (lockObj)
+            {
+                if (services == null)
+                {
+                    var serviceCollection = new ServiceCollection();
+                    serviceCollection.AddTransient<AppSetting>();
+                    services = serviceCollection.BuildServiceProvider();
+                }
+                return services;
+            }
+        }
+
         private MainWindow? mainWindow = null;
+        private readonly static object lockObj = new();
+        private static IServiceProvider? services = null;
     }
 }

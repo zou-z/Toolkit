@@ -26,6 +26,7 @@ namespace JsonFormatTest
             InitializeComponent();
             Left = Top = 30;
             jsonFormat = new JsonFormat.JsonFormat();
+            TopMost_Click(null, null);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

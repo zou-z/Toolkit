@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using JsonFormat.Model;
 using JsonFormat.Service;
 using JsonFormat.View;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,7 +26,20 @@ namespace JsonFormat.ViewModel
 
         public TabManager TabManager => tabManager ??= new TabManager();
 
-        public AppSetting AppSetting => appSetting ??= new AppSetting();
+        public AppSetting? AppSetting
+        {
+            get
+            {
+                if (appSetting == null)
+                {
+                    if (JsonFormat.GetServices().GetService<AppSetting>() is AppSetting setting)
+                    {
+                        appSetting = setting;
+                    }
+                }
+                return appSetting;
+            }
+        }
 
         public MainViewModel()
         {

@@ -30,6 +30,7 @@ namespace Toolkit.Base.Util
             try
             {
                 string path = GetSettingPath(name, false);
+                if (!File.Exists(path)) return null;
                 var bytes = FileUtil.ReadBytesFromFile(path);
                 var utf8Reader = new Utf8JsonReader(bytes);
                 return JsonSerializer.Deserialize<T>(ref utf8Reader);
@@ -51,7 +52,7 @@ namespace Toolkit.Base.Util
             {
                 Directory.CreateDirectory(path);
             }
-            return Path.Combine(path, name);
+            return Path.Combine(path, $"{name}.Settings.json");
         }
 
         private static string path = string.Empty;

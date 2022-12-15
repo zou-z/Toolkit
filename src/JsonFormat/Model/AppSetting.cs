@@ -1,11 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using JsonFormat.Model.Setting;
 using JsonFormat.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Toolkit.Base.Util;
 
 namespace JsonFormat.Model
 {
@@ -13,15 +16,27 @@ namespace JsonFormat.Model
     {
         public RelayCommand OpenSettingCommand => openSettingCommand ??= new RelayCommand(OpenSetting);
 
+        public Settings Settings { get; private set; }
+
         public AppSetting()
         {
-            //LoadSetting();
-        }
-
-        private void LoadSetting()
-        {
-            System.Threading.Thread.Sleep(3000);
-            MessageBox.Show("模拟加载设置完成");
+            if (Assembly.GetExecutingAssembly().GetName().Name is string name)
+            {
+                currentAssemblyName = name;
+            }
+            else
+            {
+                currentAssemblyName = "JsonFormat";
+            }
+            if (SettingUtil.LoadSetting<Settings>(currentAssemblyName) is Settings _settings)
+            {
+                Settings = _settings;
+            }
+            else
+            {
+                Settings = new Settings();
+            }
+            //SettingUtil.SaveSetting(currentAssemblyName, Settings);
         }
 
         private void OpenSetting()
@@ -44,5 +59,6 @@ namespace JsonFormat.Model
 
         private RelayCommand? openSettingCommand = null;
         private SettingWindow? settingWindow = null;
+        private readonly string currentAssemblyName;
     }
 }
