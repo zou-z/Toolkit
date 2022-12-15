@@ -45,8 +45,9 @@
                 <Button Style="{StaticResource TitleButtonStyle}" ToolTip="复制">
                     <TextBlock Text="&#xE16F;" FontSize="13" Foreground="White" FontFamily="Segoe MDL2 Assets"/>
                 </Button>
-                <Border Width="40" Height="20" Margin="0,0,5,0" Background="RoyalBlue">
-                </Border>
+                <Button Style="{StaticResource TitleButtonStyle}">
+                    <TextBlock Text="&#xE10C;" FontSize="13" Foreground="White" FontFamily="Segoe MDL2 Assets"/>
+                </Button>
             </StackPanel>
         </local:TabView.TabViewFooter>
     </local:TabView>
