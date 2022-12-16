@@ -55,7 +55,7 @@
                                         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Color="Black" Opacity="0.4"/>
                                     </Border.Effect>
                                 </Border>
-                                <ScrollViewer Width="{TemplateBinding ActualWidth}" MaxHeight="500" Margin="8,18" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" CanContentScroll="False" Style="{StaticResource ScrollViewerStyle}">
+                                <ScrollViewer Width="{TemplateBinding ActualWidth}" MaxHeight="500" Margin="8,16" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" CanContentScroll="False" Style="{StaticResource ScrollViewerStyle}">
                                     <StackPanel IsItemsHost="True"/>
                                 </ScrollViewer>
                             </Grid>
@@ -74,7 +74,7 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="ComboBoxItem">
-                                <Border Width="{TemplateBinding ActualWidth}" Background="{TemplateBinding Background}" CornerRadius="4" ToolTip="{TemplateBinding Content}">
+                                <Border Width="{TemplateBinding ActualWidth}" Background="{TemplateBinding Background}" ToolTip="{TemplateBinding Content}">
                                     <TextBlock Text="{Binding}" Foreground="{TemplateBinding Foreground}" Margin="10,0" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                 </Border>
                                 <ControlTemplate.Triggers>

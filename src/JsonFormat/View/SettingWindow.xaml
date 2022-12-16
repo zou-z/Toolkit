@@ -82,7 +82,7 @@
                                     <DropShadowEffect ShadowDepth="0" BlurRadius="8" Color="Black" Opacity="0.4"/>
                                 </Border.Effect>
                             </Border>
-                            <ScrollViewer Width="{TemplateBinding ActualWidth}" MaxHeight="500" Margin="8,18" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" CanContentScroll="False" Style="{StaticResource ScrollViewerStyle}">
+                            <ScrollViewer Width="{TemplateBinding ActualWidth}" MaxHeight="500" Margin="8,16" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" CanContentScroll="False" Style="{StaticResource ScrollViewerStyle}">
                                 <StackPanel IsItemsHost="True"/>
                             </ScrollViewer>
                         </Grid>
@@ -97,7 +97,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="ComboBoxItem">
-                            <Border Width="{TemplateBinding ActualWidth}" Background="{TemplateBinding Background}" CornerRadius="4" ToolTip="{TemplateBinding Content}">
+                            <Border Width="{TemplateBinding ActualWidth}" Background="{TemplateBinding Background}" ToolTip="{TemplateBinding Content}">
                                 <TextBlock Text="{TemplateBinding Content}" FontFamily="{TemplateBinding Content,Converter={StaticResource TextFontFamilyConverter}}" Foreground="{TemplateBinding Foreground}" Margin="10,0" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                             </Border>
                             <ControlTemplate.Triggers>
@@ -114,7 +114,9 @@
             </Style>
         </ResourceDictionary>
     </Window.Resources>
+
     <StackPanel Margin="20">
+        <!--字体-->
         <DockPanel Margin="{StaticResource SettingClassWithContentMargin}">
             <TextBlock DockPanel.Dock="Left" Text="字体" Style="{StaticResource SettingClassTextStyle}"/>
             <Border Style="{StaticResource SettingClassDecoratorStyle}"/>
@@ -129,6 +131,8 @@
                 <ComboBox ItemsSource="{Binding FontSizes,Mode=OneTime}" SelectedItem="{Binding SelectedFontSize,Mode=TwoWay}" Style="{StaticResource ComboBoxStyle}"/>
             </StackPanel>
         </StackPanel>
+
+        <!--缩进-->
         <DockPanel Margin="{StaticResource SettingClassWithContentMargin}">
             <TextBlock DockPanel.Dock="Left" Text="缩进" Style="{StaticResource SettingClassTextStyle}"/>
             <Border Style="{StaticResource SettingClassDecoratorStyle}"/>
@@ -140,72 +144,19 @@
             </StackPanel>
         </StackPanel>
 
+        <!--高亮颜色-->
+        <DockPanel Margin="{StaticResource SettingClassWithContentMargin}">
+            <TextBlock DockPanel.Dock="Left" Text="高亮颜色" Style="{StaticResource SettingClassTextStyle}"/>
+            <Border Style="{StaticResource SettingClassDecoratorStyle}"/>
+        </DockPanel>
+        <WrapPanel Margin="{StaticResource SettingClassWithClassMargin}">
+            
+        </WrapPanel>
 
+        <!--底部-->
         <StackPanel Orientation="Horizontal">
             <Button Width="80" Height="26" Content="应用"/>
             <Button Width="100" Height="26" Content="恢复默认设置" Margin="20,0,0,0"/>
         </StackPanel>
     </StackPanel>
-    <!--<DockPanel Margin="20">
-        <Border DockPanel.Dock="Bottom" Margin="0,20,0,0" BorderBrush="#282828" BorderThickness="0,1,0,0" SnapsToDevicePixels="True">
-            <StackPanel Margin="0,20,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Width="80" Height="26" Content="应用"/>
-                <Button Width="100" Height="26" Content="恢复默认设置" Margin="20,0,0,0"/>
-            </StackPanel>
-        </Border>
-        <StackPanel DockPanel.Dock="Left">
-            <StackPanel Margin="{StaticResource SettingItemMargin}">
-                <TextBlock Text="字体类型" Style="{StaticResource SettingItemTextStyle}"/>
-                <ComboBox ItemsSource="{Binding FontFamilies,Mode=OneTime}" Margin="{StaticResource SettingItemInsideMargin}" Style="{StaticResource ComboBoxStyle}" ItemContainerStyle="{StaticResource FontFamiliesItemStyle}"/>
-            </StackPanel>
-            <StackPanel Margin="{StaticResource SettingItemMargin}">
-                <TextBlock Text="字体大小" Style="{StaticResource SettingItemTextStyle}"/>
-                <ComboBox Width="200" Height="26" HorizontalAlignment="Left" Margin="{StaticResource SettingItemInsideMargin}"/>
-            </StackPanel>
-            <StackPanel Margin="{StaticResource SettingItemMargin}">
-                <TextBlock Text="缩进空格数" Style="{StaticResource SettingItemTextStyle}"/>
-                <ComboBox Width="200" Height="26" HorizontalAlignment="Left" Margin="{StaticResource SettingItemInsideMargin}"/>
-            </StackPanel>
-        </StackPanel>
-        <StackPanel Margin="30,0,0,0">
-            <TextBlock Text="高亮颜色" Style="{StaticResource SettingItemTextStyle}"/>
-            <Grid Margin="{StaticResource SettingItemInsideMargin}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="15"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="15"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="15"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="15"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Border Grid.Row="0" Grid.Column="0" Background="Gray">
-                    <TextBlock Text="字符" Style="{StaticResource SettingSecondItemTextStyle}"/>
-                </Border>
-                <TextBox Grid.Row="0" Grid.Column="1" Width="150" Height="26" HorizontalAlignment="Left"/>
-                <Border Grid.Row="2" Grid.Column="0" Background="Gray">
-                    <TextBlock Text="键名" Style="{StaticResource SettingSecondItemTextStyle}"/>
-                </Border>
-                <TextBox Grid.Row="2" Grid.Column="1" Width="150" Height="26" HorizontalAlignment="Left"/>
-                <Border Grid.Row="4" Grid.Column="0" Background="Gray">
-                    <TextBlock Text="字符串" Style="{StaticResource SettingSecondItemTextStyle}"/>
-                </Border>
-                <TextBox Grid.Row="4" Grid.Column="1" Width="150" Height="26" HorizontalAlignment="Left"/>
-                <Border Grid.Row="6" Grid.Column="0" Background="Gray">
-                    <TextBlock Text="数字" Style="{StaticResource SettingSecondItemTextStyle}"/>
-                </Border>
-                <TextBox Grid.Row="6" Grid.Column="1" Width="150" Height="26" HorizontalAlignment="Left"/>
-                <Border Grid.Row="8" Grid.Column="0" Background="Gray">
-                    <TextBlock Text="布尔和null" Style="{StaticResource SettingSecondItemTextStyle}"/>
-                </Border>
-                <TextBox Grid.Row="8" Grid.Column="1" Width="150" Height="26" HorizontalAlignment="Left"/>
-            </Grid>
-        </StackPanel>
-    </DockPanel>-->
 </Window>
