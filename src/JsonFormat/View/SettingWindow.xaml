@@ -6,6 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:JsonFormat.View"
         xmlns:converter="clr-namespace:JsonFormat.Converter"
+        xmlns:util="clr-namespace:JsonFormat.Util"
         Title="设置" SizeToContent="WidthAndHeight" ResizeMode="NoResize" Background="#1E1E1E">
     <Window.Resources>
         <ResourceDictionary>
@@ -27,7 +28,6 @@
                 <Setter Property="FontWeight" Value="Bold"/>
                 <Setter Property="Margin" Value="0,0,0,5"/>
             </Style>
-
             <Style x:Key="SettingClassDecoratorStyle" TargetType="Border">
                 <Setter Property="Height" Value="1"/>
                 <Setter Property="Background" Value="#2A2A2A"/>
@@ -112,6 +112,44 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+
+            <Style x:Key="ColorTextBoxStyle" TargetType="TextBox">
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="Height" Value="26"/>
+                <Setter Property="MaxLength" Value="9"/>
+                <Setter Property="MinWidth" Value="85"/>
+                <Setter Property="InputMethod.IsInputMethodEnabled" Value="False"/>
+                <Setter Property="Validation.ErrorTemplate" Value="{x:Null}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TextBox">
+                            <Grid>
+                                <Border x:Name="MainBorder" CornerRadius="4" Background="White" BorderBrush="Transparent" BorderThickness="2"/>
+                                <ScrollViewer x:Name="PART_ContentHost" Margin="7,0" VerticalAlignment="Center"/>
+                                <Canvas>
+                                    <Border x:Name="ErrorTip" Canvas.Top="28" Visibility="Collapsed" CornerRadius="4" Background="Red">
+                                        <TextBlock Text="无效的颜色值" Foreground="White" Margin="10,5"/>
+                                    </Border>
+                                </Canvas>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="MainBorder" Property="BorderBrush" Value="RoyalBlue"/>
+                                </Trigger>
+                                <Trigger Property="IsFocused" Value="True">
+                                    <Setter TargetName="MainBorder" Property="BorderBrush" Value="RoyalBlue"/>
+                                </Trigger>
+                                <Trigger Property="Validation.HasError" Value="True">
+                                    <Setter TargetName="ErrorTip" Property="Visibility" Value="Visible"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Opacity" Value="0.5"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </Window.Resources>
 
@@ -150,6 +188,21 @@
             <Border Style="{StaticResource SettingClassDecoratorStyle}"/>
         </DockPanel>
         <WrapPanel Margin="{StaticResource SettingClassWithClassMargin}">
+            <Border Background="#555" CornerRadius="4">
+                <StackPanel Margin="10">
+                    <TextBlock Text="字符颜色" Style="{StaticResource SettingItemNameTextStyle}"/>
+                    <TextBox Style="{StaticResource ColorTextBoxStyle}">
+                        <TextBox.Text>
+                            <Binding Path="CharColor" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <util:ColorValidationRule ValidatesOnTargetUpdated="True"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                        <!--restore setting saved color when lost focus-->
+                    </TextBox>
+                </StackPanel>
+            </Border>
             
         </WrapPanel>
 

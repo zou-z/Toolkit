@@ -48,6 +48,12 @@ namespace JsonFormat.Model
             set => SetProperty(ref selectedIndentSpaceCount, value);
         }
 
+        public string CharColor
+        {
+            get => charColor;
+            set => SetProperty(ref charColor, value);
+        }
+
         public AppSetting()
         {
             if (Assembly.GetExecutingAssembly().GetName().Name is string name)
@@ -119,9 +125,14 @@ namespace JsonFormat.Model
             {
                 Settings.RenderSetting.IndentSpaceCount = RenderSetting.GetDefaultIndentSpaceCount();
             }
+            if (!ColorUtil.IsValidStringColor(Settings.RenderSetting.CharColor))
+            {
+                Settings.RenderSetting.CharColor = RenderSetting.GetDefaultTextColor();
+            }
             SelectedFontFamily = Settings.RenderSetting.FontFamily;
             SelectedFontSize = Settings.RenderSetting.FontSize;
             SelectedIndentSpaceCount = Settings.RenderSetting.IndentSpaceCount;
+            CharColor = Settings.RenderSetting.CharColor;
         }
 
         private void OpenSetting()
@@ -163,5 +174,6 @@ namespace JsonFormat.Model
         private string selectedFontFamily = string.Empty;
         private int selectedFontSize = 0;
         private int selectedIndentSpaceCount = 0;
+        private string charColor = string.Empty;
     }
 }
