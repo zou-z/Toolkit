@@ -7,33 +7,36 @@
         xmlns:local="clr-namespace:JsonFormat.View"
         Title="设置" SizeToContent="WidthAndHeight" ResizeMode="NoResize" Background="#1E1E1E">
     <Window.Resources>
-        <Thickness x:Key="SettingItemMargin" Left="0" Top="0" Right="0" Bottom="20"/>
-        <Thickness x:Key="SettingItemInsideMargin" Left="0" Top="10" Right="0" Bottom="0"/>
-        <Style x:Key="TextBaseStyle" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-        </Style>
-        <Style x:Key="SettingSecondItemTextStyle" TargetType="TextBlock" BasedOn="{StaticResource TextBaseStyle}">
-            <Setter Property="Margin" Value="10,0"/>
-            <Setter Property="TextAlignment" Value="Center"/>
-        </Style>
-        <Style x:Key="SettingItemTextStyle" TargetType="TextBlock" BasedOn="{StaticResource TextBaseStyle}">
-            <Setter Property="Foreground" Value="DarkGray"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="FontSize" Value="14"/>
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/JsonFormat;component/Style/ScrollViewer.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
 
-        
-        <Style x:Key="ComboBoxStyle" TargetType="ComboBox">
-            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-            <Setter Property="Width" Value="200"/>
-            <Setter Property="Height" Value="26"/>
-            <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ComboBox">
-                        <Border>
-                            <Grid>
+            <Thickness x:Key="SettingItemMargin" Left="0" Top="0" Right="0" Bottom="20"/>
+            <Thickness x:Key="SettingItemInsideMargin" Left="0" Top="10" Right="0" Bottom="0"/>
+            <Style x:Key="TextBaseStyle" TargetType="TextBlock">
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+            <Style x:Key="SettingSecondItemTextStyle" TargetType="TextBlock" BasedOn="{StaticResource TextBaseStyle}">
+                <Setter Property="Margin" Value="10,0"/>
+                <Setter Property="TextAlignment" Value="Center"/>
+            </Style>
+            <Style x:Key="SettingItemTextStyle" TargetType="TextBlock" BasedOn="{StaticResource TextBaseStyle}">
+                <Setter Property="Foreground" Value="DarkGray"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="FontSize" Value="14"/>
+            </Style>
+
+            <Style x:Key="ComboBoxStyle" TargetType="ComboBox">
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="Width" Value="200"/>
+                <Setter Property="Height" Value="26"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ComboBox">
+                            <Grid ToolTip="{TemplateBinding SelectionBoxItem}">
                                 <ToggleButton IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}" Cursor="Hand" FocusVisualStyle="{x:Null}">
                                     <ToggleButton.Template>
                                         <ControlTemplate TargetType="ToggleButton">
@@ -69,46 +72,47 @@
                                         </ControlTemplate>
                                     </ToggleButton.Template>
                                 </ToggleButton>
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Content="{TemplateBinding SelectionBoxItem}" IsHitTestVisible="False" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"/>
+                                <TextBlock Text="{TemplateBinding SelectionBoxItem}" HorizontalAlignment="Left" Margin="10,0,26,0" VerticalAlignment="Center" IsHitTestVisible="False" TextTrimming="CharacterEllipsis"/>
                                 <Popup IsOpen="{TemplateBinding IsDropDownOpen}" Placement="Bottom" Focusable="False" AllowsTransparency="True" PopupAnimation="Slide">
-                                    <Border MinWidth="{TemplateBinding ActualWidth}" CornerRadius="4" Background="White">
-                                        <ScrollViewer MaxHeight="500" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" CanContentScroll="False">
-                                            <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                    <Border Width="{TemplateBinding ActualWidth}" CornerRadius="4" Background="White">
+                                        <ScrollViewer MaxHeight="500" Margin="0,10" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" CanContentScroll="False" Style="{StaticResource ScrollViewerStyle}">
+                                            <StackPanel IsItemsHost="True"/>
                                         </ScrollViewer>
                                     </Border>
                                 </Popup>
                             </Grid>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="ItemContainerStyle">
-                <Setter.Value>
-                    <Style TargetType="ComboBoxItem">
-                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                        <Setter Property="Height" Value="60"/>
-                        <Setter Property="Foreground" Value="#2E5B7E"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="ComboBoxItem">
-                                    <Border SnapsToDevicePixels="True" Background="{TemplateBinding Background}" CornerRadius="4">
-                                        <TextBlock Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="Gainsboro"/>
-                                        </Trigger>
-                                        <Trigger Property="IsSelected" Value="True">
-                                            <Setter Property="Background" Value="#BCBCBC"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Setter.Value>
-            </Setter>
-        </Style>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="ItemContainerStyle">
+                    <Setter.Value>
+                        <Style TargetType="ComboBoxItem">
+                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                            <Setter Property="Height" Value="26"/>
+                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ComboBoxItem">
+                                        <Border Width="{TemplateBinding ActualWidth}" Background="{TemplateBinding Background}" CornerRadius="4" ToolTip="{TemplateBinding Content}">
+                                            <TextBlock Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" Margin="10,0" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="Gainsboro"/>
+                                            </Trigger>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="Background" Value="#BCBCBC"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
     </Window.Resources>
     <DockPanel Margin="20">
         <Border DockPanel.Dock="Bottom" Margin="0,20,0,0" BorderBrush="#282828" BorderThickness="0,1,0,0" SnapsToDevicePixels="True">
