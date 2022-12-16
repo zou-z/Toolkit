@@ -27,7 +27,30 @@
                 <Setter Property="FontWeight" Value="Bold"/>
                 <Setter Property="FontSize" Value="14"/>
             </Style>
-            
+
+            <Style x:Key="FontFamiliesItemStyle" TargetType="ComboBoxItem">
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="Height" Value="26"/>
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ComboBoxItem">
+                            <Border Width="{TemplateBinding ActualWidth}" Background="{TemplateBinding Background}" CornerRadius="4" ToolTip="{TemplateBinding Content}">
+                                <TextBlock Text="{TemplateBinding Content}" FontFamily="{TemplateBinding Content,Converter={StaticResource TextFontFamilyConverter}}" Foreground="{TemplateBinding Foreground}" Margin="10,0" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="Gainsboro"/>
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="#BCBCBC"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </Window.Resources>
     <DockPanel Margin="20">
@@ -40,7 +63,7 @@
         <StackPanel DockPanel.Dock="Left">
             <StackPanel Margin="{StaticResource SettingItemMargin}">
                 <TextBlock Text="字体类型" Style="{StaticResource SettingItemTextStyle}"/>
-                <ComboBox ItemsSource="{Binding FontFamilies,Mode=OneTime}" Margin="{StaticResource SettingItemInsideMargin}" Style="{StaticResource ComboBoxStyle}"/>
+                <ComboBox ItemsSource="{Binding FontFamilies,Mode=OneTime}" Margin="{StaticResource SettingItemInsideMargin}" Style="{StaticResource ComboBoxStyle}" ItemContainerStyle="{StaticResource FontFamiliesItemStyle}"/>
             </StackPanel>
             <StackPanel Margin="{StaticResource SettingItemMargin}">
                 <TextBlock Text="字体大小" Style="{StaticResource SettingItemTextStyle}"/>

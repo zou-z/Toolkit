@@ -46,17 +46,21 @@ namespace JsonFormat.Model
 
         private void LoadFontFamilies()
         {
-            //foreach (FontFamily font in Fonts.SystemFontFamilies)
-            //{
-            //    fontFamilies.Add(font.Source);
-            //}
-            //fontFamilies.Sort();
-
-            fontFamilies.Add("ccc");
-            fontFamilies.Add("bbb");
-            fontFamilies.Add("aaa");
+            foreach (FontFamily font in Fonts.SystemFontFamilies)
+            {
+                if (font.Source == "HoloLens MDL2 Assets" ||
+                    font.Source == "Marlett" ||
+                    font.Source == "OpenSymbol" ||
+                    font.Source == "Segoe MDL2 Assets" ||
+                    font.Source == "Symbol" ||
+                    font.Source == "Webdings" ||
+                    font.Source == "Wingdings")
+                {
+                    continue;
+                }
+                fontFamilies.Add(font.Source);
+            }
             fontFamilies.Sort();
-
         }
 
         private void OpenSetting()
