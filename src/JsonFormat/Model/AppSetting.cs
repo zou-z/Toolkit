@@ -46,10 +46,17 @@ namespace JsonFormat.Model
 
         private void LoadFontFamilies()
         {
-            foreach (FontFamily font in Fonts.SystemFontFamilies)
-            {
-                fontFamilies.Add(font.Source);
-            }
+            //foreach (FontFamily font in Fonts.SystemFontFamilies)
+            //{
+            //    fontFamilies.Add(font.Source);
+            //}
+            //fontFamilies.Sort();
+
+            fontFamilies.Add("ccc");
+            fontFamilies.Add("bbb");
+            fontFamilies.Add("aaa");
+            fontFamilies.Sort();
+
         }
 
         private void OpenSetting()
