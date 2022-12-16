@@ -12,20 +12,26 @@
                 <ResourceDictionary Source="/JsonFormat;component/Style/ComboBox.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            <Thickness x:Key="SettingItemMargin" Left="0" Top="0" Right="0" Bottom="20"/>
-            <Thickness x:Key="SettingItemInsideMargin" Left="0" Top="10" Right="0" Bottom="0"/>
-            <Style x:Key="TextBaseStyle" TargetType="TextBlock">
+            <Thickness x:Key="SettingClassWithContentMargin" Left="0" Top="0" Right="0" Bottom="5"/>
+            <Thickness x:Key="SettingClassWithClassMargin" Left="0" Top="20" Right="0" Bottom="0"/>
+            <Thickness x:Key="SettingItemHorizontalMargin" Left="20" Top="0" Right="0" Bottom="0"/>
+
+            <Style x:Key="SettingClassTextStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="15"/>
                 <Setter Property="Foreground" Value="White"/>
-                <Setter Property="VerticalAlignment" Value="Center"/>
-            </Style>
-            <Style x:Key="SettingSecondItemTextStyle" TargetType="TextBlock" BasedOn="{StaticResource TextBaseStyle}">
-                <Setter Property="Margin" Value="10,0"/>
-                <Setter Property="TextAlignment" Value="Center"/>
-            </Style>
-            <Style x:Key="SettingItemTextStyle" TargetType="TextBlock" BasedOn="{StaticResource TextBaseStyle}">
-                <Setter Property="Foreground" Value="DarkGray"/>
                 <Setter Property="FontWeight" Value="Bold"/>
-                <Setter Property="FontSize" Value="14"/>
+            </Style>
+            <Style x:Key="SettingItemNameTextStyle" TargetType="TextBlock">
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Margin" Value="0,0,0,5"/>
+            </Style>
+
+            <Style x:Key="SettingClassDecoratorStyle" TargetType="Border">
+                <Setter Property="Height" Value="1"/>
+                <Setter Property="Background" Value="#282828"/>
+                <Setter Property="SnapsToDevicePixels" Value="True"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
             </Style>
 
             <Style x:Key="FontFamiliesItemStyle" TargetType="ComboBoxItem">
@@ -53,7 +59,30 @@
             </Style>
         </ResourceDictionary>
     </Window.Resources>
-    <DockPanel Margin="20">
+    <StackPanel Margin="20">
+        <DockPanel Margin="{StaticResource SettingClassWithContentMargin}">
+            <TextBlock DockPanel.Dock="Left" Text="字体" Style="{StaticResource SettingClassTextStyle}"/>
+            <Border Style="{StaticResource SettingClassDecoratorStyle}"/>
+        </DockPanel>
+        <StackPanel Orientation="Horizontal">
+            <StackPanel>
+                <TextBlock Text="字体类型" Style="{StaticResource SettingItemNameTextStyle}"/>
+                <ComboBox ItemsSource="{Binding FontFamilies,Mode=OneTime}" Style="{StaticResource ComboBoxStyle}" ItemContainerStyle="{StaticResource FontFamiliesItemStyle}"/>
+            </StackPanel>
+            <StackPanel Margin="{StaticResource SettingItemHorizontalMargin}">
+                <TextBlock Text="字体大小" Style="{StaticResource SettingItemNameTextStyle}"/>
+                <ComboBox/>
+            </StackPanel>
+        </StackPanel>
+
+
+
+        <StackPanel Orientation="Horizontal" Margin="{StaticResource SettingClassWithClassMargin}">
+            <Button Width="80" Height="26" Content="应用"/>
+            <Button Width="100" Height="26" Content="恢复默认设置" Margin="20,0,0,0"/>
+        </StackPanel>
+    </StackPanel>
+    <!--<DockPanel Margin="20">
         <Border DockPanel.Dock="Bottom" Margin="0,20,0,0" BorderBrush="#282828" BorderThickness="0,1,0,0" SnapsToDevicePixels="True">
             <StackPanel Margin="0,20,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Width="80" Height="26" Content="应用"/>
@@ -114,5 +143,5 @@
                 <TextBox Grid.Row="8" Grid.Column="1" Width="150" Height="26" HorizontalAlignment="Left"/>
             </Grid>
         </StackPanel>
-    </DockPanel>
+    </DockPanel>-->
 </Window>
