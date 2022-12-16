@@ -155,8 +155,8 @@
 
         <!--底部-->
         <StackPanel Orientation="Horizontal">
-            <Button Width="80" Height="26" Content="应用"/>
-            <Button Width="100" Height="26" Content="恢复默认设置" Margin="20,0,0,0"/>
+            <Button Width="80" Height="26" Content="应用" Command="{Binding ApplySettingsCommand,Mode=OneTime}"/>
+            <Button Width="100" Height="26" Content="恢复默认设置" Margin="20,0,0,0" Command="{Binding RestoreSettingsCommand,Mode=OneTime}"/>
         </StackPanel>
     </StackPanel>
 </Window>

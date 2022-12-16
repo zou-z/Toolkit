@@ -18,6 +18,10 @@ namespace JsonFormat.Model
     {
         public RelayCommand OpenSettingCommand => openSettingCommand ??= new RelayCommand(OpenSetting);
 
+        public AsyncRelayCommand ApplySettingsCommand => applySettingsCommand ??= new AsyncRelayCommand(ApplySettings);
+
+        public AsyncRelayCommand RestoreSettingsCommand => restoreSettingsCommand ??= new AsyncRelayCommand(RestoreSettings);
+
         public Settings Settings { get; private set; }
 
         public List<string> FontFamilies => fontFamilies;
@@ -138,7 +142,19 @@ namespace JsonFormat.Model
             settingWindow.Show();
         }
 
+        private async Task ApplySettings()
+        {
+            await Task.Delay(100);
+        }
+
+        private async Task RestoreSettings()
+        {
+            await Task.Delay(100);
+        }
+
         private RelayCommand? openSettingCommand = null;
+        private AsyncRelayCommand? applySettingsCommand = null;
+        private AsyncRelayCommand? restoreSettingsCommand = null;
         private SettingWindow? settingWindow = null;
         private readonly string currentAssemblyName;
         private readonly List<string> fontFamilies;
