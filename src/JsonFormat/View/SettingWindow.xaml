@@ -14,25 +14,26 @@
             </ResourceDictionary.MergedDictionaries>
 
             <Thickness x:Key="SettingClassWithContentMargin" Left="0" Top="0" Right="0" Bottom="5"/>
-            <Thickness x:Key="SettingClassWithClassMargin" Left="0" Top="20" Right="0" Bottom="0"/>
+            <Thickness x:Key="SettingClassWithClassMargin" Left="0" Top="0" Right="0" Bottom="20"/>
             <Thickness x:Key="SettingItemHorizontalMargin" Left="20" Top="0" Right="0" Bottom="0"/>
 
             <Style x:Key="SettingClassTextStyle" TargetType="TextBlock">
-                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="FontSize" Value="14"/>
                 <Setter Property="Foreground" Value="White"/>
                 <Setter Property="FontWeight" Value="Bold"/>
             </Style>
             <Style x:Key="SettingItemNameTextStyle" TargetType="TextBlock">
-                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Foreground" Value="DarkGray"/>
                 <Setter Property="FontWeight" Value="Bold"/>
                 <Setter Property="Margin" Value="0,0,0,5"/>
             </Style>
 
             <Style x:Key="SettingClassDecoratorStyle" TargetType="Border">
                 <Setter Property="Height" Value="1"/>
-                <Setter Property="Background" Value="#282828"/>
+                <Setter Property="Background" Value="#2A2A2A"/>
                 <Setter Property="SnapsToDevicePixels" Value="True"/>
                 <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Margin" Value="5,0,0,0"/>
             </Style>
 
             <converter:TextFontFamilyConverter x:Key="TextFontFamilyConverter"/>
@@ -118,7 +119,7 @@
             <TextBlock DockPanel.Dock="Left" Text="字体" Style="{StaticResource SettingClassTextStyle}"/>
             <Border Style="{StaticResource SettingClassDecoratorStyle}"/>
         </DockPanel>
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal" Margin="{StaticResource SettingClassWithClassMargin}">
             <StackPanel>
                 <TextBlock Text="字体类型" Style="{StaticResource SettingItemNameTextStyle}"/>
                 <ComboBox ItemsSource="{Binding FontFamilies,Mode=OneTime}" SelectedItem="{Binding SelectedFontFamily,Mode=TwoWay}" Style="{StaticResource ComboBoxStyle}" Template="{StaticResource FontFamiliesTemplate}" ItemContainerStyle="{StaticResource FontFamiliesItemStyle}"/>
@@ -128,10 +129,19 @@
                 <ComboBox ItemsSource="{Binding FontSizes,Mode=OneTime}" SelectedItem="{Binding SelectedFontSize,Mode=TwoWay}" Style="{StaticResource ComboBoxStyle}"/>
             </StackPanel>
         </StackPanel>
+        <DockPanel Margin="{StaticResource SettingClassWithContentMargin}">
+            <TextBlock DockPanel.Dock="Left" Text="缩进" Style="{StaticResource SettingClassTextStyle}"/>
+            <Border Style="{StaticResource SettingClassDecoratorStyle}"/>
+        </DockPanel>
+        <StackPanel Margin="{StaticResource SettingClassWithClassMargin}">
+            <StackPanel HorizontalAlignment="Left">
+                <TextBlock Text="缩进空格数" Style="{StaticResource SettingItemNameTextStyle}"/>
+                <ComboBox ItemsSource="{Binding IndentSpaceCounts,Mode=OneTime}" SelectedItem="{Binding SelectedIndentSpaceCount,Mode=TwoWay}" Style="{StaticResource ComboBoxStyle}"/>
+            </StackPanel>
+        </StackPanel>
 
 
-
-        <StackPanel Orientation="Horizontal" Margin="{StaticResource SettingClassWithClassMargin}">
+        <StackPanel Orientation="Horizontal">
             <Button Width="80" Height="26" Content="应用"/>
             <Button Width="100" Height="26" Content="恢复默认设置" Margin="20,0,0,0"/>
         </StackPanel>
