@@ -22,6 +22,93 @@
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="FontSize" Value="14"/>
         </Style>
+
+        
+        <Style x:Key="ComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Border>
+                            <Grid>
+                                <ToggleButton IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}" Cursor="Hand" FocusVisualStyle="{x:Null}">
+                                    <ToggleButton.Template>
+                                        <ControlTemplate TargetType="ToggleButton">
+                                            <Border x:Name="MainBorder" CornerRadius="4" Background="White">
+                                                <Path x:Name="ToggleIcon" Data="M0,0 L5,5 10,0" Stroke="RoyalBlue" StrokeThickness="1" Margin="0,0,8,0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                    <Path.RenderTransform>
+                                                        <RotateTransform x:Name="Rotate" Angle="0" CenterX="5" CenterY="2.5"/>
+                                                    </Path.RenderTransform>
+                                                </Path>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="MainBorder" Property="Background" Value="Gainsboro"/>
+                                                </Trigger>
+                                                <Trigger Property="IsChecked" Value="True">
+                                                    <Setter TargetName="MainBorder" Property="Background" Value="Gainsboro"/>
+                                                </Trigger>
+                                                <EventTrigger RoutedEvent="ToggleButton.Checked">
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation Storyboard.TargetName="Rotate" Storyboard.TargetProperty="Angle" To="180" Duration="0:0:0.2"/>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </EventTrigger>
+                                                <EventTrigger RoutedEvent="ToggleButton.Unchecked">
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation Storyboard.TargetName="Rotate" Storyboard.TargetProperty="Angle" To="0" Duration="0:0:0.2"/>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </EventTrigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </ToggleButton.Template>
+                                </ToggleButton>
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Content="{TemplateBinding SelectionBoxItem}" IsHitTestVisible="False" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"/>
+                                <Popup IsOpen="{TemplateBinding IsDropDownOpen}" Placement="Bottom" Focusable="False" AllowsTransparency="True" PopupAnimation="Slide">
+                                    <Border MinWidth="{TemplateBinding ActualWidth}" CornerRadius="4" Background="White">
+                                        <ScrollViewer MaxHeight="500" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" CanContentScroll="False">
+                                            <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                        </ScrollViewer>
+                                    </Border>
+                                </Popup>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="ComboBoxItem">
+                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                        <Setter Property="Height" Value="60"/>
+                        <Setter Property="Foreground" Value="#2E5B7E"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ComboBoxItem">
+                                    <Border SnapsToDevicePixels="True" Background="{TemplateBinding Background}" CornerRadius="4">
+                                        <TextBlock Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="Gainsboro"/>
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="#BCBCBC"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     <DockPanel Margin="20">
         <Border DockPanel.Dock="Bottom" Margin="0,20,0,0" BorderBrush="#282828" BorderThickness="0,1,0,0" SnapsToDevicePixels="True">
@@ -33,7 +120,7 @@
         <StackPanel DockPanel.Dock="Left">
             <StackPanel Margin="{StaticResource SettingItemMargin}">
                 <TextBlock Text="字体类型" Style="{StaticResource SettingItemTextStyle}"/>
-                <ComboBox Width="200" Height="26" HorizontalAlignment="Left" Margin="{StaticResource SettingItemInsideMargin}"/>
+                <ComboBox ItemsSource="{Binding FontFamilies,Mode=OneTime}" Margin="{StaticResource SettingItemInsideMargin}" Style="{StaticResource ComboBoxStyle}"/>
             </StackPanel>
             <StackPanel Margin="{StaticResource SettingItemMargin}">
                 <TextBlock Text="字体大小" Style="{StaticResource SettingItemTextStyle}"/>

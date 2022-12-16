@@ -6,358 +6,219 @@
                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
                   xmlns:local="clr-namespace:JsonFormat.View">
     <FrameworkElement.Resources>
-        <Style x:Key="ScrollBarThumb" TargetType="Thumb">
-            <Setter Property="OverridesDefaultStyle" Value="true"/>
-            <Setter Property="IsTabStop" Value="false"/>
-            <Setter Property="Background" Value="DimGray"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Thumb">
-                        <Border Background="{TemplateBinding Background}" SnapsToDevicePixels="True"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="ScrollBarPageButton" TargetType="RepeatButton">
-            <Setter Property="OverridesDefaultStyle" Value="true"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Focusable" Value="false"/>
-            <Setter Property="IsTabStop" Value="false"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type RepeatButton}">
-                        <Rectangle Fill="{TemplateBinding Background}" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="VerticalScrollBarStyle" TargetType="ScrollBar">
-            <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
-            <Setter Property="Stylus.IsFlicksEnabled" Value="false"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ScrollBar">
-                        <Grid x:Name="grid" Width="4" Background="Transparent" HorizontalAlignment="Right" SnapsToDevicePixels="True">
-                            <Track x:Name="PART_Track" IsDirectionReversed="True">
-                                <Track.DecreaseRepeatButton>
-                                    <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}" Style="{StaticResource ScrollBarPageButton}"/>
-                                </Track.DecreaseRepeatButton>
-                                <Track.IncreaseRepeatButton>
-                                    <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Style="{StaticResource ScrollBarPageButton}"/>
-                                </Track.IncreaseRepeatButton>
-                                <Track.Thumb>
-                                    <Thumb Style="{StaticResource ScrollBarThumb}"/>
-                                </Track.Thumb>
-                            </Track>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <EventTrigger RoutedEvent="MouseEnter">
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="grid" Storyboard.TargetProperty="Width" To="12" Duration="0:0:0.1"/>
-                                        <ColorAnimation Storyboard.TargetName="grid" Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" Duration="0:0:0.1">
-                                            <ColorAnimation.To>
-                                                <Color A="51" R="0" G="0" B="0"/>
-                                            </ColorAnimation.To>
-                                        </ColorAnimation>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger>
-                            <EventTrigger RoutedEvent="MouseLeave">
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="grid" Storyboard.TargetProperty="Width" To="4" Duration="0:0:0.1"/>
-                                        <ColorAnimation Storyboard.TargetName="grid" Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" Duration="0:0:0.1">
-                                            <ColorAnimation.To>
-                                                <Color A="0" R="0" G="0" B="0"/>
-                                            </ColorAnimation.To>
-                                        </ColorAnimation>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="HorizontalScrollBarStyle" TargetType="ScrollBar">
-            <Setter Property="Orientation" Value="Horizontal"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ScrollBar">
-                        <Grid x:Name="grid" Height="4" Background="Transparent" VerticalAlignment="Bottom" SnapsToDevicePixels="True">
-                            <Track x:Name="PART_Track" >
-                                <Track.DecreaseRepeatButton>
-                                    <RepeatButton Command="{x:Static ScrollBar.PageLeftCommand}" Style="{StaticResource ScrollBarPageButton}"/>
-                                </Track.DecreaseRepeatButton>
-                                <Track.IncreaseRepeatButton>
-                                    <RepeatButton Command="{x:Static ScrollBar.PageRightCommand}" Style="{StaticResource ScrollBarPageButton}"/>
-                                </Track.IncreaseRepeatButton>
-                                <Track.Thumb>
-                                    <Thumb Style="{StaticResource ScrollBarThumb}" />
-                                </Track.Thumb>
-                            </Track>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <EventTrigger RoutedEvent="MouseEnter">
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="grid" Storyboard.TargetProperty="Height" To="12" Duration="0:0:0.1"/>
-                                        <ColorAnimation Storyboard.TargetName="grid" Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" Duration="0:0:0.1">
-                                            <ColorAnimation.To>
-                                                <Color A="51" R="0" G="0" B="0"/>
-                                            </ColorAnimation.To>
-                                        </ColorAnimation>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger>
-                            <EventTrigger RoutedEvent="MouseLeave">
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="grid" Storyboard.TargetProperty="Height" To="4" Duration="0:0:0.1"/>
-                                        <ColorAnimation Storyboard.TargetName="grid" Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" Duration="0:0:0.1">
-                                            <ColorAnimation.To>
-                                                <Color A="0" R="0" G="0" B="0"/>
-                                            </ColorAnimation.To>
-                                        </ColorAnimation>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="ScrollViewerStyle" TargetType="ScrollViewer">
-            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ScrollViewer">
-                        <Grid Background="{TemplateBinding Background}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" CanContentScroll="{TemplateBinding CanContentScroll}" CanHorizontallyScroll="False" CanVerticallyScroll="False" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Margin="{TemplateBinding Padding}" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
-                            <ScrollBar x:Name="PART_VerticalScrollBar" AutomationProperties.AutomationId="VerticalScrollBar" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Maximum="{TemplateBinding ScrollableHeight}" Minimum="0" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportHeight}" Style="{DynamicResource VerticalScrollBarStyle}"/>
-                            <ScrollBar x:Name="PART_HorizontalScrollBar" AutomationProperties.AutomationId="HorizontalScrollBar" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Maximum="{TemplateBinding ScrollableWidth}" Minimum="0" Orientation="Horizontal" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportWidth}"  Style="{DynamicResource HorizontalScrollBarStyle}"/>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/JsonFormat;component/Style/ScrollViewer.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
 
-        <Style x:Key="ContextMenuStyle" TargetType="ContextMenu">
-            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-            <Setter Property="HorizontalOffset" Value="-8"/>
-            <Setter Property="VerticalOffset" Value="-8"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ContextMenu">
-                        <Grid Margin="8">
-                            <Border CornerRadius="5" Background="#252525">
-                                <Border.Effect>
-                                    <DropShadowEffect ShadowDepth="0" BlurRadius="8" Color="Black"/>
-                                </Border.Effect>
+            <Style x:Key="ContextMenuStyle" TargetType="ContextMenu">
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="HorizontalOffset" Value="-8"/>
+                <Setter Property="VerticalOffset" Value="-8"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ContextMenu">
+                            <Grid Margin="8">
+                                <Border CornerRadius="5" Background="#252525">
+                                    <Border.Effect>
+                                        <DropShadowEffect ShadowDepth="0" BlurRadius="8" Color="Black"/>
+                                    </Border.Effect>
+                                </Border>
+                                <StackPanel Margin="8,10" IsItemsHost="True"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="MenuItem">
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="Focusable" Value="False"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="MenuItem">
+                            <Border x:Name="MainBorder" CornerRadius="2" Height="24" Background="Transparent" BorderBrush="Transparent" BorderThickness="1">
+                                <TextBlock Text="{TemplateBinding Header}" Margin="8,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                             </Border>
-                            <StackPanel Margin="8,10" IsItemsHost="True"/>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style TargetType="MenuItem">
-            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-            <Setter Property="Focusable" Value="False"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="MenuItem">
-                        <Border x:Name="MainBorder" CornerRadius="2" Height="24" Background="Transparent" BorderBrush="Transparent" BorderThickness="1">
-                            <TextBlock Text="{TemplateBinding Header}" Margin="8,0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="MainBorder" Property="Background" Value="#04395E"/>
-                                <Setter TargetName="MainBorder" Property="BorderBrush" Value="#007FD4"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="MainBorder" Property="Background" Value="#04395E"/>
-                                <Setter TargetName="MainBorder" Property="BorderBrush" Value="#007FD4"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="CustomMenuItemStyle" TargetType="MenuItem">
-            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-            <Setter Property="StaysOpenOnClick" Value="True"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="MenuItem">
-                        <ContentPresenter ContentSource="Header"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="TextBoxStyle" TargetType="TextBox">
-            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="MaxLength" Value="30"/>
-            <Setter Property="Width" Value="200"/>
-            <Setter Property="Height" Value="30"/>
-            <Setter Property="CaretBrush" Value="#007FD4"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TextBox">
-                        <Grid>
-                            <Border x:Name="MainBorder" CornerRadius="2" Background="#3C3C3C" BorderBrush="Transparent" BorderThickness="1"/>
-                            <TextBlock x:Name="PlaceHolder" Visibility="Collapsed" Text="请输入标签名称..." Opacity="0.5" Margin="10,0" VerticalAlignment="Center"/>
-                            <ScrollViewer x:Name="PART_ContentHost" Margin="8,0" VerticalAlignment="Center"/>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self},Path=Text}" Value="">
-                                <Setter TargetName="PlaceHolder" Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                            <Trigger Property="IsFocused" Value="True">
-                                <Setter TargetName="MainBorder" Property="BorderBrush" Value="#007FD4"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="MainBorder" Property="Background" Value="#04395E"/>
+                                    <Setter TargetName="MainBorder" Property="BorderBrush" Value="#007FD4"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="MainBorder" Property="Background" Value="#04395E"/>
+                                    <Setter TargetName="MainBorder" Property="BorderBrush" Value="#007FD4"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="CustomMenuItemStyle" TargetType="MenuItem">
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="StaysOpenOnClick" Value="True"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="MenuItem">
+                            <ContentPresenter ContentSource="Header"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="TextBoxStyle" TargetType="TextBox">
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="MaxLength" Value="30"/>
+                <Setter Property="Width" Value="200"/>
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="CaretBrush" Value="#007FD4"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TextBox">
+                            <Grid>
+                                <Border x:Name="MainBorder" CornerRadius="2" Background="#3C3C3C" BorderBrush="Transparent" BorderThickness="1"/>
+                                <TextBlock x:Name="PlaceHolder" Visibility="Collapsed" Text="请输入标签名称..." Opacity="0.5" Margin="10,0" VerticalAlignment="Center"/>
+                                <ScrollViewer x:Name="PART_ContentHost" Margin="8,0" VerticalAlignment="Center"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self},Path=Text}" Value="">
+                                    <Setter TargetName="PlaceHolder" Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                                <Trigger Property="IsFocused" Value="True">
+                                    <Setter TargetName="MainBorder" Property="BorderBrush" Value="#007FD4"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
 
-        <Style x:Key="CloseButtonStyle" TargetType="Button">
-            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-            <Setter Property="SnapsToDevicePixels" Value="False"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="MainBorder" Width="16" Height="16" Background="Transparent" CornerRadius="4">
-                            <TextBlock Text="&#xF78A;" FontSize="8" Foreground="{TemplateBinding Foreground}" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="MainBorder" Property="Background" Value="#3B3C3C"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="MainBorder" Property="Background" Value="#4B4C4C"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="AddButtonStyle" TargetType="Button">
-            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-            <Setter Property="SnapsToDevicePixels" Value="False"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="MainBorder" Width="36" Height="30" Background="Transparent">
-                            <TextBlock Text="&#xE109;" Foreground="White" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="MainBorder" Property="Background" Value="#3B3C3C"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="MainBorder" Property="Background" Value="#4B4C4C"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style TargetType="ListBox">
-            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-            <Setter Property="SelectedItem" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:TabView},Path=SelectedItem,Mode=TwoWay}"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListBox">
-                        <Grid Height="30" Background="#252525">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <ScrollViewer Grid.Column="0" CanContentScroll="False" Style="{StaticResource ScrollViewerStyle}">
-                                <ItemsPresenter/>
-                            </ScrollViewer>
-                            <Button Grid.Column="1" Click="AddButton_Click" Style="{StaticResource AddButtonStyle}" VerticalAlignment="Top" Margin="5,0,0,0" ToolTip="新建标签"/>
-                            <ContentControl Grid.Column="2" Content="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:TabView},Path=TabViewFooter,Mode=OneWay}"/>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="ItemsPanel">
-                <Setter.Value>
-                    <ItemsPanelTemplate>
-                        <StackPanel IsItemsHost="True" Orientation="Horizontal" Background="Transparent" AllowDrop="True"/>
-                    </ItemsPanelTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="ItemContainerStyle">
-                <Setter.Value>
-                    <Style TargetType="ListBoxItem">
-                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="ListBoxItem">
-                                    <Border x:Name="MainBorder" MinWidth="50" MaxWidth="150" Margin="0,0,1,0" Background="#2D2D2D"
+            <Style x:Key="CloseButtonStyle" TargetType="Button">
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="SnapsToDevicePixels" Value="False"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="MainBorder" Width="16" Height="16" Background="Transparent" CornerRadius="4">
+                                <TextBlock Text="&#xF78A;" FontSize="8" Foreground="{TemplateBinding Foreground}" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="MainBorder" Property="Background" Value="#3B3C3C"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="MainBorder" Property="Background" Value="#4B4C4C"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="AddButtonStyle" TargetType="Button">
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="SnapsToDevicePixels" Value="False"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="MainBorder" Width="36" Height="30" Background="Transparent">
+                                <TextBlock Text="&#xE109;" Foreground="White" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="MainBorder" Property="Background" Value="#3B3C3C"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="MainBorder" Property="Background" Value="#4B4C4C"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="ListBox">
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="SelectedItem" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:TabView},Path=SelectedItem,Mode=TwoWay}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListBox">
+                            <Grid Height="30" Background="#252525">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ScrollViewer Grid.Column="0" CanContentScroll="False" Style="{StaticResource ScrollViewerStyle}">
+                                    <ItemsPresenter/>
+                                </ScrollViewer>
+                                <Button Grid.Column="1" Click="AddButton_Click" Style="{StaticResource AddButtonStyle}" VerticalAlignment="Top" Margin="5,0,0,0" ToolTip="新建标签"/>
+                                <ContentControl Grid.Column="2" Content="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:TabView},Path=TabViewFooter,Mode=OneWay}"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="ItemsPanel">
+                    <Setter.Value>
+                        <ItemsPanelTemplate>
+                            <StackPanel IsItemsHost="True" Orientation="Horizontal" Background="Transparent" AllowDrop="True"/>
+                        </ItemsPanelTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="ItemContainerStyle">
+                    <Setter.Value>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListBoxItem">
+                                        <Border x:Name="MainBorder" MinWidth="50" MaxWidth="150" Margin="0,0,1,0" Background="#2D2D2D"
                                             AllowDrop="True" 
                                             MouseLeftButtonDown="Border_MouseLeftButtonDown"
                                             MouseLeftButtonUp="Border_MouseLeftButtonUp"
                                             MouseMove="Border_MouseMove"
                                             DragEnter="Border_DragEnter"
                                             GiveFeedback="Border_GiveFeedback">
-                                        <DockPanel Margin="5,0">
-                                            <Button x:Name="CloseButton" Click="CloseButton_Click" Tag="{Binding}" DockPanel.Dock="Right" Visibility="Hidden" Margin="5,0,0,0" Style="{StaticResource CloseButtonStyle}" Foreground="{Binding ElementName=Header,Path=Foreground,Mode=OneWay}"/>
-                                            <TextBlock x:Name="Header" Text="{Binding Header,Mode=OneWay}" Foreground="#999999" VerticalAlignment="Center" ToolTip="{Binding Header,Mode=OneWay}" TextTrimming="CharacterEllipsis"/>
-                                        </DockPanel>
-                                        <Border.ContextMenu>
-                                            <ContextMenu Style="{StaticResource ContextMenuStyle}">
-                                                <MenuItem Style="{StaticResource CustomMenuItemStyle}">
-                                                    <MenuItem.Header>
-                                                        <StackPanel>
-                                                            <TextBlock Text="标签重命名" Foreground="White" Margin="0,0,0,5"/>
-                                                            <TextBox Text="{Binding Header,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxStyle}"/>
-                                                        </StackPanel>
-                                                    </MenuItem.Header>
-                                                </MenuItem>
-                                                <Separator Margin="0,8">
-                                                    <Separator.Template>
-                                                        <ControlTemplate TargetType="Separator">
-                                                            <Border Height="1" Background="DimGray"/>
-                                                        </ControlTemplate>
-                                                    </Separator.Template>
-                                                </Separator>
-                                                <MenuItem Header="关闭标签" Click="CloseButton_Click" Tag="{Binding}"/>
-                                            </ContextMenu>
-                                        </Border.ContextMenu>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="CloseButton" Property="Visibility" Value="Visible"/>
-                                            <Setter TargetName="MainBorder" Property="Background" Value="#262626"/>
-                                        </Trigger>
-                                        <Trigger Property="IsSelected" Value="True">
-                                            <Setter TargetName="CloseButton" Property="Visibility" Value="Visible"/>
-                                            <Setter TargetName="MainBorder" Property="Background" Value="#1E1E1E"/>
-                                            <Setter TargetName="Header" Property="Foreground" Value="White"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Setter.Value>
-            </Setter>
-        </Style>
+                                            <DockPanel Margin="5,0">
+                                                <Button x:Name="CloseButton" Click="CloseButton_Click" Tag="{Binding}" DockPanel.Dock="Right" Visibility="Hidden" Margin="5,0,0,0" Style="{StaticResource CloseButtonStyle}" Foreground="{Binding ElementName=Header,Path=Foreground,Mode=OneWay}"/>
+                                                <TextBlock x:Name="Header" Text="{Binding Header,Mode=OneWay}" Foreground="#999999" VerticalAlignment="Center" ToolTip="{Binding Header,Mode=OneWay}" TextTrimming="CharacterEllipsis"/>
+                                            </DockPanel>
+                                            <Border.ContextMenu>
+                                                <ContextMenu Style="{StaticResource ContextMenuStyle}">
+                                                    <MenuItem Style="{StaticResource CustomMenuItemStyle}">
+                                                        <MenuItem.Header>
+                                                            <StackPanel>
+                                                                <TextBlock Text="标签重命名" Foreground="White" Margin="0,0,0,5"/>
+                                                                <TextBox Text="{Binding Header,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxStyle}"/>
+                                                            </StackPanel>
+                                                        </MenuItem.Header>
+                                                    </MenuItem>
+                                                    <Separator Margin="0,8">
+                                                        <Separator.Template>
+                                                            <ControlTemplate TargetType="Separator">
+                                                                <Border Height="1" Background="DimGray"/>
+                                                            </ControlTemplate>
+                                                        </Separator.Template>
+                                                    </Separator>
+                                                    <MenuItem Header="关闭标签" Click="CloseButton_Click" Tag="{Binding}"/>
+                                                </ContextMenu>
+                                            </Border.ContextMenu>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="CloseButton" Property="Visibility" Value="Visible"/>
+                                                <Setter TargetName="MainBorder" Property="Background" Value="#262626"/>
+                                            </Trigger>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter TargetName="CloseButton" Property="Visibility" Value="Visible"/>
+                                                <Setter TargetName="MainBorder" Property="Background" Value="#1E1E1E"/>
+                                                <Setter TargetName="Header" Property="Foreground" Value="White"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
     </FrameworkElement.Resources>
 </FrameworkElement>

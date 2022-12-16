@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using Toolkit.Base.Util;
 
 namespace JsonFormat.Model
@@ -17,6 +18,8 @@ namespace JsonFormat.Model
         public RelayCommand OpenSettingCommand => openSettingCommand ??= new RelayCommand(OpenSetting);
 
         public Settings Settings { get; private set; }
+
+        public List<string> FontFamilies => fontFamilies;
 
         public AppSetting()
         {
@@ -36,7 +39,17 @@ namespace JsonFormat.Model
             {
                 Settings = new Settings();
             }
+            fontFamilies = new List<string>();
+            LoadFontFamilies();
             //SettingUtil.SaveSetting(currentAssemblyName, Settings);
+        }
+
+        private void LoadFontFamilies()
+        {
+            foreach (FontFamily font in Fonts.SystemFontFamilies)
+            {
+                fontFamilies.Add(font.Source);
+            }
         }
 
         private void OpenSetting()
@@ -60,5 +73,6 @@ namespace JsonFormat.Model
         private RelayCommand? openSettingCommand = null;
         private SettingWindow? settingWindow = null;
         private readonly string currentAssemblyName;
+        private List<string> fontFamilies;
     }
 }
