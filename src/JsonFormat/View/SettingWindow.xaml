@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:JsonFormat.View"
+        xmlns:converter="clr-namespace:JsonFormat.Converter"
         Title="设置" SizeToContent="WidthAndHeight" ResizeMode="NoResize" Background="#1E1E1E">
     <Window.Resources>
         <ResourceDictionary>
@@ -34,6 +35,59 @@
                 <Setter Property="VerticalAlignment" Value="Center"/>
             </Style>
 
+            <converter:TextFontFamilyConverter x:Key="TextFontFamilyConverter"/>
+            <ControlTemplate x:Key="FontFamiliesTemplate" TargetType="ComboBox">
+                <Grid ToolTip="{TemplateBinding SelectionBoxItem}">
+                    <ToggleButton IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}" Cursor="Hand" FocusVisualStyle="{x:Null}">
+                        <ToggleButton.Template>
+                            <ControlTemplate TargetType="ToggleButton">
+                                <Border x:Name="MainBorder" CornerRadius="4" Background="White">
+                                    <Path x:Name="ToggleIcon" Data="M0,0 L5,5 10,0" Stroke="RoyalBlue" StrokeThickness="1" Margin="0,0,8,0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                        <Path.RenderTransform>
+                                            <RotateTransform x:Name="Rotate" Angle="0" CenterX="5" CenterY="2.5"/>
+                                        </Path.RenderTransform>
+                                    </Path>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="MainBorder" Property="Background" Value="Gainsboro"/>
+                                    </Trigger>
+                                    <Trigger Property="IsChecked" Value="True">
+                                        <Setter TargetName="MainBorder" Property="Background" Value="Gainsboro"/>
+                                    </Trigger>
+                                    <EventTrigger RoutedEvent="ToggleButton.Checked">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="Rotate" Storyboard.TargetProperty="Angle" To="180" Duration="0:0:0.2"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                    <EventTrigger RoutedEvent="ToggleButton.Unchecked">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="Rotate" Storyboard.TargetProperty="Angle" To="0" Duration="0:0:0.2"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </ToggleButton.Template>
+                    </ToggleButton>
+                    <TextBlock Text="{TemplateBinding Text}" FontFamily="{TemplateBinding SelectionBoxItem,Converter={StaticResource TextFontFamilyConverter}}" HorizontalAlignment="Left" Margin="10,0,26,0" VerticalAlignment="Center" IsHitTestVisible="False" TextTrimming="CharacterEllipsis"/>
+                    <Popup IsOpen="{TemplateBinding IsDropDownOpen}" Placement="Bottom" Focusable="False" AllowsTransparency="True" PopupAnimation="Slide" HorizontalOffset="-8" VerticalOffset="-6">
+                        <Grid>
+                            <Border Margin="8" CornerRadius="4" Background="White">
+                                <Border.Effect>
+                                    <DropShadowEffect ShadowDepth="0" BlurRadius="8" Color="Black" Opacity="0.4"/>
+                                </Border.Effect>
+                            </Border>
+                            <ScrollViewer Width="{TemplateBinding ActualWidth}" MaxHeight="500" Margin="8,18" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" CanContentScroll="False" Style="{StaticResource ScrollViewerStyle}">
+                                <StackPanel IsItemsHost="True"/>
+                            </ScrollViewer>
+                        </Grid>
+                    </Popup>
+                </Grid>
+            </ControlTemplate>
             <Style x:Key="FontFamiliesItemStyle" TargetType="ComboBoxItem">
                 <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                 <Setter Property="Height" Value="26"/>
@@ -67,11 +121,11 @@
         <StackPanel Orientation="Horizontal">
             <StackPanel>
                 <TextBlock Text="字体类型" Style="{StaticResource SettingItemNameTextStyle}"/>
-                <ComboBox ItemsSource="{Binding FontFamilies,Mode=OneTime}" Style="{StaticResource ComboBoxStyle}" ItemContainerStyle="{StaticResource FontFamiliesItemStyle}"/>
+                <ComboBox ItemsSource="{Binding FontFamilies,Mode=OneTime}" SelectedItem="{Binding SelectedFontFamily,Mode=TwoWay}" Style="{StaticResource ComboBoxStyle}" Template="{StaticResource FontFamiliesTemplate}" ItemContainerStyle="{StaticResource FontFamiliesItemStyle}"/>
             </StackPanel>
             <StackPanel Margin="{StaticResource SettingItemHorizontalMargin}">
                 <TextBlock Text="字体大小" Style="{StaticResource SettingItemNameTextStyle}"/>
-                <ComboBox/>
+                <ComboBox ItemsSource="{Binding FontSizes,Mode=OneTime}" SelectedItem="{Binding SelectedFontSize,Mode=TwoWay}" Style="{StaticResource ComboBoxStyle}"/>
             </StackPanel>
         </StackPanel>
 

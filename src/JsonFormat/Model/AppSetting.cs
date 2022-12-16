@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using JsonFormat.Model.Setting;
 using JsonFormat.View;
 using System;
@@ -13,13 +14,35 @@ using Toolkit.Base.Util;
 
 namespace JsonFormat.Model
 {
-    internal class AppSetting
+    internal class AppSetting : ObservableObject
     {
         public RelayCommand OpenSettingCommand => openSettingCommand ??= new RelayCommand(OpenSetting);
 
         public Settings Settings { get; private set; }
 
         public List<string> FontFamilies => fontFamilies;
+
+        public List<int> FontSizes => fontSizes;
+
+        public List<int> IndentSpaceCounts => indentSpaceCounts;
+
+        public string SelectedFontFamily
+        {
+            get => selectedFontFamily;
+            set => SetProperty(ref selectedFontFamily, value);
+        }
+
+        public int SelectedFontSize
+        {
+            get => selectedFontSize;
+            set => SetProperty(ref selectedFontSize, value);
+        }
+
+        public int SelectedIndentSpaceCount
+        {
+            get => selectedIndentSpaceCount;
+            set => SetProperty(ref selectedIndentSpaceCount, value);
+        }
 
         public AppSetting()
         {
@@ -31,6 +54,7 @@ namespace JsonFormat.Model
             {
                 currentAssemblyName = "JsonFormat";
             }
+
             if (SettingUtil.LoadSetting<Settings>(currentAssemblyName) is Settings _settings)
             {
                 Settings = _settings;
@@ -39,12 +63,16 @@ namespace JsonFormat.Model
             {
                 Settings = new Settings();
             }
-            fontFamilies = new List<string>();
-            LoadFontFamilies();
-            //SettingUtil.SaveSetting(currentAssemblyName, Settings);
-        }
 
-        private void LoadFontFamilies()
+            fontFamilies = new List<string>();
+            fontSizes = new List<int>(RenderSetting.GetMaxFontSize() - RenderSetting.GetMinFontSize() + 1);
+            indentSpaceCounts = new List<int>(RenderSetting.GetMaxIndentSpaceCount() - RenderSetting.GetMinIndentSpaceCount() + 1);
+            LoadFontDataCollections();
+            InitSettings();
+        }
+        //SettingUtil.SaveSetting(currentAssemblyName, Settings);
+
+        private void LoadFontDataCollections()
         {
             foreach (FontFamily font in Fonts.SystemFontFamilies)
             {
@@ -61,6 +89,35 @@ namespace JsonFormat.Model
                 fontFamilies.Add(font.Source);
             }
             fontFamilies.Sort();
+
+            for (int i = RenderSetting.GetMinFontSize(); i <= RenderSetting.GetMaxFontSize(); ++i)
+            {
+                fontSizes.Add(i);
+            }
+
+            for (int i = RenderSetting.GetMinIndentSpaceCount(); i <= RenderSetting.GetMaxIndentSpaceCount(); ++i)
+            {
+                indentSpaceCounts.Add(i);
+            }
+        }
+
+        private void InitSettings()
+        {
+            if (!FontFamilies.Contains(Settings.RenderSetting.FontFamily))
+            {
+                Settings.RenderSetting.FontFamily = RenderSetting.GetDefaultFontFamily();
+            }
+            if (!FontSizes.Contains(Settings.RenderSetting.FontSize))
+            {
+                Settings.RenderSetting.FontSize = RenderSetting.GetDefaultFontSize();
+            }
+            if (!IndentSpaceCounts.Contains(Settings.RenderSetting.IndentSpaceCount))
+            {
+                Settings.RenderSetting.IndentSpaceCount = RenderSetting.GetDefaultIndentSpaceCount();
+            }
+            SelectedFontFamily = Settings.RenderSetting.FontFamily;
+            SelectedFontSize = Settings.RenderSetting.FontSize;
+            SelectedIndentSpaceCount = Settings.RenderSetting.IndentSpaceCount;
         }
 
         private void OpenSetting()
@@ -84,6 +141,11 @@ namespace JsonFormat.Model
         private RelayCommand? openSettingCommand = null;
         private SettingWindow? settingWindow = null;
         private readonly string currentAssemblyName;
-        private List<string> fontFamilies;
+        private readonly List<string> fontFamilies;
+        private readonly List<int> fontSizes;
+        private readonly List<int> indentSpaceCounts;
+        private string selectedFontFamily = string.Empty;
+        private int selectedFontSize = 0;
+        private int selectedIndentSpaceCount = 0;
     }
 }
