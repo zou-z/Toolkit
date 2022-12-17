@@ -56,35 +56,44 @@ namespace JsonFormat.Model
             set => SetProperty(ref charColor, value);
         }
 
+        public string KeyColor
+        {
+            get => keyColor;
+            set => SetProperty(ref keyColor, value);
+        }
+
+        public string StringColor
+        {
+            get => stringColor;
+            set => SetProperty(ref stringColor, value);
+        }
+
+        public string NumberColor
+        {
+            get => numberColor; 
+            set => SetProperty(ref numberColor, value);
+        }
+
+        public string BooleanNullColor
+        {
+            get => booleanNullColor;
+            set => SetProperty(ref booleanNullColor, value);
+        }
+
         public AppSetting()
         {
-            if (Assembly.GetExecutingAssembly().GetName().Name is string name)
-            {
-                currentAssemblyName = name;
-            }
-            else
-            {
-                currentAssemblyName = "JsonFormat";
-            }
-
-            if (SettingUtil.LoadSetting<Settings>(currentAssemblyName) is Settings _settings)
-            {
-                Settings = _settings;
-            }
-            else
-            {
-                Settings = new Settings();
-            }
-
+            currentAssemblyName = Assembly.GetExecutingAssembly().GetName().Name is string assemblyName ? assemblyName : "JsonFormat";
+            Settings = SettingUtil.LoadSetting<Settings>(currentAssemblyName) is Settings settings ? settings : new Settings();
             fontFamilies = new List<string>();
             fontSizes = new List<int>(RenderSetting.GetMaxFontSize() - RenderSetting.GetMinFontSize() + 1);
             indentSpaceCounts = new List<int>(RenderSetting.GetMaxIndentSpaceCount() - RenderSetting.GetMinIndentSpaceCount() + 1);
-            LoadFontDataCollections();
-            InitSettings();
-        }
-        //SettingUtil.SaveSetting(currentAssemblyName, Settings);
 
-        private void LoadFontDataCollections()
+            InitDataCollections();    // 初始化只读数据集合
+            CheckSettings();          // 检查读取的设置的正确性
+            InitSettings();           // 初始化设置相关的属性
+        }
+
+        private void InitDataCollections()
         {
             foreach (FontFamily font in Fonts.SystemFontFamilies)
             {
@@ -113,7 +122,7 @@ namespace JsonFormat.Model
             }
         }
 
-        private void InitSettings()
+        private void CheckSettings()
         {
             if (!FontFamilies.Contains(Settings.RenderSetting.FontFamily))
             {
@@ -131,10 +140,34 @@ namespace JsonFormat.Model
             {
                 Settings.RenderSetting.CharColor = RenderSetting.GetDefaultTextColor();
             }
+            if (!ColorUtil.IsValidStringColor(Settings.RenderSetting.KeyColor))
+            {
+                Settings.RenderSetting.KeyColor = RenderSetting.GetDefaultTextColor();
+            }
+            if (!ColorUtil.IsValidStringColor(Settings.RenderSetting.StringColor))
+            {
+                Settings.RenderSetting.StringColor = RenderSetting.GetDefaultTextColor();
+            }
+            if (!ColorUtil.IsValidStringColor(Settings.RenderSetting.NumberColor))
+            {
+                Settings.RenderSetting.NumberColor = RenderSetting.GetDefaultTextColor();
+            }
+            if (!ColorUtil.IsValidStringColor(Settings.RenderSetting.BooleanNullColor))
+            {
+                Settings.RenderSetting.BooleanNullColor = RenderSetting.GetDefaultTextColor();
+            }
+        }
+
+        private void InitSettings()
+        {
             SelectedFontFamily = Settings.RenderSetting.FontFamily;
             SelectedFontSize = Settings.RenderSetting.FontSize;
             SelectedIndentSpaceCount = Settings.RenderSetting.IndentSpaceCount;
             CharColor = Settings.RenderSetting.CharColor;
+            KeyColor = Settings.RenderSetting.KeyColor;
+            StringColor = Settings.RenderSetting.StringColor;
+            NumberColor = Settings.RenderSetting.NumberColor;
+            BooleanNullColor = Settings.RenderSetting.BooleanNullColor;
         }
 
         private void OpenSetting()
@@ -191,5 +224,9 @@ namespace JsonFormat.Model
         private int selectedFontSize = 0;
         private int selectedIndentSpaceCount = 0;
         private string charColor = string.Empty;
+        private string keyColor = string.Empty;
+        private string stringColor = string.Empty;
+        private string numberColor = string.Empty;
+        private string booleanNullColor = string.Empty;
     }
 }
