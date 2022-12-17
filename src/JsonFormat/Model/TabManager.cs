@@ -8,12 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace JsonFormat.Model
 {
     internal class TabManager : ObservableObject
     {
-        public AsyncRelayCommand NewTabCommand => newTabCommand ??= new AsyncRelayCommand(NewTab);
+        public AsyncRelayCommand NewTabCommand => newTabCommand ??= new AsyncRelayCommand(NewTabAsync);
 
         public ObservableCollection<TabViewItem> Tabs => tabs;
 
@@ -26,36 +27,31 @@ namespace JsonFormat.Model
         public TabManager()
         {
             tabs = new ObservableCollection<TabViewItem>();
-            for (int i = 0; i < 3; ++i)
-            {
-                tabs.Add(new TabViewItem
-                {
-                    Header = $"header {i + 1}",
-                    Content = CreateTabContent(),
-                });
-            }
+            _ = Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, () => { NewTab(); });
         }
 
-        private async Task NewTab()
+        private async Task NewTabAsync()
         {
-            await Application.Current.Dispatcher.BeginInvoke(() =>
+            await Application.Current.Dispatcher.BeginInvoke(() => { NewTab(); });
+        }
+
+        private void NewTab()
+        {
+            var item = new TabViewItem
             {
-                var item = new TabViewItem
-                {
-                    Header = $"new header {++newTabIndex}",
-                    Content = CreateTabContent(),
-                };
-                if (SelectedItem != null)
-                {
-                    int index = Tabs.IndexOf(SelectedItem);
-                    Tabs.Insert(index + 1, item);
-                }
-                else
-                {
-                    Tabs.Add(item);
-                }
-                SelectedItem = item;
-            });
+                Header = $"{defaultTabName} {++newTabIndex}",
+                Content = CreateTabContent(),
+            };
+            if (SelectedItem != null)
+            {
+                int index = Tabs.IndexOf(SelectedItem);
+                Tabs.Insert(index + 1, item);
+            }
+            else
+            {
+                Tabs.Add(item);
+            }
+            SelectedItem = item;
         }
 
         private static object CreateTabContent()
@@ -66,6 +62,7 @@ namespace JsonFormat.Model
         private readonly ObservableCollection<TabViewItem> tabs;
         private TabViewItem? selectedItem = null;
         private AsyncRelayCommand? newTabCommand = null;
+        private readonly string defaultTabName = "untitled";
         private int newTabIndex = 0;
     }
 }
