@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using JsonFormat.Model.Setting;
 using JsonFormat.View;
 using System;
@@ -18,7 +19,7 @@ namespace JsonFormat.Model
     {
         public RelayCommand OpenSettingCommand => openSettingCommand ??= new RelayCommand(OpenSetting);
 
-        public AsyncRelayCommand ApplySettingsCommand => applySettingsCommand ??= new AsyncRelayCommand(ApplySettings);
+        public RelayCommand ApplySettingsCommand => applySettingsCommand ??= new RelayCommand(ApplySettings);
 
         public RelayCommand RestoreSettingsCommand => restoreSettingsCommand ??= new RelayCommand(RestoreSettings);
 
@@ -171,6 +172,19 @@ namespace JsonFormat.Model
             BooleanNullColor = Settings.RenderSetting.BooleanNullColor;
         }
 
+        private void SaveSettings()
+        {
+            Settings.RenderSetting.FontFamily = SelectedFontFamily;
+            Settings.RenderSetting.FontSize = SelectedFontSize;
+            Settings.RenderSetting.IndentSpaceCount = SelectedIndentSpaceCount;
+            Settings.RenderSetting.CharColor = CharColor;
+            Settings.RenderSetting.KeyColor = KeyColor;
+            Settings.RenderSetting.StringColor = StringColor;
+            Settings.RenderSetting.NumberColor = NumberColor;
+            Settings.RenderSetting.BooleanNullColor = BooleanNullColor;
+            SettingUtil.SaveSetting(currentAssemblyName, Settings);
+        }
+
         private void OpenSetting()
         {
             if (settingWindow == null)
@@ -193,9 +207,13 @@ namespace JsonFormat.Model
             settingWindow.Show();
         }
 
-        private async Task ApplySettings()
+        private void ApplySettings()
         {
-            await Task.Delay(100);
+            if (settingWindow == null) return;
+            settingWindow.IsEnabled = false;
+            SaveSettings();
+            WeakReferenceMessenger.Default.Send(MessageToken.SettingsUpdated);
+            //settingWindow.IsEnabled = true;
         }
 
         private void RestoreSettings()
@@ -217,7 +235,7 @@ namespace JsonFormat.Model
         }
 
         private RelayCommand? openSettingCommand = null;
-        private AsyncRelayCommand? applySettingsCommand = null;
+        private RelayCommand? applySettingsCommand = null;
         private RelayCommand? restoreSettingsCommand = null;
         private RelayCommand<string>? restoreSavedColorCommand = null;
         private SettingWindow? settingWindow = null;
