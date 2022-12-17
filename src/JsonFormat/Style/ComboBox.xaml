@@ -48,7 +48,7 @@
                             </ToggleButton.Template>
                         </ToggleButton>
                         <TextBlock Text="{TemplateBinding Text}" HorizontalAlignment="Left" Margin="10,0,26,0" VerticalAlignment="Center" IsHitTestVisible="False" TextTrimming="CharacterEllipsis"/>
-                        <Popup IsOpen="{TemplateBinding IsDropDownOpen}" Placement="Bottom" Focusable="False" AllowsTransparency="True" PopupAnimation="Slide" HorizontalOffset="-8" VerticalOffset="-6">
+                        <Popup IsOpen="{TemplateBinding IsDropDownOpen}" Placement="Bottom" Focusable="False" AllowsTransparency="True" PopupAnimation="Slide" HorizontalOffset="8" VerticalOffset="-6">
                             <Grid>
                                 <Border Margin="8" CornerRadius="4" Background="White">
                                     <Border.Effect>

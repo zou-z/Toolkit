@@ -22,6 +22,8 @@ namespace JsonFormat.Model
 
         public AsyncRelayCommand RestoreSettingsCommand => restoreSettingsCommand ??= new AsyncRelayCommand(RestoreSettings);
 
+        public RelayCommand<string> RestoreSavedColorCommand => restoreSavedColorCommand ??= new RelayCommand<string>(RestoreSavedColor);
+
         public Settings Settings { get; private set; }
 
         public List<string> FontFamilies => fontFamilies;
@@ -150,6 +152,10 @@ namespace JsonFormat.Model
                     }
                 }
             }
+            else
+            {
+                InitSettings();
+            }
             settingWindow.Show();
         }
 
@@ -163,9 +169,19 @@ namespace JsonFormat.Model
             await Task.Delay(100);
         }
 
+        private void RestoreSavedColor(string? name)
+        {
+            switch (name)
+            {
+                case nameof(CharColor): OnPropertyChanged(name); break;
+                default: break;
+            }
+        }
+
         private RelayCommand? openSettingCommand = null;
         private AsyncRelayCommand? applySettingsCommand = null;
         private AsyncRelayCommand? restoreSettingsCommand = null;
+        private RelayCommand<string>? restoreSavedColorCommand = null;
         private SettingWindow? settingWindow = null;
         private readonly string currentAssemblyName;
         private readonly List<string> fontFamilies;

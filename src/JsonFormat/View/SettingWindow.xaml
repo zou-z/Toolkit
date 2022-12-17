@@ -7,6 +7,7 @@
         xmlns:local="clr-namespace:JsonFormat.View"
         xmlns:converter="clr-namespace:JsonFormat.Converter"
         xmlns:util="clr-namespace:JsonFormat.Util"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         Title="设置" SizeToContent="WidthAndHeight" ResizeMode="NoResize" Background="#1E1E1E">
     <Window.Resources>
         <ResourceDictionary>
@@ -75,7 +76,7 @@
                         </ToggleButton.Template>
                     </ToggleButton>
                     <TextBlock Text="{TemplateBinding Text}" FontFamily="{TemplateBinding SelectionBoxItem,Converter={StaticResource TextFontFamilyConverter}}" HorizontalAlignment="Left" Margin="10,0,26,0" VerticalAlignment="Center" IsHitTestVisible="False" TextTrimming="CharacterEllipsis"/>
-                    <Popup IsOpen="{TemplateBinding IsDropDownOpen}" Placement="Bottom" Focusable="False" AllowsTransparency="True" PopupAnimation="Slide" HorizontalOffset="-8" VerticalOffset="-6">
+                    <Popup IsOpen="{TemplateBinding IsDropDownOpen}" Placement="Bottom" Focusable="False" AllowsTransparency="True" PopupAnimation="Slide" HorizontalOffset="8" VerticalOffset="-6">
                         <Grid>
                             <Border Margin="8" CornerRadius="4" Background="White">
                                 <Border.Effect>
@@ -150,6 +151,7 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            <converter:StringToBrushConverter x:Key="StringToBrushConverter"/>
         </ResourceDictionary>
     </Window.Resources>
 
@@ -188,9 +190,9 @@
             <Border Style="{StaticResource SettingClassDecoratorStyle}"/>
         </DockPanel>
         <WrapPanel Margin="{StaticResource SettingClassWithClassMargin}">
-            <Border Background="#555" CornerRadius="4">
+            <Border Background="{Binding CharColor,Mode=OneWay,Converter={StaticResource StringToBrushConverter}}" CornerRadius="4" ToolTip="字符颜色">
                 <StackPanel Margin="10">
-                    <TextBlock Text="字符颜色" Style="{StaticResource SettingItemNameTextStyle}"/>
+                    <TextBlock Text="字符颜色" Foreground="{Binding CharColor,Mode=OneWay,Converter={StaticResource StringToBrushConverter},ConverterParameter=Binary}" Style="{StaticResource SettingItemNameTextStyle}"/>
                     <TextBox Style="{StaticResource ColorTextBoxStyle}">
                         <TextBox.Text>
                             <Binding Path="CharColor" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -199,7 +201,11 @@
                                 </Binding.ValidationRules>
                             </Binding>
                         </TextBox.Text>
-                        <!--restore setting saved color when lost focus-->
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="LostFocus">
+                                <b:InvokeCommandAction Command="{Binding RestoreSavedColorCommand,Mode=OneTime}" CommandParameter="CharColor"/>
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
                     </TextBox>
                 </StackPanel>
             </Border>
