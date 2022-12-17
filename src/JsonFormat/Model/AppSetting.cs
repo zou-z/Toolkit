@@ -20,7 +20,7 @@ namespace JsonFormat.Model
 
         public AsyncRelayCommand ApplySettingsCommand => applySettingsCommand ??= new AsyncRelayCommand(ApplySettings);
 
-        public AsyncRelayCommand RestoreSettingsCommand => restoreSettingsCommand ??= new AsyncRelayCommand(RestoreSettings);
+        public RelayCommand RestoreSettingsCommand => restoreSettingsCommand ??= new RelayCommand(RestoreSettings);
 
         public RelayCommand<string> RestoreSavedColorCommand => restoreSavedColorCommand ??= new RelayCommand<string>(RestoreSavedColor);
 
@@ -138,24 +138,25 @@ namespace JsonFormat.Model
             }
             if (!ColorUtil.IsValidStringColor(Settings.RenderSetting.CharColor))
             {
-                Settings.RenderSetting.CharColor = RenderSetting.GetDefaultTextColor();
+                Settings.RenderSetting.CharColor = RenderSetting.GetDefaultCharColor();
             }
             if (!ColorUtil.IsValidStringColor(Settings.RenderSetting.KeyColor))
             {
-                Settings.RenderSetting.KeyColor = RenderSetting.GetDefaultTextColor();
+                Settings.RenderSetting.KeyColor = RenderSetting.GetDefaultKeyColor();
             }
             if (!ColorUtil.IsValidStringColor(Settings.RenderSetting.StringColor))
             {
-                Settings.RenderSetting.StringColor = RenderSetting.GetDefaultTextColor();
+                Settings.RenderSetting.StringColor = RenderSetting.GetDefaultStringColor();
             }
             if (!ColorUtil.IsValidStringColor(Settings.RenderSetting.NumberColor))
             {
-                Settings.RenderSetting.NumberColor = RenderSetting.GetDefaultTextColor();
+                Settings.RenderSetting.NumberColor = RenderSetting.GetDefaultNumberColor();
             }
             if (!ColorUtil.IsValidStringColor(Settings.RenderSetting.BooleanNullColor))
             {
-                Settings.RenderSetting.BooleanNullColor = RenderSetting.GetDefaultTextColor();
+                Settings.RenderSetting.BooleanNullColor = RenderSetting.GetDefaultBooleanNullColor();
             }
+            SettingUtil.SaveSetting(currentAssemblyName, Settings);
         }
 
         private void InitSettings()
@@ -197,23 +198,27 @@ namespace JsonFormat.Model
             await Task.Delay(100);
         }
 
-        private async Task RestoreSettings()
+        private void RestoreSettings()
         {
-            await Task.Delay(100);
+            var fontFamily = RenderSetting.GetDefaultFontFamily();
+            SelectedFontFamily = FontFamilies.Contains(fontFamily) ? fontFamily : FontFamilies[0];
+            SelectedFontSize = RenderSetting.GetDefaultFontSize();
+            SelectedIndentSpaceCount = RenderSetting.GetDefaultIndentSpaceCount();
+            CharColor = RenderSetting.GetDefaultCharColor();
+            KeyColor = RenderSetting.GetDefaultKeyColor();
+            StringColor = RenderSetting.GetDefaultStringColor();
+            NumberColor = RenderSetting.GetDefaultNumberColor();
+            BooleanNullColor = RenderSetting.GetDefaultBooleanNullColor();
         }
 
         private void RestoreSavedColor(string? name)
         {
-            switch (name)
-            {
-                case nameof(CharColor): OnPropertyChanged(name); break;
-                default: break;
-            }
+            OnPropertyChanged(name);
         }
 
         private RelayCommand? openSettingCommand = null;
         private AsyncRelayCommand? applySettingsCommand = null;
-        private AsyncRelayCommand? restoreSettingsCommand = null;
+        private RelayCommand? restoreSettingsCommand = null;
         private RelayCommand<string>? restoreSavedColorCommand = null;
         private SettingWindow? settingWindow = null;
         private readonly string currentAssemblyName;

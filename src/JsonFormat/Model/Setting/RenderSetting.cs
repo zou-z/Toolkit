@@ -14,19 +14,19 @@ namespace JsonFormat.Model.Setting
         public int IndentSpaceCount { get; set; } = GetDefaultIndentSpaceCount();
 
         // 字符颜色
-        public string CharColor { get; set; } = GetDefaultTextColor();
+        public string CharColor { get; set; } = GetDefaultCharColor();
 
         // 键名颜色
-        public string KeyColor { get; set; } = GetDefaultTextColor();
+        public string KeyColor { get; set; } = GetDefaultKeyColor();
 
         // 字符串颜色
-        public string StringColor { get; set; } = GetDefaultTextColor();
+        public string StringColor { get; set; } = GetDefaultStringColor();
 
         // 数字颜色
-        public string NumberColor { get; set; } = GetDefaultTextColor();
+        public string NumberColor { get; set; } = GetDefaultNumberColor();
 
         // 布尔值和null颜色
-        public string BooleanNullColor { get; set; } = GetDefaultTextColor();
+        public string BooleanNullColor { get; set; } = GetDefaultBooleanNullColor();
 
         public static string GetDefaultFontFamily()
         {
@@ -63,9 +63,29 @@ namespace JsonFormat.Model.Setting
             return 8;
         }
 
-        public static string GetDefaultTextColor()
+        public static string GetDefaultCharColor()
         {
-            return "#FFFFFF";
+            return "#B3BEBE";
+        }
+
+        public static string GetDefaultKeyColor()
+        {
+            return "#C7BA7A";
+        }
+
+        public static string GetDefaultStringColor()
+        {
+            return "#C89D82";
+        }
+
+        public static string GetDefaultNumberColor()
+        {
+            return "#97C79D";
+        }
+
+        public static string GetDefaultBooleanNullColor()
+        {
+            return "#346EAB";
         }
     }
 }

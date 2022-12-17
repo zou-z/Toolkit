@@ -119,7 +119,7 @@
                 <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                 <Setter Property="Height" Value="26"/>
                 <Setter Property="MaxLength" Value="9"/>
-                <Setter Property="MinWidth" Value="85"/>
+                <Setter Property="MinWidth" Value="90"/>
                 <Setter Property="InputMethod.IsInputMethodEnabled" Value="False"/>
                 <Setter Property="Validation.ErrorTemplate" Value="{x:Null}"/>
                 <Setter Property="Template">
@@ -163,6 +163,32 @@
                     </Canvas>
                 </VisualBrush.Visual>
             </VisualBrush>
+            <Style x:Key="BottomButtonStyle" TargetType="Button">
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="MainBorder" MinWidth="70" Height="34" Background="White" BorderThickness="2" CornerRadius="4" SnapsToDevicePixels="True">
+                                <TextBlock Text="{TemplateBinding Content}" Foreground="Black" Margin="15,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <!--<Setter TargetName="MainBorder" Property="Background" Value="Gainsboro"/>-->
+                                    <Setter TargetName="MainBorder" Property="BorderBrush" Value="RoyalBlue"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <!--<Setter TargetName="MainBorder" Property="Background" Value="DarkGray"/>-->
+                                    <Setter TargetName="MainBorder" Property="Background" Value="Gainsboro"/>
+                                    <Setter TargetName="MainBorder" Property="BorderBrush" Value="RoyalBlue"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Opacity" Value="0.5"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </Window.Resources>
 
@@ -236,7 +262,7 @@
                             </TextBox.Text>
                             <b:Interaction.Triggers>
                                 <b:EventTrigger EventName="LostFocus">
-                                    <b:InvokeCommandAction Command="{Binding RestoreSavedColorCommand,Mode=OneTime}" CommandParameter="CharColor"/>
+                                    <b:InvokeCommandAction Command="{Binding RestoreSavedColorCommand,Mode=OneTime}" CommandParameter="KeyColor"/>
                                 </b:EventTrigger>
                             </b:Interaction.Triggers>
                         </TextBox>
@@ -257,7 +283,7 @@
                             </TextBox.Text>
                             <b:Interaction.Triggers>
                                 <b:EventTrigger EventName="LostFocus">
-                                    <b:InvokeCommandAction Command="{Binding RestoreSavedColorCommand,Mode=OneTime}" CommandParameter="CharColor"/>
+                                    <b:InvokeCommandAction Command="{Binding RestoreSavedColorCommand,Mode=OneTime}" CommandParameter="StringColor"/>
                                 </b:EventTrigger>
                             </b:Interaction.Triggers>
                         </TextBox>
@@ -278,7 +304,7 @@
                             </TextBox.Text>
                             <b:Interaction.Triggers>
                                 <b:EventTrigger EventName="LostFocus">
-                                    <b:InvokeCommandAction Command="{Binding RestoreSavedColorCommand,Mode=OneTime}" CommandParameter="CharColor"/>
+                                    <b:InvokeCommandAction Command="{Binding RestoreSavedColorCommand,Mode=OneTime}" CommandParameter="NumberColor"/>
                                 </b:EventTrigger>
                             </b:Interaction.Triggers>
                         </TextBox>
@@ -299,7 +325,7 @@
                             </TextBox.Text>
                             <b:Interaction.Triggers>
                                 <b:EventTrigger EventName="LostFocus">
-                                    <b:InvokeCommandAction Command="{Binding RestoreSavedColorCommand,Mode=OneTime}" CommandParameter="CharColor"/>
+                                    <b:InvokeCommandAction Command="{Binding RestoreSavedColorCommand,Mode=OneTime}" CommandParameter="BooleanNullColor"/>
                                 </b:EventTrigger>
                             </b:Interaction.Triggers>
                         </TextBox>
@@ -309,9 +335,9 @@
         </WrapPanel>
 
         <!--底部-->
-        <StackPanel Orientation="Horizontal">
-            <Button Width="80" Height="26" Content="应用" Command="{Binding ApplySettingsCommand,Mode=OneTime}"/>
-            <Button Width="100" Height="26" Content="恢复默认设置" Margin="20,0,0,0" Command="{Binding RestoreSettingsCommand,Mode=OneTime}"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="应用" Command="{Binding ApplySettingsCommand,Mode=OneTime}" Style="{StaticResource BottomButtonStyle}"/>
+            <Button Content="恢复默认设置" Command="{Binding RestoreSettingsCommand,Mode=OneTime}" Margin="20,0,0,0" Style="{StaticResource BottomButtonStyle}"/>
         </StackPanel>
     </StackPanel>
 </Window>
