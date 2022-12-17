@@ -32,7 +32,7 @@
             </Style>
             <Style x:Key="SettingClassDecoratorStyle" TargetType="Border">
                 <Setter Property="Height" Value="1"/>
-                <Setter Property="Background" Value="#2A2A2A"/>
+                <Setter Property="Background" Value="#2C2C2C"/>
                 <Setter Property="SnapsToDevicePixels" Value="True"/>
                 <Setter Property="VerticalAlignment" Value="Center"/>
                 <Setter Property="Margin" Value="5,0,0,0"/>
@@ -153,6 +153,16 @@
                 </Setter>
             </Style>
             <converter:StringToBrushConverter x:Key="StringToBrushConverter"/>
+            <VisualBrush x:Key="GridBackground" TileMode="Tile" Viewport="0,0,18,18" ViewportUnits="Absolute" Stretch="None">
+                <VisualBrush.Visual>
+                    <Canvas>
+                        <Rectangle Canvas.Left="0" Canvas.Top="0" Width="9" Height="9" Fill="DarkGray"/>
+                        <Rectangle Canvas.Left="9" Canvas.Top="9" Width="9" Height="9" Fill="DarkGray"/>
+                        <Rectangle Canvas.Left="0" Canvas.Top="9" Width="9" Height="9" Fill="White"/>
+                        <Rectangle Canvas.Left="9" Canvas.Top="0" Width="9" Height="9" Fill="White"/>
+                    </Canvas>
+                </VisualBrush.Visual>
+            </VisualBrush>
         </ResourceDictionary>
     </Window.Resources>
 
@@ -191,100 +201,110 @@
             <Border Style="{StaticResource SettingClassDecoratorStyle}"/>
         </DockPanel>
         <WrapPanel MaxWidth="500" Margin="{StaticResource SettingClassWithClassMargin}">
-            <Border Background="{Binding CharColor,Mode=OneWay,Converter={StaticResource StringToBrushConverter}}" CornerRadius="4" ToolTip="字符颜色" Margin="{StaticResource ColorSettingItemMargin}">
-                <StackPanel Margin="10">
-                    <TextBlock Text="字符颜色" Foreground="{Binding CharColor,Mode=OneWay,Converter={StaticResource StringToBrushConverter},ConverterParameter=Binary}" Style="{StaticResource SettingItemNameTextStyle}"/>
-                    <TextBox Style="{StaticResource ColorTextBoxStyle}">
-                        <TextBox.Text>
-                            <Binding Path="CharColor" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <util:ColorValidationRule ValidatesOnTargetUpdated="True"/>
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                        <b:Interaction.Triggers>
-                            <b:EventTrigger EventName="LostFocus">
-                                <b:InvokeCommandAction Command="{Binding RestoreSavedColorCommand,Mode=OneTime}" CommandParameter="CharColor"/>
-                            </b:EventTrigger>
-                        </b:Interaction.Triggers>
-                    </TextBox>
-                </StackPanel>
+            <Border CornerRadius="6" Margin="{StaticResource ColorSettingItemMargin}" Background="{StaticResource GridBackground}" SnapsToDevicePixels="True">
+                <Border Background="{Binding CharColor,Mode=OneWay,Converter={StaticResource StringToBrushConverter}}" CornerRadius="4" ToolTip="字符颜色" SnapsToDevicePixels="True">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="字符颜色" Foreground="{Binding CharColor,Mode=OneWay,Converter={StaticResource StringToBrushConverter},ConverterParameter=Binary}" Style="{StaticResource SettingItemNameTextStyle}"/>
+                        <TextBox Style="{StaticResource ColorTextBoxStyle}">
+                            <TextBox.Text>
+                                <Binding Path="CharColor" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <util:ColorValidationRule ValidatesOnTargetUpdated="True"/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="LostFocus">
+                                    <b:InvokeCommandAction Command="{Binding RestoreSavedColorCommand,Mode=OneTime}" CommandParameter="CharColor"/>
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
+                        </TextBox>
+                    </StackPanel>
+                </Border>
             </Border>
-            <Border Background="{Binding KeyColor,Mode=OneWay,Converter={StaticResource StringToBrushConverter}}" CornerRadius="4" ToolTip="键名颜色" Margin="{StaticResource ColorSettingItemMargin}">
-                <StackPanel Margin="10">
-                    <TextBlock Text="键名颜色" Foreground="{Binding KeyColor,Mode=OneWay,Converter={StaticResource StringToBrushConverter},ConverterParameter=Binary}" Style="{StaticResource SettingItemNameTextStyle}"/>
-                    <TextBox Style="{StaticResource ColorTextBoxStyle}">
-                        <TextBox.Text>
-                            <Binding Path="KeyColor" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <util:ColorValidationRule ValidatesOnTargetUpdated="True"/>
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                        <b:Interaction.Triggers>
-                            <b:EventTrigger EventName="LostFocus">
-                                <b:InvokeCommandAction Command="{Binding RestoreSavedColorCommand,Mode=OneTime}" CommandParameter="CharColor"/>
-                            </b:EventTrigger>
-                        </b:Interaction.Triggers>
-                    </TextBox>
-                </StackPanel>
+            <Border CornerRadius="6" Margin="{StaticResource ColorSettingItemMargin}" Background="{StaticResource GridBackground}" SnapsToDevicePixels="True">
+                <Border Background="{Binding KeyColor,Mode=OneWay,Converter={StaticResource StringToBrushConverter}}" CornerRadius="4" ToolTip="键名颜色" SnapsToDevicePixels="True">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="键名颜色" Foreground="{Binding KeyColor,Mode=OneWay,Converter={StaticResource StringToBrushConverter},ConverterParameter=Binary}" Style="{StaticResource SettingItemNameTextStyle}"/>
+                        <TextBox Style="{StaticResource ColorTextBoxStyle}">
+                            <TextBox.Text>
+                                <Binding Path="KeyColor" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <util:ColorValidationRule ValidatesOnTargetUpdated="True"/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="LostFocus">
+                                    <b:InvokeCommandAction Command="{Binding RestoreSavedColorCommand,Mode=OneTime}" CommandParameter="CharColor"/>
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
+                        </TextBox>
+                    </StackPanel>
+                </Border>
             </Border>
-            <Border Background="{Binding StringColor,Mode=OneWay,Converter={StaticResource StringToBrushConverter}}" CornerRadius="4" ToolTip="字符串颜色" Margin="{StaticResource ColorSettingItemMargin}">
-                <StackPanel Margin="10">
-                    <TextBlock Text="字符串颜色" Foreground="{Binding StringColor,Mode=OneWay,Converter={StaticResource StringToBrushConverter},ConverterParameter=Binary}" Style="{StaticResource SettingItemNameTextStyle}"/>
-                    <TextBox Style="{StaticResource ColorTextBoxStyle}">
-                        <TextBox.Text>
-                            <Binding Path="StringColor" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <util:ColorValidationRule ValidatesOnTargetUpdated="True"/>
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                        <b:Interaction.Triggers>
-                            <b:EventTrigger EventName="LostFocus">
-                                <b:InvokeCommandAction Command="{Binding RestoreSavedColorCommand,Mode=OneTime}" CommandParameter="CharColor"/>
-                            </b:EventTrigger>
-                        </b:Interaction.Triggers>
-                    </TextBox>
-                </StackPanel>
+            <Border CornerRadius="6" Margin="{StaticResource ColorSettingItemMargin}" Background="{StaticResource GridBackground}" SnapsToDevicePixels="True">
+                <Border Background="{Binding StringColor,Mode=OneWay,Converter={StaticResource StringToBrushConverter}}" CornerRadius="4" ToolTip="字符串颜色" SnapsToDevicePixels="True">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="字符串颜色" Foreground="{Binding StringColor,Mode=OneWay,Converter={StaticResource StringToBrushConverter},ConverterParameter=Binary}" Style="{StaticResource SettingItemNameTextStyle}"/>
+                        <TextBox Style="{StaticResource ColorTextBoxStyle}">
+                            <TextBox.Text>
+                                <Binding Path="StringColor" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <util:ColorValidationRule ValidatesOnTargetUpdated="True"/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="LostFocus">
+                                    <b:InvokeCommandAction Command="{Binding RestoreSavedColorCommand,Mode=OneTime}" CommandParameter="CharColor"/>
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
+                        </TextBox>
+                    </StackPanel>
+                </Border>
             </Border>
-            <Border Background="{Binding NumberColor,Mode=OneWay,Converter={StaticResource StringToBrushConverter}}" CornerRadius="4" ToolTip="数字颜色" Margin="{StaticResource ColorSettingItemMargin}">
-                <StackPanel Margin="10">
-                    <TextBlock Text="数字颜色" Foreground="{Binding NumberColor,Mode=OneWay,Converter={StaticResource StringToBrushConverter},ConverterParameter=Binary}" Style="{StaticResource SettingItemNameTextStyle}"/>
-                    <TextBox Style="{StaticResource ColorTextBoxStyle}">
-                        <TextBox.Text>
-                            <Binding Path="NumberColor" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <util:ColorValidationRule ValidatesOnTargetUpdated="True"/>
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                        <b:Interaction.Triggers>
-                            <b:EventTrigger EventName="LostFocus">
-                                <b:InvokeCommandAction Command="{Binding RestoreSavedColorCommand,Mode=OneTime}" CommandParameter="CharColor"/>
-                            </b:EventTrigger>
-                        </b:Interaction.Triggers>
-                    </TextBox>
-                </StackPanel>
+            <Border CornerRadius="6" Margin="{StaticResource ColorSettingItemMargin}" Background="{StaticResource GridBackground}" SnapsToDevicePixels="True">
+                <Border Background="{Binding NumberColor,Mode=OneWay,Converter={StaticResource StringToBrushConverter}}" CornerRadius="4" ToolTip="数字颜色" SnapsToDevicePixels="True">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="数字颜色" Foreground="{Binding NumberColor,Mode=OneWay,Converter={StaticResource StringToBrushConverter},ConverterParameter=Binary}" Style="{StaticResource SettingItemNameTextStyle}"/>
+                        <TextBox Style="{StaticResource ColorTextBoxStyle}">
+                            <TextBox.Text>
+                                <Binding Path="NumberColor" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <util:ColorValidationRule ValidatesOnTargetUpdated="True"/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="LostFocus">
+                                    <b:InvokeCommandAction Command="{Binding RestoreSavedColorCommand,Mode=OneTime}" CommandParameter="CharColor"/>
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
+                        </TextBox>
+                    </StackPanel>
+                </Border>
             </Border>
-            <Border Background="{Binding BooleanNullColor,Mode=OneWay,Converter={StaticResource StringToBrushConverter}}" CornerRadius="4" ToolTip="布尔值和null颜色" Margin="{StaticResource ColorSettingItemMargin}">
-                <StackPanel Margin="10">
-                    <TextBlock Text="布尔值和null颜色" Foreground="{Binding BooleanNullColor,Mode=OneWay,Converter={StaticResource StringToBrushConverter},ConverterParameter=Binary}" Style="{StaticResource SettingItemNameTextStyle}"/>
-                    <TextBox Style="{StaticResource ColorTextBoxStyle}">
-                        <TextBox.Text>
-                            <Binding Path="BooleanNullColor" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <util:ColorValidationRule ValidatesOnTargetUpdated="True"/>
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                        <b:Interaction.Triggers>
-                            <b:EventTrigger EventName="LostFocus">
-                                <b:InvokeCommandAction Command="{Binding RestoreSavedColorCommand,Mode=OneTime}" CommandParameter="CharColor"/>
-                            </b:EventTrigger>
-                        </b:Interaction.Triggers>
-                    </TextBox>
-                </StackPanel>
+            <Border CornerRadius="6" Margin="{StaticResource ColorSettingItemMargin}" Background="{StaticResource GridBackground}" SnapsToDevicePixels="True">
+                <Border Background="{Binding BooleanNullColor,Mode=OneWay,Converter={StaticResource StringToBrushConverter}}" CornerRadius="4" ToolTip="布尔值和null颜色" SnapsToDevicePixels="True">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="布尔值和null颜色" Foreground="{Binding BooleanNullColor,Mode=OneWay,Converter={StaticResource StringToBrushConverter},ConverterParameter=Binary}" Style="{StaticResource SettingItemNameTextStyle}"/>
+                        <TextBox Style="{StaticResource ColorTextBoxStyle}">
+                            <TextBox.Text>
+                                <Binding Path="BooleanNullColor" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <util:ColorValidationRule ValidatesOnTargetUpdated="True"/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="LostFocus">
+                                    <b:InvokeCommandAction Command="{Binding RestoreSavedColorCommand,Mode=OneTime}" CommandParameter="CharColor"/>
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
+                        </TextBox>
+                    </StackPanel>
+                </Border>
             </Border>
         </WrapPanel>
 
