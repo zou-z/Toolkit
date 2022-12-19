@@ -1,4 +1,7 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using JsonFormat.Model;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -18,37 +21,53 @@ using System.Windows.Shapes;
 
 namespace JsonFormat.View
 {
-    internal partial class RichTextBoxEx : RichTextBox
+    internal partial class RichTextBoxEx : RichTextBox, IRecipient<string>
     {
         public RichTextBoxEx()
         {
             InitializeComponent();
             SnapsToDevicePixels = false;
             PreviewKeyDown += RichTextBox_PreviewKeyDown;
+            WeakReferenceMessenger.Default.Register(this);
+        }
+
+        public void Receive(string message)
+        {
+            if (message == MessageToken.SettingsUpdated)
+            {
+                if (JsonFormat.GetServices().GetService<AppSetting>() is AppSetting appSetting)
+                {
+                    FontFamily = new FontFamily(appSetting.Settings.RenderSetting.FontFamily);
+                    FontSize = appSetting.Settings.RenderSetting.FontSize;
+                    UpdatePageWidth();
+                    if (lineNumber != null)
+                    {
+                        foreach (Block item in lineNumber.Document.Blocks)
+                        {
+                            item.FontFamily = FontFamily;
+                            item.FontSize = FontSize;
+                        }
+                        lineNumber.UpdatePageWidth();
+                    }
+                }
+            }
         }
 
         protected override void OnTextChanged(TextChangedEventArgs e)
         {
             base.OnTextChanged(e);
             UpdatePageWidth();
-            UpdateLineNumber();
+            lineNumber?.UpdateLineNumber(Document.Blocks.Count);
         }
 
-        private void LineNumberView_Loaded(object sender, RoutedEventArgs e)
+        private void RichTextBoxLineNumber_Loaded(object sender, RoutedEventArgs e)
         {
-            lineNumberView = (VirtualizingStackPanel)sender;
-            lineNumberView.Loaded -= LineNumberView_Loaded;
-            string key = "LineNumberTextStyle";
-            if (Resources.Contains(key) && Resources[key] is Style style)
+            if (sender is RichTextBoxLineNumber _lineNumber)
             {
-                lineNumberTextStyle = style;
+                lineNumber = _lineNumber;
+                lineNumber.Loaded -= RichTextBoxLineNumber_Loaded;
+                lineNumber.UpdateLineNumber(Document.Blocks.Count);
             }
-            key = "ParagraphMargin";
-            if (Resources.Contains(key) && Resources[key] is Thickness thickness)
-            {
-                lineHeight = ExtentHeight + thickness.Top;
-            }
-            UpdateLineNumber();
         }
 
         private void UpdatePageWidth()
@@ -59,51 +78,18 @@ namespace JsonFormat.View
             Document.PageWidth = formattedText.Width + 12;
         }
 
-        private void UpdateLineNumber()
-        {
-            if (lineNumberView == null) return;
-            int lineCount = Document.Blocks.Count;
-            if (lineCount > lineNumberView.Children.Count)
-            {
-                for (int i = lineNumberView.Children.Count + 1; i <= lineCount; ++i)
-                {
-                    var textBlock = new TextBlock
-                    {
-                        Text = i.ToString(),
-                        Style = lineNumberTextStyle,
-                        FontSize = FontSize,
-                        FontFamily = FontFamily,
-                        LineHeight = 19.56333,
-                    };
-                    if (lineHeight > 0)
-                    {
-                        textBlock.LineHeight = lineHeight;
-                    }
-                    lineNumberView.Children.Add(textBlock);
-                }
-            }
-            else if (lineCount < lineNumberView.Children.Count)
-            {
-                for (int i = lineNumberView.Children.Count - 1; i >= lineCount && i > 0; --i)
-                {
-                    lineNumberView.Children.RemoveAt(i);
-                }
-            }
-        }
-
         private void Content_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            if (lineNumberScrollViewer == null)
+            if (contentScrollViewer == null)
             {
-                if (sender is ScrollViewer scrollViewer && scrollViewer.Parent is DockPanel dockPanel)
+                if (sender is ScrollViewer scrollViewer)
                 {
                     contentScrollViewer = scrollViewer;
-                    lineNumberScrollViewer = (ScrollViewer)dockPanel.Children[0];
                 }
             }
-            if (contentScrollViewer != null && lineNumberScrollViewer != null)
+            if (contentScrollViewer != null && lineNumber != null)
             {
-                lineNumberScrollViewer.ScrollToVerticalOffset(contentScrollViewer.VerticalOffset);
+                lineNumber.UpdateVerticalOffset(contentScrollViewer.VerticalOffset);
             }
         }
 
@@ -122,10 +108,7 @@ namespace JsonFormat.View
             }
         }
 
-        private VirtualizingStackPanel? lineNumberView = null;
-        private Style? lineNumberTextStyle = null;
-        private double lineHeight = 0;
+        private RichTextBoxLineNumber? lineNumber = null;
         private ScrollViewer? contentScrollViewer = null;
-        private ScrollViewer? lineNumberScrollViewer = null;
     }
 }
