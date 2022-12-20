@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using JsonFormat.Core;
+using JsonFormat.Model;
 using JsonFormat.Service;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -49,14 +51,25 @@ namespace JsonFormat.ViewModel
             });
             if (result)
             {
-                jsonRenderer ??= new JsonRenderer(new JsonRenderer.RenderConfig
+                renderConfig ??= new JsonRenderer.RenderConfig();
+                if (JsonFormat.GetServices().GetService<AppSetting>() is AppSetting appSetting)
                 {
-                });
-                JsonDocument = jsonRenderer.Render(jsonObject);
+                    renderConfig.FontFamily = new FontFamily(appSetting.Settings.RenderSetting.FontFamily);
+                    renderConfig.FontSize = appSetting.Settings.RenderSetting.FontSize;
+                    renderConfig.IndentSpaceCount = appSetting.Settings.RenderSetting.IndentSpaceCount;
+                    renderConfig.CharColor = (Color)ColorConverter.ConvertFromString(appSetting.Settings.RenderSetting.CharColor);
+                    renderConfig.KeyColor = (Color)ColorConverter.ConvertFromString(appSetting.Settings.RenderSetting.KeyColor);
+                    renderConfig.StringColor = (Color)ColorConverter.ConvertFromString(appSetting.Settings.RenderSetting.StringColor);
+                    renderConfig.NumberColor = (Color)ColorConverter.ConvertFromString(appSetting.Settings.RenderSetting.NumberColor);
+                    renderConfig.BooleanNullColor = (Color)ColorConverter.ConvertFromString(appSetting.Settings.RenderSetting.BooleanNullColor);
+                }
+                jsonRenderer ??= new JsonRenderer();
+                JsonDocument = jsonRenderer.Render(jsonObject, renderConfig);
             }
         }
 
         private FlowDocument? jsonDocument = null;
         private JsonRenderer? jsonRenderer = null;
+        private JsonRenderer.RenderConfig? renderConfig = null;
     }
 }

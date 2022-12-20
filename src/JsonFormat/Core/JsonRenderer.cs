@@ -39,14 +39,14 @@ namespace JsonFormat.Core
             public Color BooleanNullColor { get; set; } = Colors.White;
         }
 
-        public JsonRenderer(RenderConfig renderConfig)
+        public JsonRenderer()
         {
-            flowDocumentUtil = new FlowDocumentUtil(renderConfig);
+            flowDocumentUtil = new FlowDocumentUtil();
         }
 
-        public FlowDocument Render(object jsonObject)
+        public FlowDocument Render(object jsonObject, RenderConfig renderConfig)
         {
-            flowDocumentUtil.Init();
+            flowDocumentUtil.Init(renderConfig);
             RenderJsonValue(jsonObject, true);
             return flowDocumentUtil.GetFlowDocument();
         }
@@ -136,13 +136,9 @@ namespace JsonFormat.Core
 
         private class FlowDocumentUtil
         {
-            public FlowDocumentUtil(RenderConfig renderConfig)
+            public void Init(RenderConfig renderConfig)
             {
                 this.renderConfig = renderConfig;
-            }
-
-            public void Init()
-            {
                 flowDocument ??= new FlowDocument
                 {
                     FontFamily = renderConfig.FontFamily,
@@ -172,6 +168,7 @@ namespace JsonFormat.Core
             // 添加空格缩进
             public void AppendSpaceIndent()
             {
+                if (renderConfig == null) return;
                 int spaceCount = currentIndentCount * renderConfig.IndentSpaceCount;
                 if (spaceCount > 0)
                 {
@@ -193,36 +190,42 @@ namespace JsonFormat.Core
             // 添加字符
             public void AppendChar(string character, bool isLineEnd)
             {
+                if (renderConfig == null) return;
                 AppendText(character, renderConfig.CharColor, isLineEnd);
             }
 
             // 添加键名
             public void AppendKey(string key, bool isLineEnd)
             {
+                if (renderConfig == null) return;
                 AppendText(key, renderConfig.KeyColor, isLineEnd);
             }
 
             // 添加字符串
             public void AppendString(string str, bool isLineEnd)
             {
+                if (renderConfig == null) return;
                 AppendText(str, renderConfig.StringColor, isLineEnd);
             }
 
             // 添加数字
             public void AppendNumber(double number, bool isLineEnd)
             {
+                if (renderConfig == null) return;
                 AppendText(number.ToString(), renderConfig.NumberColor, isLineEnd);
             }
 
             // 添加布尔值
             public void AppendBoolean(bool b, bool isLineEnd)
             {
+                if (renderConfig == null) return;
                 AppendText(b.ToString().ToLower(), renderConfig.BooleanNullColor, isLineEnd);
             }
 
             // 添加null
             public void AppendNull(bool isLineEnd)
             {
+                if (renderConfig == null) return;
                 AppendText("null", renderConfig.BooleanNullColor, isLineEnd);
             }
 
@@ -242,9 +245,9 @@ namespace JsonFormat.Core
             }
 
             private FlowDocument? flowDocument = null;
+            private RenderConfig? renderConfig = null;
             private Paragraph? currentParagraph = null;
             private int currentIndentCount = 0;
-            private readonly RenderConfig renderConfig;
         }
 
         private readonly FlowDocumentUtil flowDocumentUtil;
