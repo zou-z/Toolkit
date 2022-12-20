@@ -28,6 +28,7 @@ namespace JsonFormat.View
             InitializeComponent();
             SnapsToDevicePixels = false;
             PreviewKeyDown += RichTextBox_PreviewKeyDown;
+            ApplySettingsUpdate();
         }
 
         public void ApplySettingsUpdate()
@@ -39,11 +40,8 @@ namespace JsonFormat.View
                 UpdatePageWidth();
                 if (lineNumber != null)
                 {
-                    foreach (Block item in lineNumber.Document.Blocks)
-                    {
-                        item.FontFamily = Document.FontFamily;
-                        item.FontSize = Document.FontSize;
-                    }
+                    lineNumber.Document.FontFamily = Document.FontFamily;
+                    lineNumber.Document.FontSize = Document.FontSize;
                     lineNumber.UpdatePageWidth();
                 }
             }
@@ -62,6 +60,8 @@ namespace JsonFormat.View
             {
                 lineNumber = _lineNumber;
                 lineNumber.Loaded -= RichTextBoxLineNumber_Loaded;
+                lineNumber.Document.FontFamily = Document.FontFamily;
+                lineNumber.Document.FontSize = Document.FontSize;
                 lineNumber.UpdateLineNumber(Document.Blocks.Count);
             }
         }

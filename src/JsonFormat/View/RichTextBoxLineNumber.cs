@@ -44,12 +44,7 @@ namespace JsonFormat.View
             {
                 for (int i = Document.Blocks.Count + 1; i <= targetLineCount; ++i)
                 {
-                    var paragraph = new Paragraph
-                    {
-                        FontFamily = FontFamily,
-                        FontSize = FontSize,
-                        Foreground = Brushes.Gray,
-                    };
+                    var paragraph = new Paragraph();
                     paragraph.Inlines.Add(new Run
                     {
                         Text = i.ToString(),
