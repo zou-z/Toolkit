@@ -34,15 +34,15 @@ namespace JsonFormat.View
         {
             if (JsonFormat.GetServices().GetService<AppSetting>() is AppSetting appSetting)
             {
-                FontFamily = new FontFamily(appSetting.Settings.RenderSetting.FontFamily);
-                FontSize = appSetting.Settings.RenderSetting.FontSize;
+                Document.FontFamily = new FontFamily(appSetting.Settings.RenderSetting.FontFamily);
+                Document.FontSize = appSetting.Settings.RenderSetting.FontSize;
                 UpdatePageWidth();
                 if (lineNumber != null)
                 {
                     foreach (Block item in lineNumber.Document.Blocks)
                     {
-                        item.FontFamily = FontFamily;
-                        item.FontSize = FontSize;
+                        item.FontFamily = Document.FontFamily;
+                        item.FontSize = Document.FontSize;
                     }
                     lineNumber.UpdatePageWidth();
                 }
@@ -69,8 +69,8 @@ namespace JsonFormat.View
         private void UpdatePageWidth()
         {
             var text = new TextRange(Document.ContentStart, Document.ContentEnd).Text;
-            var typeface = new Typeface(FontFamily, FontStyle, FontWeight, FontStretch);
-            var formattedText = new FormattedText(text, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, typeface, FontSize, Brushes.Black, 96 / 96);
+            var typeface = new Typeface(Document.FontFamily, Document.FontStyle, Document.FontWeight, Document.FontStretch);
+            var formattedText = new FormattedText(text, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, typeface, Document.FontSize, Brushes.Black, 96 / 96);
             Document.PageWidth = formattedText.Width + 12;
         }
 

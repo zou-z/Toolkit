@@ -143,7 +143,11 @@ namespace JsonFormat.Core
 
             public void Init()
             {
-                flowDocument ??= new FlowDocument();
+                flowDocument ??= new FlowDocument
+                {
+                    FontFamily = renderConfig.FontFamily,
+                    FontSize = renderConfig.FontSize,
+                };
                 flowDocument?.Blocks.Clear();
                 currentIndentCount = 0;
             }
@@ -181,8 +185,6 @@ namespace JsonFormat.Core
                     currentParagraph.Inlines.Add(new Run
                     {
                         Text = indent,
-                        FontFamily = renderConfig.FontFamily,
-                        FontSize = renderConfig.FontSize,
                         Foreground = Brushes.White,
                     });
                 }
@@ -230,8 +232,6 @@ namespace JsonFormat.Core
                 currentParagraph.Inlines.Add(new Run
                 {
                     Text = text,
-                    FontFamily = renderConfig.FontFamily,
-                    FontSize = renderConfig.FontSize,
                     Foreground = new SolidColorBrush(textColor),
                 });
                 if (isLineEnd)

@@ -28,8 +28,8 @@ namespace JsonFormat.View
         public void UpdatePageWidth()
         {
             var text = new TextRange(Document.ContentStart, Document.ContentEnd).Text;
-            var typeface = new Typeface(FontFamily, FontStyle, FontWeight, FontStretch);
-            var formattedText = new FormattedText(text, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, typeface, FontSize, Brushes.Black, 96 / 96);
+            var typeface = new Typeface(Document.FontFamily, Document.FontStyle, Document.FontWeight, Document.FontStretch);
+            var formattedText = new FormattedText(text, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, typeface, Document.FontSize, Brushes.Black, 96 / 96);
             Document.PageWidth = formattedText.Width + Document.PagePadding.Left + Document.PagePadding.Right + 12;
         }
 
