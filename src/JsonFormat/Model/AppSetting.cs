@@ -15,7 +15,7 @@ using Toolkit.Base.Util;
 
 namespace JsonFormat.Model
 {
-    internal class AppSetting : ObservableObject
+    internal class AppSetting : ObservableObject, IRecipient<string>
     {
         public RelayCommand OpenSettingCommand => openSettingCommand ??= new RelayCommand(OpenSetting);
 
@@ -92,6 +92,18 @@ namespace JsonFormat.Model
             InitDataCollections();    // 初始化只读数据集合
             CheckSettings();          // 检查读取的设置的正确性
             InitSettings();           // 初始化设置相关的属性
+            WeakReferenceMessenger.Default.Register(this);
+        }
+
+        public void Receive(string message)
+        {
+            if (message == MessageToken.SettingsUpdateFinished)
+            {
+                if (settingWindow != null)
+                {
+                    settingWindow.IsEnabled = true;
+                }
+            }
         }
 
         private void InitDataCollections()
@@ -213,7 +225,6 @@ namespace JsonFormat.Model
             settingWindow.IsEnabled = false;
             SaveSettings();
             WeakReferenceMessenger.Default.Send(MessageToken.SettingsUpdated);
-            //settingWindow.IsEnabled = true;
         }
 
         private void RestoreSettings()

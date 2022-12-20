@@ -11,5 +11,7 @@ namespace JsonFormat.Service
         string GetText();
 
         IJsonFormat? GetDataContext();
+
+        void ApplySettingsUpdate();
     }
 }

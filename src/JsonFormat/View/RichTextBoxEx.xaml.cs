@@ -21,34 +21,30 @@ using System.Windows.Shapes;
 
 namespace JsonFormat.View
 {
-    internal partial class RichTextBoxEx : RichTextBox, IRecipient<string>
+    internal partial class RichTextBoxEx : RichTextBox
     {
         public RichTextBoxEx()
         {
             InitializeComponent();
             SnapsToDevicePixels = false;
             PreviewKeyDown += RichTextBox_PreviewKeyDown;
-            WeakReferenceMessenger.Default.Register(this);
         }
 
-        public void Receive(string message)
+        public void ApplySettingsUpdate()
         {
-            if (message == MessageToken.SettingsUpdated)
+            if (JsonFormat.GetServices().GetService<AppSetting>() is AppSetting appSetting)
             {
-                if (JsonFormat.GetServices().GetService<AppSetting>() is AppSetting appSetting)
+                FontFamily = new FontFamily(appSetting.Settings.RenderSetting.FontFamily);
+                FontSize = appSetting.Settings.RenderSetting.FontSize;
+                UpdatePageWidth();
+                if (lineNumber != null)
                 {
-                    FontFamily = new FontFamily(appSetting.Settings.RenderSetting.FontFamily);
-                    FontSize = appSetting.Settings.RenderSetting.FontSize;
-                    UpdatePageWidth();
-                    if (lineNumber != null)
+                    foreach (Block item in lineNumber.Document.Blocks)
                     {
-                        foreach (Block item in lineNumber.Document.Blocks)
-                        {
-                            item.FontFamily = FontFamily;
-                            item.FontSize = FontSize;
-                        }
-                        lineNumber.UpdatePageWidth();
+                        item.FontFamily = FontFamily;
+                        item.FontSize = FontSize;
                     }
+                    lineNumber.UpdatePageWidth();
                 }
             }
         }

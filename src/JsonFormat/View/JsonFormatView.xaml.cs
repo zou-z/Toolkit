@@ -59,6 +59,11 @@ namespace JsonFormat.View
             return null;
         }
 
+        public void ApplySettingsUpdate()
+        {
+            richTextBox?.ApplySettingsUpdate();
+        }
+
         private static void JsonDocumentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is JsonFormatView self && self.richTextBox != null)
