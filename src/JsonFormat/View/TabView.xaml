@@ -150,7 +150,9 @@
                                     <ItemsPresenter/>
                                 </ScrollViewer>
                                 <Button Grid.Column="1" Click="AddButton_Click" Style="{StaticResource AddButtonStyle}" VerticalAlignment="Top" Margin="5,0,0,0" ToolTip="新建标签"/>
-                                <ContentControl Grid.Column="2" Content="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:TabView},Path=TabViewFooter,Mode=OneWay}"/>
+                                <ContentControl Grid.Column="2" 
+                                                DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:TabView},Path=DataContext,Mode=OneWay}"
+                                                Content="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:TabView},Path=TabViewFooter,Mode=OneWay}"/>
                             </Grid>
                         </ControlTemplate>
                     </Setter.Value>

@@ -24,6 +24,8 @@ namespace JsonFormat.ViewModel
     {
         public AsyncRelayCommand FormatCommand => formatCommand ??= new AsyncRelayCommand(Format);
 
+        public AsyncRelayCommand CopyCommand => copyCommand ??= new AsyncRelayCommand(Copy);
+
         public TabManager TabManager => tabManager ??= new TabManager();
 
         public AppSetting? AppSetting
@@ -39,6 +41,12 @@ namespace JsonFormat.ViewModel
                 }
                 return appSetting;
             }
+        }
+
+        public string CopyButtonText
+        {
+            get => copyButtonText;
+            set => SetProperty(ref copyButtonText, value);
         }
 
         public MainViewModel()
@@ -58,8 +66,25 @@ namespace JsonFormat.ViewModel
             }
         }
 
+        private async Task Copy()
+        {
+            if (TabManager.SelectedItem == null) return;
+            if (TabManager.SelectedItem.Content is IJsonFormatView jsonFormatView)
+            {
+                var text = jsonFormatView.GetText();
+                Clipboard.SetText(text);
+
+                text = CopyButtonText;
+                CopyButtonText = "\xE081";
+                await Task.Delay(1000);
+                CopyButtonText = text;
+            }
+        }
+
         private TabManager? tabManager = null;
         private AppSetting? appSetting = null;
         private AsyncRelayCommand? formatCommand = null;
+        private AsyncRelayCommand? copyCommand = null;
+        private string copyButtonText = "\xE16F";
     }
 }

@@ -6,11 +6,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:JsonFormat.View"
         xmlns:viewmodel="clr-namespace:JsonFormat.ViewModel"
+        xmlns:converter="clr-namespace:JsonFormat.Converter"
         Title="JsonFormat" Height="500" Width="800" Background="#1E1E1E">
     <Window.DataContext>
         <viewmodel:MainViewModel/>
     </Window.DataContext>
     <Window.Resources>
+        <converter:StatusTextColorConverter x:Key="StatusTextColorConverter"/>
         <Style x:Key="TitleButtonStyle" TargetType="Button">
             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
             <Setter Property="SnapsToDevicePixels" Value="False"/>
@@ -35,15 +37,28 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <ControlTemplate x:Key="WithoutDisabledStatusTemplate" TargetType="Button">
+            <Border x:Name="MainBorder" Width="36" Height="30" Background="Transparent">
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="MainBorder" Property="Background" Value="#3B3C3C"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter TargetName="MainBorder" Property="Background" Value="#4B4C4C"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
     </Window.Resources>
     <local:TabView ItemsSource="{Binding TabManager.Tabs,Mode=OneWay}" SelectedItem="{Binding TabManager.SelectedItem,Mode=TwoWay}" NewTabCommand="{Binding TabManager.NewTabCommand,Mode=OneTime}">
         <local:TabView.TabViewFooter>
-            <StackPanel Orientation="Horizontal" DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window},Path=DataContext,Mode=OneTime}">
+            <StackPanel Orientation="Horizontal">
                 <Button Command="{Binding FormatCommand,Mode=OneTime}" Style="{StaticResource TitleButtonStyle}" ToolTip="格式化">
                     <TextBlock Text="&#xE102;" FontSize="13" Foreground="White" FontFamily="Segoe MDL2 Assets"/>
                 </Button>
-                <Button Style="{StaticResource TitleButtonStyle}" ToolTip="复制">
-                    <TextBlock Text="&#xE16F;" FontSize="13" Foreground="White" FontFamily="Segoe MDL2 Assets"/>
+                <Button Command="{Binding CopyCommand,Mode=OneTime}" Style="{StaticResource TitleButtonStyle}" ToolTip="复制" Template="{StaticResource WithoutDisabledStatusTemplate}">
+                    <TextBlock Text="{Binding CopyButtonText,Mode=OneWay}" FontSize="13" Foreground="{Binding CopyButtonText,Mode=OneWay,Converter={StaticResource StatusTextColorConverter}}" FontFamily="Segoe MDL2 Assets"/>
                 </Button>
                 <Button Command="{Binding AppSetting.OpenSettingCommand,Mode=OneTime}" Style="{StaticResource TitleButtonStyle}">
                     <TextBlock Text="&#xE10C;" FontSize="13" Foreground="White" FontFamily="Segoe MDL2 Assets"/>

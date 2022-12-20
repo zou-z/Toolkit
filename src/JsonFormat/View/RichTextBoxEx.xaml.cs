@@ -26,6 +26,7 @@ namespace JsonFormat.View
         public RichTextBoxEx()
         {
             InitializeComponent();
+            ContextMenu = null;
             SnapsToDevicePixels = false;
             PreviewKeyDown += RichTextBox_PreviewKeyDown;
             ApplySettingsUpdate();
