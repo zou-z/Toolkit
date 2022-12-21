@@ -50,6 +50,53 @@
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
+        <Style x:Key="ToggleButtonStyle" TargetType="ToggleButton">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="SnapsToDevicePixels" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border x:Name="MainBorder" Width="36" Height="30" Background="Transparent">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#3B3C3C"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#4B4C4C"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="MenuItemButtonStyle" TargetType="Button">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="MainBorder" CornerRadius="4" Background="Transparent" BorderBrush="Transparent" BorderThickness="1">
+                            <ContentPresenter/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#2E2E2E"/>
+                                <Setter TargetName="MainBorder" Property="BorderBrush" Value="#3A3A3A"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="MainBorder" Property="Background" Value="#242424"/>
+                                <Setter TargetName="MainBorder" Property="BorderBrush" Value="#3A3A3A"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     <local:TabView ItemsSource="{Binding TabManager.Tabs,Mode=OneWay}" SelectedItem="{Binding TabManager.SelectedItem,Mode=TwoWay}" NewTabCommand="{Binding TabManager.NewTabCommand,Mode=OneTime}">
         <local:TabView.TabViewFooter>
@@ -60,9 +107,44 @@
                 <Button Command="{Binding CopyCommand,Mode=OneTime}" Style="{StaticResource TitleButtonStyle}" ToolTip="复制" Template="{StaticResource WithoutDisabledStatusTemplate}">
                     <TextBlock Text="{Binding CopyButtonText,Mode=OneWay}" FontSize="13" Foreground="{Binding CopyButtonText,Mode=OneWay,Converter={StaticResource StatusTextColorConverter}}" FontFamily="Segoe MDL2 Assets"/>
                 </Button>
-                <Button Command="{Binding AppSetting.OpenSettingCommand,Mode=OneTime}" Style="{StaticResource TitleButtonStyle}">
-                    <TextBlock Text="&#xE10C;" FontSize="13" Foreground="White" FontFamily="Segoe MDL2 Assets"/>
-                </Button>
+                <local:PopupButton>
+                    <local:PopupButton.SwitchButton>
+                        <ToggleButton Style="{StaticResource ToggleButtonStyle}">
+                            <TextBlock Text="&#xE10C;" FontSize="13" Foreground="White" FontFamily="Segoe MDL2 Assets"/>
+                        </ToggleButton>
+                    </local:PopupButton.SwitchButton>
+                    <local:PopupButton.RelatedPopup>
+                        <Popup StaysOpen="False" Placement="Bottom" PopupAnimation="Slide" AllowsTransparency="True" HorizontalOffset="-144">
+                            <Grid Width="180">
+                                <Border Margin="8" CornerRadius="4" Background="#272727">
+                                    <Border.Effect>
+                                        <DropShadowEffect ShadowDepth="0" BlurRadius="8" Color="Black" Opacity="0.5"/>
+                                    </Border.Effect>
+                                </Border>
+                                <Border Margin="8">
+                                    <StackPanel Margin="8">
+                                        <Button Command="{Binding AppSetting.OpenSettingCommand,Mode=OneTime}" Click="Close_Popup" Style="{StaticResource MenuItemButtonStyle}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Border Width="26" Height="26">
+                                                    <TextBlock Text="&#xE115;" Foreground="White" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                                <TextBlock Text="设置" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Command="{Binding AppSetting.OpenAboutCommand,Mode=OneTime}" Click="Close_Popup" Style="{StaticResource MenuItemButtonStyle}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Border Width="26" Height="26">
+                                                    <TextBlock Text="&#xE11B;" Foreground="White" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                                <TextBlock Text="关于" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </Button>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                        </Popup>
+                    </local:PopupButton.RelatedPopup>
+                </local:PopupButton>
             </StackPanel>
         </local:TabView.TabViewFooter>
     </local:TabView>

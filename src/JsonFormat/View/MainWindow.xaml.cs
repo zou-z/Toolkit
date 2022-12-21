@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -23,5 +24,28 @@ namespace JsonFormat.View
         {
             InitializeComponent();
         }
+
+        private void Close_Popup(object sender, RoutedEventArgs e)
+        {
+            if (popup == null)
+            {
+                FrameworkElement element = (FrameworkElement)sender;
+                while (element.Parent != null)
+                {
+                    if (element.Parent is Popup _popup)
+                    {
+                        popup = _popup;
+                        break;
+                    }
+                    element = (FrameworkElement)element.Parent;
+                }
+            }
+            if (popup != null)
+            {
+                popup.IsOpen = false;
+            }
+        }
+
+        private Popup? popup = null;
     }
 }

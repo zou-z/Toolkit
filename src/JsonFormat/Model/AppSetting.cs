@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using Toolkit.Base.Util;
 
@@ -18,6 +19,8 @@ namespace JsonFormat.Model
     internal class AppSetting : ObservableObject, IRecipient<string>
     {
         public RelayCommand OpenSettingCommand => openSettingCommand ??= new RelayCommand(OpenSetting);
+
+        public RelayCommand OpenAboutCommand => openAboutCommand ??= new RelayCommand(About);
 
         public RelayCommand ApplySettingsCommand => applySettingsCommand ??= new RelayCommand(ApplySettings);
 
@@ -245,7 +248,37 @@ namespace JsonFormat.Model
             OnPropertyChanged(name);
         }
 
+        private void About()
+        {
+            var aboutWindow = new Window
+            {
+                Title = "关于",
+                ResizeMode = ResizeMode.NoResize,
+                SizeToContent = SizeToContent.WidthAndHeight,
+                SnapsToDevicePixels = true,
+                Content = new TextBox
+                {
+                    IsReadOnly = true,
+                    BorderThickness = new Thickness(0),
+                    Background = Brushes.Transparent,
+                    Padding = new Thickness(15, 5, 15, 15),
+                    Text = "JsonFormat\r\n©zzh\r\nhttps://github.com/zou-z/Toolkit",
+                },
+            };
+            foreach (var window in Application.Current.Windows)
+            {
+                if (window is MainWindow mainWindow)
+                {
+                    aboutWindow.Owner = mainWindow;
+                    aboutWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                    break;
+                }
+            }
+            aboutWindow.ShowDialog();
+        }
+
         private RelayCommand? openSettingCommand = null;
+        private RelayCommand? openAboutCommand = null;
         private RelayCommand? applySettingsCommand = null;
         private RelayCommand? restoreSettingsCommand = null;
         private RelayCommand<string>? restoreSavedColorCommand = null;
