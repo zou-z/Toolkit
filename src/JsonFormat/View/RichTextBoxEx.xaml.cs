@@ -29,22 +29,18 @@ namespace JsonFormat.View
             ContextMenu = null;
             SnapsToDevicePixels = false;
             PreviewKeyDown += RichTextBox_PreviewKeyDown;
-            ApplySettingsUpdate();
         }
 
-        public void ApplySettingsUpdate()
+        public void ApplySettingsUpdate(string fontFamily, int fontSize)
         {
-            if (JsonFormat.GetServices().GetService<AppSetting>() is AppSetting appSetting)
+            Document.FontFamily = new FontFamily(fontFamily);
+            Document.FontSize = fontSize;
+            UpdatePageWidth();
+            if (lineNumber != null)
             {
-                Document.FontFamily = new FontFamily(appSetting.Settings.RenderSetting.FontFamily);
-                Document.FontSize = appSetting.Settings.RenderSetting.FontSize;
-                UpdatePageWidth();
-                if (lineNumber != null)
-                {
-                    lineNumber.Document.FontFamily = Document.FontFamily;
-                    lineNumber.Document.FontSize = Document.FontSize;
-                    lineNumber.UpdatePageWidth();
-                }
+                lineNumber.Document.FontFamily = Document.FontFamily;
+                lineNumber.Document.FontSize = Document.FontSize;
+                lineNumber.UpdatePageWidth();
             }
         }
 

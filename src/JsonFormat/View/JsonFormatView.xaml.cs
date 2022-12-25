@@ -1,4 +1,6 @@
-﻿using JsonFormat.Service;
+﻿using JsonFormat.Model;
+using JsonFormat.Service;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +42,7 @@ namespace JsonFormat.View
                     }
                 }
             }
+            ApplySettingsUpdate();
             SetBinding(JsonDocumentProperty, new Binding("JsonDocument") { Mode = BindingMode.OneWay });
         }
 
@@ -48,6 +51,76 @@ namespace JsonFormat.View
             if (richTextBox == null) return string.Empty;
             string text = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;
             return text.Trim();
+        }
+
+        public void ClearContent()
+        {
+            richTextBox?.Document.Blocks.Clear();
+        }
+
+        public void CompressedContent()
+        {
+            if (richTextBox != null)
+            {
+                var text = GetText();
+                text = Util.StringUtil.StringCompression(text);
+                richTextBox.Document.Blocks.Clear();
+                var run = new Run
+                {
+                    Text = text,
+                    FontSize = richTextBox.Document.FontSize,
+                    FontFamily = richTextBox.Document.FontFamily,
+                };
+                Paragraph paragraph = new();
+                paragraph.Inlines.Add(run);
+                richTextBox.Document.Blocks.Add(paragraph);
+            }
+        }
+
+        public void AddEscape()
+        {
+            if (richTextBox != null)
+            {
+                var text = GetText();
+                text = Util.StringUtil.StringAddEscape(text);
+                var data = text.Split("\r\n");
+                richTextBox.Document.Blocks.Clear();
+                foreach (var item in data)
+                {
+                    var run = new Run
+                    {
+                        Text = item,
+                        FontSize = richTextBox.Document.FontSize,
+                        FontFamily = richTextBox.Document.FontFamily,
+                    };
+                    Paragraph paragraph = new();
+                    paragraph.Inlines.Add(run);
+                    richTextBox.Document.Blocks.Add(paragraph);
+                }
+            }
+        }
+
+        public void RemoveEscape()
+        {
+            if (richTextBox != null)
+            {
+                var text = GetText();
+                text = Util.StringUtil.StringRemoveEscape(text);
+                var data = text.Split("\r\n");
+                richTextBox.Document.Blocks.Clear();
+                foreach (var item in data)
+                {
+                    var run = new Run
+                    {
+                        Text = item,
+                        FontSize = richTextBox.Document.FontSize,
+                        FontFamily = richTextBox.Document.FontFamily,
+                    };
+                    Paragraph paragraph = new();
+                    paragraph.Inlines.Add(run);
+                    richTextBox.Document.Blocks.Add(paragraph);
+                }
+            }
         }
 
         public IJsonFormat? GetDataContext()
@@ -61,7 +134,10 @@ namespace JsonFormat.View
 
         public void ApplySettingsUpdate()
         {
-            richTextBox?.ApplySettingsUpdate();
+            if (JsonFormat.GetServices().GetService<AppSetting>() is AppSetting appSetting)
+            {
+                richTextBox?.ApplySettingsUpdate(appSetting.Settings.RenderSetting.FontFamily, appSetting.Settings.RenderSetting.FontSize);
+            }
         }
 
         private static void JsonDocumentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

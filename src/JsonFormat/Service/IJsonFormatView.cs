@@ -10,6 +10,14 @@ namespace JsonFormat.Service
     {
         string GetText();
 
+        void ClearContent();
+
+        void CompressedContent();
+
+        void AddEscape();
+
+        void RemoveEscape();
+
         IJsonFormat? GetDataContext();
 
         void ApplySettingsUpdate();

@@ -97,6 +97,12 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="SeparatorStyle" TargetType="Border">
+            <Setter Property="Height" Value="1"/>
+            <Setter Property="Margin" Value="5,5"/>
+            <Setter Property="Background" Value="#353535"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+        </Style>
     </Window.Resources>
     <local:TabView ItemsSource="{Binding TabManager.Tabs,Mode=OneWay}" SelectedItem="{Binding TabManager.SelectedItem,Mode=TwoWay}" NewTabCommand="{Binding TabManager.NewTabCommand,Mode=OneTime}">
         <local:TabView.TabViewFooter>
@@ -114,8 +120,8 @@
                         </ToggleButton>
                     </local:PopupButton.SwitchButton>
                     <local:PopupButton.RelatedPopup>
-                        <Popup StaysOpen="False" Placement="Bottom" PopupAnimation="Slide" AllowsTransparency="True" HorizontalOffset="-144">
-                            <Grid Width="180">
+                        <Popup StaysOpen="False" Placement="Bottom" PopupAnimation="Slide" AllowsTransparency="True" HorizontalOffset="-114">
+                            <Grid Width="150">
                                 <Border Margin="8" CornerRadius="4" Background="#272727">
                                     <Border.Effect>
                                         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Color="Black" Opacity="0.5"/>
@@ -123,6 +129,36 @@
                                 </Border>
                                 <Border Margin="8">
                                     <StackPanel Margin="8">
+                                        <Button Command="{Binding ClearContentCommand,Mode=OneTime}" Click="Close_Popup" Style="{StaticResource MenuItemButtonStyle}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Border Width="26" Height="26">
+                                                    <TextBlock Text="&#xE107;" Foreground="White" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                                <TextBlock Text="清空" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Command="{Binding CompressedContentCommand,Mode=OneTime}" Click="Close_Popup" Style="{StaticResource MenuItemButtonStyle}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Border Width="26" Height="26">
+                                                </Border>
+                                                <TextBlock Text="压缩" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Command="{Binding AddEscapeCommand,Mode=OneTime}" Click="Close_Popup" Style="{StaticResource MenuItemButtonStyle}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Border Width="26" Height="26">
+                                                </Border>
+                                                <TextBlock Text="添加转义" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Command="{Binding RemoveEscapeCommand,Mode=OneTime}" Click="Close_Popup" Style="{StaticResource MenuItemButtonStyle}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Border Width="26" Height="26">
+                                                </Border>
+                                                <TextBlock Text="去除转义" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </Button>
+                                        <Border Style="{StaticResource SeparatorStyle}"/>
                                         <Button Command="{Binding AppSetting.OpenSettingCommand,Mode=OneTime}" Click="Close_Popup" Style="{StaticResource MenuItemButtonStyle}">
                                             <StackPanel Orientation="Horizontal">
                                                 <Border Width="26" Height="26">
@@ -131,10 +167,11 @@
                                                 <TextBlock Text="设置" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                             </StackPanel>
                                         </Button>
-                                        <Button Command="{Binding AppSetting.OpenAboutCommand,Mode=OneTime}" Click="Close_Popup" Style="{StaticResource MenuItemButtonStyle}">
+                                        <Border Style="{StaticResource SeparatorStyle}"/>
+                                        <Button Command="{Binding OpenAboutCommand,Mode=OneTime}" Click="Close_Popup" Style="{StaticResource MenuItemButtonStyle}">
                                             <StackPanel Orientation="Horizontal">
                                                 <Border Width="26" Height="26">
-                                                    <TextBlock Text="&#xE11B;" Foreground="White" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="&#xE783;" Foreground="White" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                 </Border>
                                                 <TextBlock Text="关于" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                             </StackPanel>
